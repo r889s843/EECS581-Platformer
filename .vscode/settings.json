@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "EECS581-Project3.sln"
+    "dotnet.defaultSolution": "EECS581-Platformer-main.sln"
 }
