@@ -1,8 +1,13 @@
+// Name: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 10/17/2024
+// Course: EECS 581
+// Purpose: Physics engine. Decides how the player interacts with movement and collidable objects.
+
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D body;
+    private Rigidbody2D body; // reference to players body
     private BoxCollider2D boxCollider; //reference to player's box collider
     [SerializeField] private LayerMask groundLayer; //holds ground layer mask
     [SerializeField] private LayerMask wallLayer; //holds wall layer mask
@@ -36,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
                 body.linearVelocity = Vector2.zero;
             }
             else {
-                body.gravityScale = 5;
+                body.gravityScale = 5; // change gravity if you are on a wall or not.
             }
 
             //if space is pressed then jump
@@ -45,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         else {
-            wallJumpCooldown += Time.deltaTime; 
+            wallJumpCooldown += Time.deltaTime; // cooldown on wall jumps so you can't just slide up the wall.
         }
 
     }
@@ -57,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (onWall() && !isGrounded()) { //on a wall and not on ground
             if (horizontalInput == 0) {
-                body.linearVelocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 60, 20);
+                body.linearVelocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 60, 20); // apply force to propell yourself off the walls. To allow wall jumping back and forth.
                 transform.localScale = new Vector3(-Mathf.Sign(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             }
             else {

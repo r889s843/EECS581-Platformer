@@ -1,3 +1,8 @@
+// Name: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 10/17/2024
+// Course: EECS 581
+// Purpose: This creates a camera to track the player while the game is going.
+
 using UnityEngine;
 
 public class CameraController : MonoBehaviour

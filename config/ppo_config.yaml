@@ -1,3 +1,8 @@
+# Name: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+# Date: 10/17/2024
+# Course: EECS 581
+# Purpose: this is the config file for the PPO agent which is learning how to play the platformer game. This adjusts how it thinks and acts but mostly augments the AI's brain.
+
 behaviors:
   PlatformerAgent:
     trainer_type: ppo
