@@ -12,9 +12,15 @@ Use the following command to create the required conda environment:
 conda env create -f environment.yml
 ```
 
+Activate the new conda environment from terminal:
+
+```bash
+conda activate torch
+```
+
 ## Training the AI Model
 
-From the root directory, use the following command to train the model:
+From the root directory (cd to it or open it there), use the following command to train the model:
 
 ```bash
 mlagents-learn config/ppo_config.yaml --run-id=PlatformerRun --resume
