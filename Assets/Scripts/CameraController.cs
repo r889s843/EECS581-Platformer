@@ -9,18 +9,23 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform player;
     [SerializeField] private float aheadDistance; //distance that camera will look ahead
-    [SerializeField] private float cameraSpeed; //camera speed for switching look ahead directions
-    private float lookAhead; //distance and direction for camera to look ahead and not be centered on player
+    [SerializeField] private float aboveDistance; //distance that cameral will look above
+    //[SerializeField] private float cameraSpeed; //camera speed for switching look ahead directions
+    //private float lookAhead; //distance and direction for camera to look ahead and not be centered on player
 
     private void Awake() {
-        //sets camera position to correct lookahead on startup
-        lookAhead = aheadDistance * player.localScale.x;
-        transform.position = new Vector3(player.position.x + lookAhead, transform.position.y, transform.position.z);
+        //sets camera position to correct lookahead on startup FOR OLD CAMERA CONTROLLER
+        //lookAhead = aheadDistance * player.localScale.x;
+        //transform.position = new Vector3(player.position.x + lookAhead, transform.position.y, transform.position.z);
     }
 
     private void Update() {
         //follow player
-        transform.position = new Vector3(player.position.x + lookAhead, transform.position.y, transform.position.z); //actually moves camera to player's position
-        lookAhead = Mathf.Lerp(lookAhead, (aheadDistance * player.localScale.x), Time.deltaTime * cameraSpeed); //slowly transition camera to final lookahead
+        transform.position = new Vector3(player.position.x + aheadDistance, player.position.y + aboveDistance, transform.position.z);
+
+
+        //OLD CAMERA CONTROLLER
+        //transform.position = new Vector3(player.position.x + lookAhead, transform.position.y, transform.position.z); //actually moves camera to player's position
+        //lookAhead = Mathf.Lerp(lookAhead, (aheadDistance * player.localScale.x), Time.deltaTime * cameraSpeed); //slowly transition camera to final lookahead
     }
 }

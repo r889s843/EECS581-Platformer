@@ -407,6 +407,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2100892088925098272, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: goalTransform
+      value: 
+      objectReference: {fileID: 1291469944}
     - target: {fileID: 8795842049470078105, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_Name
       value: Player
@@ -473,6 +477,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6608245b8e89044382e3caab2e85793, type: 3}
+--- !u!4 &1291469944 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6062583078717770621, guid: d6608245b8e89044382e3caab2e85793, type: 3}
+  m_PrefabInstance: {fileID: 1291469943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1313149342
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -807,7 +816,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1221916318}
   aheadDistance: 3
-  cameraSpeed: 5
+  aboveDistance: 0.5
 --- !u!114 &1897536543
 MonoBehaviour:
   m_ObjectHideFlags: 0
