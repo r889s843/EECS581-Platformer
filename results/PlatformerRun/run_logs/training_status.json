@@ -2,19 +2,10 @@
     "metadata": {
         "stats_format_version": "0.3.0",
         "mlagents_version": "0.30.0",
-        "torch_version": "2.3.1+cu121"
+        "torch_version": "2.3.0"
     },
     "PlatformerAgent": {
         "checkpoints": [
-            {
-                "steps": 4262171,
-                "file_path": "results\\PlatformerRun\\PlatformerAgent\\PlatformerAgent-4262171.onnx",
-                "reward": 1.1762294951412413,
-                "creation_time": 1729479797.5559883,
-                "auxillary_file_paths": [
-                    "results\\PlatformerRun\\PlatformerAgent\\PlatformerAgent-4262171.pt"
-                ]
-            },
             {
                 "steps": 4287600,
                 "file_path": "results\\PlatformerRun\\PlatformerAgent\\PlatformerAgent-4287600.onnx",
@@ -50,15 +41,24 @@
                 "auxillary_file_paths": [
                     "results\\PlatformerRun\\PlatformerAgent\\PlatformerAgent-4393291.pt"
                 ]
+            },
+            {
+                "steps": 4396951,
+                "file_path": "results\\PlatformerRun\\PlatformerAgent\\PlatformerAgent-4396951.onnx",
+                "reward": -2.5170414120920244,
+                "creation_time": 1730349790.3220198,
+                "auxillary_file_paths": [
+                    "results\\PlatformerRun\\PlatformerAgent\\PlatformerAgent-4396951.pt"
+                ]
             }
         ],
         "final_checkpoint": {
-            "steps": 4393291,
+            "steps": 4396951,
             "file_path": "results\\PlatformerRun\\PlatformerAgent.onnx",
-            "reward": -2.5190731113464535,
-            "creation_time": 1729743802.4203107,
+            "reward": -2.5170414120920244,
+            "creation_time": 1730349790.3220198,
             "auxillary_file_paths": [
-                "results\\PlatformerRun\\PlatformerAgent\\PlatformerAgent-4393291.pt"
+                "results\\PlatformerRun\\PlatformerAgent\\PlatformerAgent-4396951.pt"
             ]
         }
     }
