@@ -143,5 +143,11 @@ public class PlatformerAgent : Agent
             Debug.Log($"Agent hit the DeathZone. Final reward: {GetCumulativeReward()}"); //debugging console
             EndEpisode(); // end session and respawn and reset everything.
         }
+        else if (collision.CompareTag("Enemy"))
+        {
+            SetReward(-4.0f); // give it a high negative reward for dying.
+            Debug.Log($"Agent hit the Enemy. Final reward: {GetCumulativeReward()}"); //debugging console
+            EndEpisode(); // end session and respawn and reset everything.
+        }
     } // add any more here for enemies, enemy projectiles, and environment hazards.
 }
