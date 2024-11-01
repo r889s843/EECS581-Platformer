@@ -15,7 +15,7 @@ conda env create -f environment.yml
 Activate the new conda environment from terminal:
 
 ```bash
-conda activate torch
+conda activate unity
 ```
 
 ## Training the AI Model
