@@ -131,6 +131,8 @@ public class PlatformerAgent : Agent
             // Increment the completion count
             currentLevelCompletions++;
 
+            Debug.Log($"Current Count: {currentLevelCompletions}");
+
             // Check if the level completion count meets the threshold
             if (currentLevelCompletions >= levelCompletionThreshold)
             {
