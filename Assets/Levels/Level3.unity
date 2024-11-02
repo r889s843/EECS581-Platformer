@@ -180,6 +180,10 @@ PrefabInstance:
       propertyPath: nextLevelName
       value: Level1
       objectReference: {fileID: 0}
+    - target: {fileID: 7179274755119001291, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 5022602860645237092, guid: 7f6d004fbf49e9a4da96f388ef90c5eb, type: 3}
     - target: {fileID: 8795842049470078105, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_Name
       value: Player
