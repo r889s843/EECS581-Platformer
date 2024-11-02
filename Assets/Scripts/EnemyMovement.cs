@@ -1,3 +1,9 @@
+// Name: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 1/01/2024
+// Course: EECS 581
+// Purpose: Enemy Movements
+
+
 using UnityEngine;
 using System.Collections;
 
