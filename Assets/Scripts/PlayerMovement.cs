@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpHeight; //player jump height
     private float horizontalInput; //horizontal input on player
     private float wallJumpCooldown; //timer to cool down wall jump
+    public Animator animator; // for modifying animation parameters
 
     private void Awake() {
         //Get components and store on startup
@@ -25,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     private void Update() {
         horizontalInput = Input.GetAxis("Horizontal"); //stores horizontal input
         body.linearVelocity = new Vector2(horizontalInput * speed, body.linearVelocity.y); //moves player left and right
+
+        animator.SetFloat("Speed", Mathf.Abs(horizontalInput)); // run animation parameters
 
         //flip player when moving
         if (horizontalInput > 0.01f) { //if player is moving right
@@ -46,7 +49,11 @@ public class PlayerMovement : MonoBehaviour
 
             //if space is pressed then jump
             if(Input.GetKeyDown(KeyCode.Space)) { 
-                jump();
+               jump();
+               animator.SetBool("isJumping", true);             // jump animation parameters
+               if (isGrounded()) {
+                   animator.SetBool("isJumping", false);
+               }
             }
         }
         else {
