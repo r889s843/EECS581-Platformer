@@ -174,8 +174,7 @@ public class ProcGen : MonoBehaviour
             currentx += 2;
             counter++;
         }
-        GameObject flagPrefab = Resources.Load<GameObject>("Flag");
-        GameObject flag = PrefabUtility.InstantiatePrefab(flagPrefab) as GameObject;
+        GameObject flag = GameObject.Find("Flag");
         flag.transform.position = new Vector3(currentx-6, currenty+6);  // Place flag roughly in the middle
         return;
     }
