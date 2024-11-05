@@ -157,7 +157,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 5
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 38f89a5cb22d0ec4bace930fe336eec3, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -167,7 +167,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 0
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &2646103504705394422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,9 +186,17 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 128
-  speed: 10
+  maxSpeed: 15
+  acceleration: 40
+  deceleration: 80
+  airAcceleration: 15
+  airDeceleration: 10
   jumpHeight: 20
+  jumpHeightBonus: 0
+  wallJumpX: 10
+  wallJumpY: 20
   animator: {fileID: -8611442375277616293}
+  agentActive: 0
 --- !u!114 &7179274755119001291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,7 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 12
+    VectorObservationSize: 17
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -250,14 +258,15 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1000
+  MaxStep: 5000
   goalTransform: {fileID: 0}
   platformLayer:
     serializedVersion: 2
     m_Bits: 64
+  detectableLayers:
+    serializedVersion: 2
+    m_Bits: 0
   raycastDistance: 20
-  speed: 10
-  jumpHeight: 20
   levelCompletionThreshold: 100
 --- !u!114 &6720324758942419461
 MonoBehaviour:
