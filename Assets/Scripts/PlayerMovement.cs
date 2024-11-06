@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
     [SerializeField] private LayerMask groundLayer;
-    //[SerializeField] private LayerMask wallLayer;
 
     // Movement and physics parameters
     [SerializeField] private float maxSpeed = 15f;
@@ -26,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalInput;
     private bool jumpInput;
     private int grounded; //holds returned value of onGround() -> 0 for floor, 1 for left wall, 2 for right wall, -1 for none
-    // private int wallSide; // -1 for left wall, 1 for right wall, 0 if not on a wall -- OLD
     public Animator animator;
 
     // Wall jump variables
@@ -65,7 +63,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Check if player is grounded and/or on a wall
-        //bool grounded = isGrounded(); OLD
         grounded = onGround();
 
         // Reset gravity and movement if on floor
@@ -138,13 +135,6 @@ public class PlayerMovement : MonoBehaviour
                 Vector2 wallJumpDirection = new Vector2(-wallJumpX, wallJumpY);  
                 Jump(wallJumpDirection, isWallJump: true);
             }
-            // else if (grounded == 1 || grounded == 2) //if on wall (already checked on floor) DOES NOT WORK
-            // {
-            //     // Wall jump in the opposite direction
-            //     Vector2 wallJumpDirection = new Vector2(-grounded * wallJumpX, wallJumpY);  
-            //     Jump(wallJumpDirection, isWallJump: true);
-            // }
-            // jumpInput = false; // Reset jump input
         }
 
         // Flip player direction based on movement
@@ -168,17 +158,6 @@ public class PlayerMovement : MonoBehaviour
             wallJumpCounter = wallJumpTime;
         }
     }
-
-    //old funcion
-    // private bool isGrounded()
-    // {
-    //     RaycastHit2D raycastHit = Physics2D.BoxCast(
-    //         boxCollider.bounds.center,
-    //         boxCollider.bounds.size, 0,
-    //         Vector2.down, 0.1f, groundLayer
-    //     );
-    //     return raycastHit.collider != null;
-    // }
 
     //checks for contact with floor or walls
     //returns 0 for floor, 1 for left wall, 2 for right wall, and -1 if in the air
