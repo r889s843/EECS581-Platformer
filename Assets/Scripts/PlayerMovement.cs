@@ -10,22 +10,28 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D body;
     private BoxCollider2D boxCollider;
     [SerializeField] private LayerMask groundLayer;
+    public Animator animator;
 
     // Movement and physics parameters
+    [Header("Movement Parameters")]
     [SerializeField] private float maxSpeed = 15f;
     [SerializeField] private float acceleration = 40f;
     [SerializeField] private float deceleration = 80f;
     [SerializeField] private float airAcceleration = 15f;
     [SerializeField] private float airDeceleration = 10f;
+
+    [Header("Jumping Parameters")]
     [SerializeField] private float jumpHeight = 20f;
     [SerializeField] private float jumpHeightBonus = 0f; // Additional jump height based on speed
     [SerializeField] private float wallJumpX = 10f;
     [SerializeField] private float wallJumpY = 20f;
+    [SerializeField] private float cyoteTime; //how much time after the player leaves the ground they can jump
+    private float cyoteCounter; //how much time has passed since the player has left the ground
+    
 
     private float horizontalInput;
     private bool jumpInput;
     private int grounded; //holds returned value of onGround() -> 0 for floor, 1 for left wall, 2 for right wall, -1 for none
-    public Animator animator;
 
     // Wall jump variables
     private bool wallJumping = false;
@@ -71,6 +77,11 @@ public class PlayerMovement : MonoBehaviour
             body.gravityScale = 5;
             wallJumping = false;
             animator.SetBool("isJumping", false);
+            cyoteCounter = cyoteTime; //reset cyote counter when on ground
+        }
+        else
+        {
+            cyoteCounter -= Time.deltaTime; //start cyote counter
         }
 
         // Handle wall jump timer
@@ -137,6 +148,12 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        //smaller jump when space bar released
+        if(Input.GetKeyUp(KeyCode.Space) && body.linearVelocity.y > 0) //if space is released and player is already jumping
+        {
+            body.linearVelocity = new Vector2(body.linearVelocity.x, body.linearVelocity.y / 2); //cuts vertical velocity in half
+        }
+
         // Flip player direction based on movement
         if (horizontalInput > 0.01f)
             transform.localScale = Vector3.one;
@@ -149,6 +166,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump(Vector2 jumpForce, bool isWallJump = false)
     {
+        //if(cyoteCounter <= 0 && (grounded != 1 && grounded != 2)) return; //if cyote timer is up do not jump
+
         body.linearVelocity = jumpForce;
         animator.SetBool("isJumping", true);
 
@@ -193,6 +212,12 @@ public class PlayerMovement : MonoBehaviour
         {
             return 2; // On right wall
         }
+
+        //check for cyote time
+        // if(cyoteCounter > 0)
+        // {
+        //     return 0; //player is not on the ground but is within cyote time so act as if player is on ground
+        // }
 
         return -1; // not grounded
     }

@@ -415,6 +415,10 @@ PrefabInstance:
       propertyPath: goalTransform
       value: 
       objectReference: {fileID: 1291469944}
+    - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: cyoteTime
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8795842049470078105, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_Name
       value: Player
