@@ -7,6 +7,10 @@ TagManager:
   - DeathZone
   - Flag
   - Enemy
+  - Projectile
+  - Hazard
+  - FallingPlatform
+  - Ground
   layers:
   - Default
   - TransparentFX

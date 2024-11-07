@@ -180,6 +180,10 @@ PrefabInstance:
       propertyPath: nextLevelName
       value: Level1
       objectReference: {fileID: 0}
+    - target: {fileID: 2100892088925098272, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: detectableLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 7179274755119001291, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_Model
       value: 
@@ -320,9 +324,6 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7127516521367446038, guid: d6608245b8e89044382e3caab2e85793, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1559882487}
     - targetCorrespondingSourceObject: {fileID: 3880381174684426510, guid: d6608245b8e89044382e3caab2e85793, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1010813202}
@@ -634,24 +635,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 407454691613311167, guid: 73765d34de6e454459d9ace5af624f64, type: 3}
   m_PrefabInstance: {fileID: 740712953}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1559882484 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7127516521367446038, guid: d6608245b8e89044382e3caab2e85793, type: 3}
-  m_PrefabInstance: {fileID: 253050727}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1559882487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1559882484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c22140ff077756c46bb5140a4d40ab33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nextLevelName: Level1
 --- !u!1001 &1575758432
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -858,11 +841,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 407454691613311167, guid: 73765d34de6e454459d9ace5af624f64, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.4
+      value: -6.07
       objectReference: {fileID: 0}
     - target: {fileID: 407454691613311167, guid: 73765d34de6e454459d9ace5af624f64, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.24
+      value: -2.55
       objectReference: {fileID: 0}
     - target: {fileID: 407454691613311167, guid: 73765d34de6e454459d9ace5af624f64, type: 3}
       propertyPath: m_LocalPosition.z

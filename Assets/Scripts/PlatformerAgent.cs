@@ -15,7 +15,7 @@ public class PlatformerAgent : Agent
     public LayerMask platformLayer;
     public LayerMask detectableLayers;
 
-    public float raycastDistance = 20f;
+    public float raycastDistance = 15f;
     private Rigidbody2D rigidbody;
     private Vector2 previousPosition;
     private Vector2 startPosition;
@@ -23,7 +23,7 @@ public class PlatformerAgent : Agent
     private PlayerMovement playerMovement;
 
     // Completion tracking
-    public int levelCompletionThreshold = 100; // Number of times to complete the level before moving on
+    public int levelCompletionThreshold = 3; // Number of times to complete the level before moving on
     private int currentLevelCompletions = 0; // Tracks how many times the current level has been completed
 
     public override void Initialize()
@@ -52,88 +52,70 @@ public class PlatformerAgent : Agent
         sensor.AddObservation(directionToGoal);
 
         // Grounded status
-        sensor.AddObservation(IsGrounded() ? 1f : 0f);
+        int groundedState = onGround();
+        sensor.AddObservation(groundedState); // Values: 0, 1, 2, -1
 
-        // Wall status
-        int wallSide = OnWall();
-        sensor.AddObservation(wallSide); // -1 for left wall, 1 for right wall, 0 for none
+        // Number of raycasts for 360-degree coverage
+        int numRaycasts = 36;
+        float angleIncrement = 360f / numRaycasts;
 
-        // Raycasts in all directions to detect platforms, enemies, and death zones
-        RaycastHit2D hitRight = Physics2D.Raycast(transform.position, Vector2.right, raycastDistance, detectableLayers);
-        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position, Vector2.left, raycastDistance, detectableLayers);
-        RaycastHit2D hitUp = Physics2D.Raycast(transform.position, Vector2.up, raycastDistance, detectableLayers);
-        RaycastHit2D hitDown = Physics2D.Raycast(transform.position, Vector2.down, raycastDistance, detectableLayers);
+        // Cast rays in 360 degrees around the AI
+        for (int i = 0; i < numRaycasts; i++)
+        {
+            // Calculate the angle in radians
+            float angle = i * angleIncrement;
+            float radian = angle * Mathf.Deg2Rad;
 
-        // Process right raycast result
-        if (hitRight.collider != null)
-        {
-            sensor.AddObservation(hitRight.distance / raycastDistance);
-            sensor.AddObservation(GetObjectType(hitRight.collider.tag));
-        }
-        else
-        {
-            sensor.AddObservation(1f); // No object detected within range
-            sensor.AddObservation(0f); // No object type detected
-        }
+            // Calculate the direction for this ray
+            Vector2 direction = new Vector2(Mathf.Cos(radian), Mathf.Sin(radian)).normalized;
 
-        // Process left raycast result
-        if (hitLeft.collider != null)
-        {
-            sensor.AddObservation(hitLeft.distance / raycastDistance);
-            sensor.AddObservation(GetObjectType(hitLeft.collider.tag));
-        }
-        else
-        {
-            sensor.AddObservation(1f);
-            sensor.AddObservation(0f);
-        }
+            // Perform the raycast
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, raycastDistance, detectableLayers);
 
-        // Process up raycast result
-        if (hitUp.collider != null)
-        {
-            sensor.AddObservation(hitUp.distance / raycastDistance);
-            sensor.AddObservation(GetObjectType(hitUp.collider.tag));
-        }
-        else
-        {
-            sensor.AddObservation(1f);
-            sensor.AddObservation(0f);
-        }
+            if (hit.collider != null)
+            {
+                // Normalized distance observation
+                sensor.AddObservation(hit.distance / raycastDistance);
+                // Object type observation
+                sensor.AddObservation(GetObjectType(hit.collider.tag));
+            }
+            else
+            {
+                // No object detected within range
+                sensor.AddObservation(1f); // Full distance
+                sensor.AddObservation(0f); // No object type detected
+            }
 
-        // Process down raycast result
-        if (hitDown.collider != null)
-        {
-            sensor.AddObservation(hitDown.distance / raycastDistance);
-            sensor.AddObservation(GetObjectType(hitDown.collider.tag));
+            // Debugging raycasts (visualize in Scene view)
+            Debug.DrawRay(transform.position, direction * raycastDistance, Color.red, 0.1f);
         }
-        else
-        {
-            sensor.AddObservation(1f);
-            sensor.AddObservation(0f);
-        }
-
-        // Debugging raycasts
-        Debug.DrawRay(transform.position, Vector2.right * raycastDistance, Color.green, 0.1f);
-        Debug.DrawRay(transform.position, Vector2.left * raycastDistance, Color.green, 0.1f);
-        Debug.DrawRay(transform.position, Vector2.up * raycastDistance, Color.green, 0.1f);
-        Debug.DrawRay(transform.position, Vector2.down * raycastDistance, Color.red, 0.1f);
     }
+
 
     // Function to convert object tags to observation values
     private float GetObjectType(string tag)
     {
         switch (tag)
         {
-            case "Platform":
+            case "Ground":
                 return 1f;
             case "Enemy":
                 return 2f;
-            case "DeathZone":
+            case "Projectile":
                 return 3f;
+            case "Hazard":
+                return 4f;
+            case "DeathZone":
+                return 5f;
+            case "Flag":
+                return 6f;
+            case "FallingPlatform":
+                return 7f;
             default:
-                return 0f; // No object detected or unknown tag
+                return 0f; // No object or unknown tag
         }
     }
+
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
@@ -184,9 +166,6 @@ public class PlatformerAgent : Agent
         {
             SceneManager.LoadScene(nextSceneIndex);
         }
-
-        // Reset level completion counter for the new level
-        currentLevelCompletions = 0;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -202,8 +181,10 @@ public class PlatformerAgent : Agent
             Debug.Log($"Current Count: {currentLevelCompletions}");
 
             // Check if the level completion count meets the threshold
-            if (currentLevelCompletions >= levelCompletionThreshold)
+            if (levelCompletionThreshold < currentLevelCompletions)
             {
+                // Reset level completion counter for the new level
+                currentLevelCompletions = 0;
                 LoadNextLevel();
             }
 
@@ -224,40 +205,40 @@ public class PlatformerAgent : Agent
     }
 
     // Check if the agent is grounded
-    private bool IsGrounded()
+    private int onGround()
     {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(
+        RaycastHit2D hitDown = Physics2D.BoxCast(
             GetComponent<BoxCollider2D>().bounds.center,
             GetComponent<BoxCollider2D>().bounds.size, 0,
-            Vector2.down, 0.5f, platformLayer
+            Vector2.down, 0.02f, platformLayer
         );
-        return raycastHit.collider != null;
-    }
 
-    // Check if the agent is on a wall
-    private int OnWall()
-    {
         RaycastHit2D hitLeft = Physics2D.BoxCast(
             GetComponent<BoxCollider2D>().bounds.center,
             GetComponent<BoxCollider2D>().bounds.size, 0,
-            Vector2.left, 0.2f, platformLayer
+            Vector2.left, 0.02f, platformLayer
         );
 
         RaycastHit2D hitRight = Physics2D.BoxCast(
             GetComponent<BoxCollider2D>().bounds.center,
             GetComponent<BoxCollider2D>().bounds.size, 0,
-            Vector2.right, 0.2f, platformLayer
+            Vector2.right, 0.02f, platformLayer
         );
 
+        if (hitDown.collider != null)
+        {
+            return 0; // On floor
+        }
         if (hitLeft.collider != null)
         {
-            return -1; // On left wall
+            return 1; // On left wall
         }
         if (hitRight.collider != null)
         {
-            return 1; // On right wall
+            return 2; // On right wall
         }
 
-        return 0; // Not on a wall
+        return -1; // Not grounded
     }
+    
 }
