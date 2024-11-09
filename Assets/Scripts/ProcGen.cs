@@ -1,9 +1,16 @@
+// Name: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 11/01/2024
+// Course: EECS 581
+// Purpose: Level Generator
+
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
 public class ProcGen : MonoBehaviour
 {
+    public static ProcGen Instance { get; private set; }
+
     [MenuItem("Tools/Generate New Level")] // Use tools from top bar to generate level
     public static void GenerateNewLevel() // Main function to handle level generation
     {
@@ -40,7 +47,7 @@ public class ProcGen : MonoBehaviour
         int randomValue = Random.Range(4, 6);   // Platform will be 4-5 in length
         while (counter < randomValue)   // Loop places each ground object to create the platform
         {
-            GameObject ground = PrefabUtility.InstantiatePrefab(groundPrefab) as GameObject;
+            GameObject ground = Instantiate(groundPrefab);
             ground.transform.position = new Vector3(currentx, currenty, 0);
             currentx += 2;
             counter++;
@@ -82,7 +89,7 @@ public class ProcGen : MonoBehaviour
         int randomValue = Random.Range(4, 6);   // Gap length will be from 4-5
         while (counter < randomValue)   // Loop creates platform at other side of the gap 
         {
-            GameObject ground = PrefabUtility.InstantiatePrefab(groundPrefab) as GameObject;
+            GameObject ground = Instantiate(groundPrefab);
             ground.transform.position = new Vector3(currentx, currenty, 0);
             currentx += 2;
             counter++;
@@ -109,7 +116,7 @@ public class ProcGen : MonoBehaviour
 
         while (counter < 5) // Loop creates the platform at end of the jump
         {
-            GameObject ground = PrefabUtility.InstantiatePrefab(groundPrefab) as GameObject;
+            GameObject ground = Instantiate(groundPrefab);
             ground.transform.position = new Vector3(currentx, currenty, 0);
             currentx += 2;
             counter++;
@@ -129,7 +136,7 @@ public class ProcGen : MonoBehaviour
         int randomValue2 = Random.Range(-1, 2); // Change in elevation will be -1, 0, or 1
         while (counter < randomValue)   // Loop creates the small platforms with small gaps
         {
-            GameObject ground = PrefabUtility.InstantiatePrefab(groundPrefab) as GameObject;
+            GameObject ground = Instantiate(groundPrefab);
             ground.transform.position = new Vector3(currentx, currenty, 0);
             currentx += 4;
             currenty += randomValue2 * 2;
@@ -153,7 +160,7 @@ public class ProcGen : MonoBehaviour
         int randomValue = Random.Range(2, 4);   // Platform length will be 2-3
         while (counter < randomValue)   // Loop creates the platform
         {
-            GameObject ground = PrefabUtility.InstantiatePrefab(groundPrefab) as GameObject;
+            GameObject ground = Instantiate(groundPrefab);
             ground.transform.position = new Vector3(currentx, currenty, 0);
             currentx -= 2;
             counter++;
@@ -169,7 +176,7 @@ public class ProcGen : MonoBehaviour
         GameObject groundPrefab = Resources.Load<GameObject>("Ground");
         while (counter < 5) // Create the flat ground
         {
-            GameObject ground = PrefabUtility.InstantiatePrefab(groundPrefab) as GameObject;
+            GameObject ground = Instantiate(groundPrefab);
             ground.transform.position = new Vector3(currentx, currenty, 0);
             currentx += 2;
             counter++;

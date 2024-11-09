@@ -22,6 +22,8 @@ public class PlatformerAgent : Agent
 
     private PlayerMovement playerMovement;
 
+    private ProcGen procGen;
+
     // Completion tracking
     public int levelCompletionThreshold = 3; // Number of times to complete the level before moving on
     private int currentLevelCompletions = 0; // Tracks how many times the current level has been completed
@@ -162,10 +164,35 @@ public class PlatformerAgent : Agent
             Debug.Log("Looping back to Level1.");
             SceneManager.LoadScene(0); // Go back to Level1 if we complete the last level
         }
+        else if (nextSceneIndex == 6){
+            procGen = FindFirstObjectByType<ProcGen>();
+            Debug.Log("Generating Level");
+            SceneManager.LoadScene("Test");
+        }
         else
         {
             SceneManager.LoadScene(nextSceneIndex);
         }
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if(scene.name == "Test"){
+            Debug.Log("Test scene loaded. Generating Level.");
+            ProcGen.GenerateNewLevel();
+        }
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable(); // Call the base class's OnEnable()
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable(); // Call the base class's OnDisable()
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -200,6 +227,18 @@ public class PlatformerAgent : Agent
         {
             SetReward(-4.0f);
             Debug.Log($"Agent hit the Enemy. Final reward: {GetCumulativeReward()}");
+            EndEpisode();
+        }
+        else if (collision.CompareTag("Hazard"))
+        {
+            SetReward(-4.0f);
+            Debug.Log($"Agent hit the Hazard. Final reward: {GetCumulativeReward()}");
+            EndEpisode();
+        }
+        else if (collision.CompareTag("Projectile"))
+        {
+            SetReward(-4.0f);
+            Debug.Log($"Agent hit the Hazard. Final reward: {GetCumulativeReward()}");
             EndEpisode();
         }
     }
