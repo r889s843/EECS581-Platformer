@@ -1,0 +1,65 @@
+{
+    "PlatformerAgent": {
+        "checkpoints": [
+            {
+                "steps": 3499975,
+                "file_path": "results\\PlatformerRun4.0\\PlatformerAgent\\PlatformerAgent-3499975.onnx",
+                "reward": -3.6587390493717695,
+                "creation_time": 1731233455.8927226,
+                "auxillary_file_paths": [
+                    "results\\PlatformerRun4.0\\PlatformerAgent\\PlatformerAgent-3499975.pt"
+                ]
+            },
+            {
+                "steps": 3999985,
+                "file_path": "results\\PlatformerRun4.0\\PlatformerAgent\\PlatformerAgent-3999985.onnx",
+                "reward": -3.6521392874479677,
+                "creation_time": 1731237292.5580091,
+                "auxillary_file_paths": [
+                    "results\\PlatformerRun4.0\\PlatformerAgent\\PlatformerAgent-3999985.pt"
+                ]
+            },
+            {
+                "steps": 4499982,
+                "file_path": "results\\PlatformerRun4.0\\PlatformerAgent\\PlatformerAgent-4499982.onnx",
+                "reward": -3.6539349032893327,
+                "creation_time": 1731241116.9421427,
+                "auxillary_file_paths": [
+                    "results\\PlatformerRun4.0\\PlatformerAgent\\PlatformerAgent-4499982.pt"
+                ]
+            },
+            {
+                "steps": 4999962,
+                "file_path": "results\\PlatformerRun4.0\\PlatformerAgent\\PlatformerAgent-4999962.onnx",
+                "reward": -3.6543257236480713,
+                "creation_time": 1731244940.2513382,
+                "auxillary_file_paths": [
+                    "results\\PlatformerRun4.0\\PlatformerAgent\\PlatformerAgent-4999962.pt"
+                ]
+            },
+            {
+                "steps": 5063902,
+                "file_path": "results\\PlatformerRun4.0\\PlatformerAgent\\PlatformerAgent-5063902.onnx",
+                "reward": -3.6545846734492424,
+                "creation_time": 1731245526.498649,
+                "auxillary_file_paths": [
+                    "results\\PlatformerRun4.0\\PlatformerAgent\\PlatformerAgent-5063902.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 5063902,
+            "file_path": "results\\PlatformerRun4.0\\PlatformerAgent.onnx",
+            "reward": -3.6545846734492424,
+            "creation_time": 1731245526.498649,
+            "auxillary_file_paths": [
+                "results\\PlatformerRun4.0\\PlatformerAgent\\PlatformerAgent-5063902.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.3.1+cu121"
+    }
+}

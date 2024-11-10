@@ -23,6 +23,7 @@ public class PlatformerAgent : Agent
     private PlayerMovement playerMovement;
 
     private ProcGen procGen;
+    private bool levelCompleted = true;
 
     // Completion tracking
     public int levelCompletionThreshold = 3; // Number of times to complete the level before moving on
@@ -41,6 +42,12 @@ public class PlatformerAgent : Agent
         transform.position = startPosition;
         rigidbody.linearVelocity = Vector2.zero;
         previousPosition = transform.position;
+        if (levelCompleted && SceneManager.GetActiveScene().name == "Test")
+        {
+            Debug.Log("Generating a new level after successful completion.");
+            ProcGen.GenerateNewLevel();
+            levelCompleted = false;  // Reset the flag after generating a new level
+        }
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -156,44 +163,44 @@ public class PlatformerAgent : Agent
 
     private void LoadNextLevel()
     {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        int nextSceneIndex = currentSceneIndex + 1;
+        // int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        // int nextSceneIndex = currentSceneIndex + 1;
 
-        if (nextSceneIndex >= SceneManager.sceneCountInBuildSettings)
-        {
-            Debug.Log("Looping back to Level1.");
-            SceneManager.LoadScene(0); // Go back to Level1 if we complete the last level
-        }
-        else if (nextSceneIndex == 6){
-            procGen = FindFirstObjectByType<ProcGen>();
-            Debug.Log("Generating Level");
-            SceneManager.LoadScene("Test");
-        }
-        else
-        {
-            SceneManager.LoadScene(nextSceneIndex);
-        }
+        // if (nextSceneIndex >= SceneManager.sceneCountInBuildSettings)
+        // {
+        Debug.Log("Looping back to Level1.");
+        SceneManager.LoadScene(0); // Go back to Level1 if we complete the last level
+        // }
+        // else if (nextSceneIndex == 6){
+        //     procGen = FindFirstObjectByType<ProcGen>();
+        //     Debug.Log("Generating Level");
+        //     SceneManager.LoadScene("Test");
+        // }
+        // else
+        // {
+        //     SceneManager.LoadScene(nextSceneIndex);
+        // }
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if(scene.name == "Test"){
-            Debug.Log("Test scene loaded. Generating Level.");
-            ProcGen.GenerateNewLevel();
-        }
-    }
+    // private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    // {
+    //     if(scene.name == "Test"){
+    //         Debug.Log("Test scene loaded. Generating Level.");
+    //         ProcGen.GenerateNewLevel();
+    //     }
+    // }
 
-    protected override void OnEnable()
-    {
-        base.OnEnable(); // Call the base class's OnEnable()
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
+    // protected override void OnEnable()
+    // {
+    //     base.OnEnable(); // Call the base class's OnEnable()
+    //     SceneManager.sceneLoaded += OnSceneLoaded;
+    // }
 
-    protected override void OnDisable()
-    {
-        base.OnDisable(); // Call the base class's OnDisable()
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
+    // protected override void OnDisable()
+    // {
+    //     base.OnDisable(); // Call the base class's OnDisable()
+    //     SceneManager.sceneLoaded -= OnSceneLoaded;
+    // }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -211,6 +218,7 @@ public class PlatformerAgent : Agent
             if (levelCompletionThreshold < currentLevelCompletions)
             {
                 // Reset level completion counter for the new level
+                levelCompleted = true;
                 currentLevelCompletions = 0;
                 LoadNextLevel();
             }
