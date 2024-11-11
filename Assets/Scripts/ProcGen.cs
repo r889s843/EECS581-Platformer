@@ -6,6 +6,8 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using static System.Math;
+using System.Linq.Expressions;
 
 public class ProcGen : MonoBehaviour
 {
@@ -190,5 +192,88 @@ public class ProcGen : MonoBehaviour
         GameObject deathZone = GameObject.Find("DeathZone");
         deathZone.transform.localScale = new Vector3(x + 30, 2, 1);
         deathZone.transform.position = new Vector3((x + 10) / 2, miny - 4, 0);
+    }
+
+    private static bool MomentumJumpTest(float ground_x, float ground_y)  
+    {
+        //Intial conditions of constants, x and y for type casting
+        double d_x = ground_x;
+        float f_x;
+        float y;
+        const float a = (float) -0.07367866;
+        const float b = (float) 1.05197485;
+        //Calculate x^2 and casts to correct type
+        d_x = Pow(d_x, 2);
+        f_x = (float) d_x;
+        //Calculate y predicted by the x value
+        y = a*f_x + b*ground_x;
+        if (ground_y >= y) 
+        {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private static bool NoMomentumJumpTest(float ground_x, float ground_y)  
+    {
+        //Intial conditions of constants, x and y for type casting
+        double d_x = ground_x;
+        float f_x;
+        float y;
+        const float a = (float) -.92504437;
+        const float b = (float) 4.32346315;
+        //Calculate x^2 and casts to correct type
+        d_x = Pow(d_x, 2);
+        f_x = (float) d_x;
+        //Calculate y predicted by the x value
+        y = a*f_x + b*ground_x;
+        if (ground_y >= y) 
+        {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //Calculate the possible wall jump between 2 platforms given the location of 
+    private static bool WallJumpTest(float player_x, float ground_x, float ground_y)
+    {
+        //Checks if player is ahead of the platform 
+        if (player_x < ground_x) 
+        {
+            //Positions ground infront of player artifically
+            ground_x = ground_x + (player_x - ground_x) * 2;
+        }
+        //Intial conditions of constants, x and y for type casting
+        double d_x = ground_x;
+        float f_x;
+        float y;
+        const float a = (float) -0.19835401;
+        const float b = (float) 1.45395189;
+        //Calculate x^2 and casts to correct type
+        d_x = Pow(d_x, 2);
+        f_x = (float) d_x;
+        //Calculate y predicted by the x value
+        y = a*f_x + b*ground_x;
+        if (ground_y >= y) 
+        {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private static void Diffculty(int diffculty)
+    {
+        switch(diffculty)
+        {
+            case 1: //Easy
+                break;
+            case 2: //Medium
+                break;
+            case 3: //Hard
+                break;
+        }
     }
 }
