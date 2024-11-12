@@ -1,279 +1,240 @@
-// Name: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// ProcGen.cs
+// Authors: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
 // Date: 11/01/2024
 // Course: EECS 581
 // Purpose: Level Generator
 
 using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
-using static System.Math;
-using System.Linq.Expressions;
 
 public class ProcGen : MonoBehaviour
 {
+    // Singleton instance
     public static ProcGen Instance { get; private set; }
 
-    [MenuItem("Tools/Generate New Level")] // Use tools from top bar to generate level
-    public static void GenerateNewLevel() // Main function to handle level generation
-    {
-        float x = 6;    // Keep track of edge x
-        float y = -2;   // Keep track of edge y
-        float miny = -2;    // Value for deathzone
-        int counter = 0;
+    // Prefabs and Resources
+    public GameObject groundPrefab;
+    public GameObject flagPrefab;
+    public GameObject deathZonePrefab;
 
-        while (counter < 12)    // Generate 12 chunks
+    // Level Generation Settings
+    public int numberOfChunks = 12;
+    public float startX = 6f;
+    public float startY = -2f;
+    public float minY = -2f;
+    public float maxY = 2f;
+
+    // Difficulty Levels
+    public enum Difficulty
+    {
+        Easy,
+        Medium,
+        Hard
+    }
+    public Difficulty currentDifficulty = Difficulty.Easy;
+
+    private void Awake()
+    {
+        // Singleton pattern
+        if (Instance == null)
         {
-            Vector2 newCords = CreateSafe(x, y);    // Create flat platform
-            x = newCords.x;     // Update x
-            y = newCords.y;     // Update y
-            newCords = CreateDanger(x, y);      // Choose a dangerous chunk to create
-            x = newCords.x;     // Update x
-            y = newCords.y;     // Update y
-            counter++;
-            if (y < miny)
+            Instance = this;
+            // DontDestroyOnLoad(gameObject); // Uncomment if you want this object to persist across scenes
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void GenerateNewLevel()
+    {
+        ClearExistingLevel();
+
+        float x = startX;
+        float y = startY;
+        float minYReached = y;
+
+        for (int i = 0; i < numberOfChunks; i++)
+        {
+            Vector2 newCoords = CreateSafeChunk(x, y);
+            x = newCoords.x;
+            y = newCoords.y;
+
+            newCoords = CreateDangerChunk(x, y);
+            x = newCoords.x;
+            y = newCoords.y;
+
+            minYReached = Mathf.Min(minYReached, y);
+        }
+
+        CreateEndChunk(x, y);
+        CreateDeathZone(x, minYReached);
+    }
+
+    private void ClearExistingLevel()
+    {
+        // Destroy all child objects (generated level elements)
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    private Vector2 CreateSafeChunk(float x, float y)
+    {
+        float currentX = x;
+        float currentY = y;
+
+        int platformLength = Random.Range(4, 6); // Platform will be 4-5 units in length
+
+        for (int i = 0; i < platformLength; i++)
+        {
+            CreateGround(currentX, currentY);
+            currentX += 2f;
+        }
+
+        return new Vector2(currentX, currentY);
+    }
+
+    private Vector2 CreateDangerChunk(float x, float y)
+    {
+        int randomValue = Random.Range(0, 4);
+
+        switch (randomValue)
+        {
+            case 0:
+                return CreateGap(x, y);
+            case 1:
+                return CreateJump(x, y);
+            case 2:
+                return CreateShortJump(x, y);
+            case 3:
+                return CreateBackJump(x, y);
+            default:
+                return new Vector2(x, y);
+        }
+    }
+
+    private Vector2 CreateGap(float x, float y)
+    {
+        float currentX = x + Random.Range(5f, 8f);
+        float currentY = y;
+
+        int platformLength = Random.Range(4, 6);
+
+        for (int i = 0; i < platformLength; i++)
+        {
+            CreateGround(currentX, currentY);
+            currentX += 2f;
+        }
+
+        return new Vector2(currentX, currentY);
+    }
+
+    private Vector2 CreateJump(float x, float y)
+    {
+        float currentX = x + Random.Range(4f, 6f);
+        float deltaY = Random.Range(0, 2) == 0 ? 2f : -2f;
+        float currentY = Mathf.Clamp(y + deltaY, minY, maxY);
+
+        int platformLength = 5;
+
+        for (int i = 0; i < platformLength; i++)
+        {
+            CreateGround(currentX, currentY);
+            currentX += 2f;
+        }
+
+        return new Vector2(currentX, currentY);
+    }
+
+    private Vector2 CreateShortJump(float x, float y)
+    {
+        float currentX = x + 2f;
+        float currentY = y;
+
+        int numPlatforms = Random.Range(2, 4);
+
+        for (int i = 0; i < numPlatforms; i++)
+        {
+            CreateGround(currentX, currentY);
+            currentX += 4f;
+            float deltaY = Random.Range(-1, 2) * 2f;
+            currentY = Mathf.Clamp(currentY + deltaY, minY, maxY);
+        }
+
+        return new Vector2(currentX, currentY);
+    }
+
+    private Vector2 CreateBackJump(float x, float y)
+    {
+        float currentX = x - 6f;
+        float currentY = Mathf.Clamp(y + 4f, minY, maxY);
+
+        int platformLength = Random.Range(2, 4);
+
+        for (int i = 0; i < platformLength; i++)
+        {
+            CreateGround(currentX, currentY);
+            currentX -= 2f;
+        }
+
+        float edgeX = currentX + 6f;
+        float edgeY = Mathf.Clamp(currentY + 2f, minY, maxY);
+
+        return new Vector2(edgeX, edgeY);
+    }
+
+    private void CreateEndChunk(float x, float y)
+    {
+        float currentX = x;
+        float currentY = y;
+
+        int platformLength = 5;
+
+        for (int i = 0; i < platformLength; i++)
+        {
+            CreateGround(currentX, currentY);
+            currentX += 2f;
+        }
+
+        // Place the flag
+        if (flagPrefab != null)
+        {
+            GameObject flag = Instantiate(
+                flagPrefab,
+                new Vector3(currentX - 6f, currentY + 6f, 0f),
+                flagPrefab.transform.rotation,
+                transform
+            );
+            
+            flag.name = "Flag";
+
+            // Update the agent's goalTransform
+            PlatformerAgent agent = FindAnyObjectByType<PlatformerAgent>();
+            if (agent != null)
             {
-                miny = y;   // Update min y if a new minimun has been reached
+                agent.goalTransform = flag.transform;
             }
         }
-        CreateEnd(x, y);     // Add flag to the end
-        CreateDeathZone(x, miny);   // Update deathzone size/location based on level size
     }
 
-    private static Vector2 CreateSafe(float x, float y) // Generate a flat chunk
+    private void CreateDeathZone(float x, float minY)
     {
-        float currentx = x;
-        float currenty = y;
-        int counter = 0;
-        GameObject groundPrefab = Resources.Load<GameObject>("Ground");
-
-        int randomValue = Random.Range(4, 6);   // Platform will be 4-5 in length
-        while (counter < randomValue)   // Loop places each ground object to create the platform
+        if (deathZonePrefab != null)
         {
-            GameObject ground = Instantiate(groundPrefab);
-            ground.transform.position = new Vector3(currentx, currenty, 0);
-            currentx += 2;
-            counter++;
-        }
-        return new Vector2(currentx, currenty); // Return new edge x/y cords
-    }
-
-    private static Vector2 CreateDanger(float x, float y)   // Choose a dangerous chunk to create
-    {
-        float currentx = x;
-        float currenty = y;
-        int randomValue = Random.Range(0, 4);
-        if (randomValue == 0)
-        {
-            return CreateGap(currentx, currenty);
-        }
-        else if (randomValue == 1)
-        {
-            return CreateJump(currentx, currenty);
-        }
-        else if (randomValue == 2)
-        {
-            return CreateShortJump(currentx, currenty);
-        }
-        else
-        {
-            return CreateBackJump(currentx, currenty);
+            GameObject deathZone = Instantiate(deathZonePrefab, new Vector3((x + 10f) / 2f, minY - 4f, 0f), Quaternion.identity, transform);
+            deathZone.transform.localScale = new Vector3(x + 30f, 2f, 1f);
+            deathZone.name = "DeathZone";
         }
     }
 
-    private static Vector2 CreateGap(float x, float y)  // Create a simple gap to jump over
+    private void CreateGround(float x, float y)
     {
-        float currentx = x;
-        float currenty = y;
-        int counter = 0;
-        GameObject groundPrefab = Resources.Load<GameObject>("Ground");
-        currentx += Random.Range(5, 8);
-
-        int randomValue = Random.Range(4, 6);   // Gap length will be from 4-5
-        while (counter < randomValue)   // Loop creates platform at other side of the gap 
+        if (groundPrefab != null)
         {
-            GameObject ground = Instantiate(groundPrefab);
-            ground.transform.position = new Vector3(currentx, currenty, 0);
-            currentx += 2;
-            counter++;
-        }
-        return new Vector2(currentx, currenty); // Return new edge x/y cords
-    }
-
-    private static Vector2 CreateJump(float x, float y) // Create a jump at a new elevation
-    {
-        float currentx = x;
-        float currenty = y;
-        int counter = 0;
-        currentx += Random.Range(4, 6);  // Gap length will be from 4-5
-        int randomValue = Random.Range(0, 2); // Choose whether to increase elevation or drop elevation
-        if (randomValue == 0)
-        {
-            currenty += 2;
-        }
-        else
-        {
-            currenty -= 2;
-        }
-        GameObject groundPrefab = Resources.Load<GameObject>("Ground");
-
-        while (counter < 5) // Loop creates the platform at end of the jump
-        {
-            GameObject ground = Instantiate(groundPrefab);
-            ground.transform.position = new Vector3(currentx, currenty, 0);
-            currentx += 2;
-            counter++;
-        }
-        return new Vector2(currentx, currenty); // Return new edge x/y cords
-    }
-
-    private static Vector2 CreateShortJump(float x, float y) // Create small jumps with small platforms to jump to, and can change elevation
-    {
-        float currentx = x;
-        float currenty = y;
-        int counter = 0;
-        currentx += 2;
-
-        GameObject groundPrefab = Resources.Load<GameObject>("Ground");
-        int randomValue = Random.Range(2, 4);   // Amount of platforms will be 2-3
-        int randomValue2 = Random.Range(-1, 2); // Change in elevation will be -1, 0, or 1
-        while (counter < randomValue)   // Loop creates the small platforms with small gaps
-        {
-            GameObject ground = Instantiate(groundPrefab);
-            ground.transform.position = new Vector3(currentx, currenty, 0);
-            currentx += 4;
-            currenty += randomValue2 * 2;
-            counter++;
-        }
-        return new Vector2(currentx, currenty); // Return new edge x/y cords
-    }
-
-    private static Vector2 CreateBackJump(float x, float y) // Create a platform that will require player to jump back and up to progress
-    {
-        float currentx = x;
-        float currenty = y;
-        int counter = 0;
-        currentx -= 6;
-        currenty += 4;
-        float edgex = currentx + 6;
-        float edgey = currenty + 2;
-
-
-        GameObject groundPrefab = Resources.Load<GameObject>("Ground");
-        int randomValue = Random.Range(2, 4);   // Platform length will be 2-3
-        while (counter < randomValue)   // Loop creates the platform
-        {
-            GameObject ground = Instantiate(groundPrefab);
-            ground.transform.position = new Vector3(currentx, currenty, 0);
-            currentx -= 2;
-            counter++;
-        }
-        return new Vector2(edgex, edgey); // Return new edge x/y cords
-    }
-
-    private static void CreateEnd(float x, float y) // Create flat ground with flag at the end
-    {
-        float currentx = x;
-        float currenty = y;
-        int counter = 0;
-        GameObject groundPrefab = Resources.Load<GameObject>("Ground");
-        while (counter < 5) // Create the flat ground
-        {
-            GameObject ground = Instantiate(groundPrefab);
-            ground.transform.position = new Vector3(currentx, currenty, 0);
-            currentx += 2;
-            counter++;
-        }
-        GameObject flag = GameObject.Find("Flag");
-        flag.transform.position = new Vector3(currentx - 6, currenty + 6);  // Place flag roughly in the middle
-        return;
-    }
-    private static void CreateDeathZone(float x, float miny) // Edit the deathzone size/location at the end of level generation
-    {
-        GameObject deathZone = GameObject.Find("DeathZone");
-        deathZone.transform.localScale = new Vector3(x + 30, 2, 1);
-        deathZone.transform.position = new Vector3((x + 10) / 2, miny - 4, 0);
-    }
-
-    private static bool MomentumJumpTest(float ground_x, float ground_y)  
-    {
-        //Intial conditions of constants, x and y for type casting
-        double d_x = ground_x;
-        float f_x;
-        float y;
-        const float a = (float) -0.07367866;
-        const float b = (float) 1.05197485;
-        //Calculate x^2 and casts to correct type
-        d_x = Pow(d_x, 2);
-        f_x = (float) d_x;
-        //Calculate y predicted by the x value
-        y = a*f_x + b*ground_x;
-        if (ground_y >= y) 
-        {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private static bool NoMomentumJumpTest(float ground_x, float ground_y)  
-    {
-        //Intial conditions of constants, x and y for type casting
-        double d_x = ground_x;
-        float f_x;
-        float y;
-        const float a = (float) -.92504437;
-        const float b = (float) 4.32346315;
-        //Calculate x^2 and casts to correct type
-        d_x = Pow(d_x, 2);
-        f_x = (float) d_x;
-        //Calculate y predicted by the x value
-        y = a*f_x + b*ground_x;
-        if (ground_y >= y) 
-        {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    //Calculate the possible wall jump between 2 platforms given the location of 
-    private static bool WallJumpTest(float player_x, float ground_x, float ground_y)
-    {
-        //Checks if player is ahead of the platform 
-        if (player_x < ground_x) 
-        {
-            //Positions ground infront of player artifically
-            ground_x = ground_x + (player_x - ground_x) * 2;
-        }
-        //Intial conditions of constants, x and y for type casting
-        double d_x = ground_x;
-        float f_x;
-        float y;
-        const float a = (float) -0.19835401;
-        const float b = (float) 1.45395189;
-        //Calculate x^2 and casts to correct type
-        d_x = Pow(d_x, 2);
-        f_x = (float) d_x;
-        //Calculate y predicted by the x value
-        y = a*f_x + b*ground_x;
-        if (ground_y >= y) 
-        {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private static void Diffculty(int diffculty)
-    {
-        switch(diffculty)
-        {
-            case 1: //Easy
-                break;
-            case 2: //Medium
-                break;
-            case 3: //Hard
-                break;
+            Instantiate(groundPrefab, new Vector3(x, y, 0f), Quaternion.identity, transform);
         }
     }
 }

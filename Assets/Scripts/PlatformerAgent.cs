@@ -1,4 +1,5 @@
-// Name: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// PlatformerAgent.cs
+// Authors: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
 // Date: 10/17/2024
 // Course: EECS 581
 // Purpose: AI controls and management. This controls how the AI is rewarded, sees the world, and how it moves.
@@ -16,14 +17,12 @@ public class PlatformerAgent : Agent
     public LayerMask detectableLayers;
 
     public float raycastDistance = 15f;
-    private Rigidbody2D rigidbody;
+    private Rigidbody2D body;
     private Vector2 previousPosition;
     private Vector2 startPosition;
 
     private PlayerMovement playerMovement;
-
-    private ProcGen procGen;
-    private bool levelCompleted = true;
+    private bool levelCompleted = false;
 
     // Completion tracking
     public int levelCompletionThreshold = 3; // Number of times to complete the level before moving on
@@ -31,7 +30,7 @@ public class PlatformerAgent : Agent
 
     public override void Initialize()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        body = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
         previousPosition = startPosition;
         playerMovement = GetComponent<PlayerMovement>();
@@ -40,68 +39,60 @@ public class PlatformerAgent : Agent
     public override void OnEpisodeBegin()
     {
         transform.position = startPosition;
-        rigidbody.linearVelocity = Vector2.zero;
+        body.linearVelocity = Vector2.zero;
         previousPosition = transform.position;
-        if (levelCompleted && SceneManager.GetActiveScene().name == "Test")
+
+        if (levelCompleted)
         {
-            Debug.Log("Generating a new level after successful completion.");
-            ProcGen.GenerateNewLevel();
-            levelCompleted = false;  // Reset the flag after generating a new level
+            levelCompleted = false;
+            currentLevelCompletions = 0;
+            LevelManager.Instance.LoadScene(SceneManager.GetActiveScene().name);
         }
+
+        // Update the goalTransform to the new flag
+        // GameObject flagObject = GameObject.Find("Flag");
+        // goalTransform = flagObject.transform;
     }
+
 
     public override void CollectObservations(VectorSensor sensor)
     {
         // Agent's position and velocity
         sensor.AddObservation(transform.localPosition / 10f);
-        sensor.AddObservation(rigidbody.linearVelocity / 10f);
+        sensor.AddObservation(body.linearVelocity / 10f);
 
         // Direction to the goal
         Vector2 directionToGoal = (goalTransform.position - transform.position) / 10f;
         sensor.AddObservation(directionToGoal);
 
         // Grounded status
-        int groundedState = onGround();
-        sensor.AddObservation(groundedState); // Values: 0, 1, 2, -1
+        int groundedState = GetGroundedState();
+        sensor.AddObservation(groundedState); // Values: 0 (floor), 1 (left wall), 2 (right wall), -1 (air)
 
-        // Number of raycasts for 360-degree coverage
+        // Raycasts around the agent
         int numRaycasts = 36;
         float angleIncrement = 360f / numRaycasts;
 
-        // Cast rays in 360 degrees around the AI
         for (int i = 0; i < numRaycasts; i++)
         {
-            // Calculate the angle in radians
-            float angle = i * angleIncrement;
-            float radian = angle * Mathf.Deg2Rad;
+            float angle = i * angleIncrement * Mathf.Deg2Rad;
+            Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
-            // Calculate the direction for this ray
-            Vector2 direction = new Vector2(Mathf.Cos(radian), Mathf.Sin(radian)).normalized;
-
-            // Perform the raycast
             RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, raycastDistance, detectableLayers);
 
             if (hit.collider != null)
             {
-                // Normalized distance observation
                 sensor.AddObservation(hit.distance / raycastDistance);
-                // Object type observation
                 sensor.AddObservation(GetObjectType(hit.collider.tag));
             }
             else
             {
-                // No object detected within range
-                sensor.AddObservation(1f); // Full distance
-                sensor.AddObservation(0f); // No object type detected
+                sensor.AddObservation(1f); // Max distance
+                sensor.AddObservation(0f); // No object detected
             }
-
-            // Debugging raycasts (visualize in Scene view)
-            Debug.DrawRay(transform.position, direction * raycastDistance, Color.red, 0.1f);
         }
     }
 
-
-    // Function to convert object tags to observation values
     private float GetObjectType(string tag)
     {
         switch (tag)
@@ -121,10 +112,9 @@ public class PlatformerAgent : Agent
             case "FallingPlatform":
                 return 7f;
             default:
-                return 0f; // No object or unknown tag
+                return 0f; // Unknown
         }
     }
-
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
@@ -139,16 +129,15 @@ public class PlatformerAgent : Agent
 
         if (jumpAction == 1) jump = true;
 
-        // Set the input in the PlayerMovement script
         playerMovement.SetInput(horizontal, jump);
 
-        // Update rewards and previous position
+        // Reward shaping
         float distanceToGoal = Vector2.Distance(transform.position, goalTransform.position);
         float previousDistanceToGoal = Vector2.Distance(previousPosition, goalTransform.position);
-        float distanceReward = previousDistanceToGoal - distanceToGoal;
-        AddReward(distanceReward * 0.1f);
+        float progress = previousDistanceToGoal - distanceToGoal;
+        AddReward(progress * 0.1f);
 
-        AddReward(-0.01f); // Time penalty
+        AddReward(-0.001f); // Small time penalty
 
         previousPosition = transform.position;
     }
@@ -156,136 +145,54 @@ public class PlatformerAgent : Agent
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var discreteActionsOut = actionsOut.DiscreteActions;
+
         float moveInput = Input.GetAxisRaw("Horizontal");
         discreteActionsOut[0] = moveInput > 0 ? 2 : (moveInput < 0 ? 1 : 0);
         discreteActionsOut[1] = Input.GetButton("Jump") ? 1 : 0;
     }
-
-    private void LoadNextLevel()
-    {
-        // int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        // int nextSceneIndex = currentSceneIndex + 1;
-
-        // if (nextSceneIndex >= SceneManager.sceneCountInBuildSettings)
-        // {
-        Debug.Log("Looping back to Level1.");
-        SceneManager.LoadScene(0); // Go back to Level1 if we complete the last level
-        // }
-        // else if (nextSceneIndex == 6){
-        //     procGen = FindFirstObjectByType<ProcGen>();
-        //     Debug.Log("Generating Level");
-        //     SceneManager.LoadScene("Test");
-        // }
-        // else
-        // {
-        //     SceneManager.LoadScene(nextSceneIndex);
-        // }
-    }
-
-    // private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    // {
-    //     if(scene.name == "Test"){
-    //         Debug.Log("Test scene loaded. Generating Level.");
-    //         ProcGen.GenerateNewLevel();
-    //     }
-    // }
-
-    // protected override void OnEnable()
-    // {
-    //     base.OnEnable(); // Call the base class's OnEnable()
-    //     SceneManager.sceneLoaded += OnSceneLoaded;
-    // }
-
-    // protected override void OnDisable()
-    // {
-    //     base.OnDisable(); // Call the base class's OnDisable()
-    //     SceneManager.sceneLoaded -= OnSceneLoaded;
-    // }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Flag"))
         {
             SetReward(5.0f);
-            Debug.Log($"Goal reached. Final reward: {GetCumulativeReward()}");
 
-            // Increment the completion count
             currentLevelCompletions++;
 
-            Debug.Log($"Current Count: {currentLevelCompletions}");
-
-            // Check if the level completion count meets the threshold
-            if (levelCompletionThreshold < currentLevelCompletions)
+            if (currentLevelCompletions >= levelCompletionThreshold)
             {
-                // Reset level completion counter for the new level
                 levelCompleted = true;
-                currentLevelCompletions = 0;
-                LoadNextLevel();
+                EndEpisode();
             }
-
-            EndEpisode();
+            else
+            {
+                // Continue the episode but reset the agent's position
+                transform.position = startPosition;
+                body.linearVelocity = Vector2.zero;
+            }
         }
-        else if (collision.CompareTag("DeathZone"))
+        else if (collision.CompareTag("DeathZone") || collision.CompareTag("Enemy") || collision.CompareTag("Hazard") || collision.CompareTag("Projectile"))
         {
-            SetReward(-5.0f);
-            Debug.Log($"Agent hit the DeathZone. Final reward: {GetCumulativeReward()}");
-            EndEpisode();
-        }
-        else if (collision.CompareTag("Enemy"))
-        {
-            SetReward(-4.0f);
-            Debug.Log($"Agent hit the Enemy. Final reward: {GetCumulativeReward()}");
-            EndEpisode();
-        }
-        else if (collision.CompareTag("Hazard"))
-        {
-            SetReward(-4.0f);
-            Debug.Log($"Agent hit the Hazard. Final reward: {GetCumulativeReward()}");
-            EndEpisode();
-        }
-        else if (collision.CompareTag("Projectile"))
-        {
-            SetReward(-4.0f);
-            Debug.Log($"Agent hit the Hazard. Final reward: {GetCumulativeReward()}");
+            SetReward(-1.0f);
             EndEpisode();
         }
     }
 
-    // Check if the agent is grounded
-    private int onGround()
+    private int GetGroundedState()
     {
-        RaycastHit2D hitDown = Physics2D.BoxCast(
-            GetComponent<BoxCollider2D>().bounds.center,
-            GetComponent<BoxCollider2D>().bounds.size, 0,
-            Vector2.down, 0.02f, platformLayer
-        );
+        Bounds bounds = GetComponent<BoxCollider2D>().bounds;
 
-        RaycastHit2D hitLeft = Physics2D.BoxCast(
-            GetComponent<BoxCollider2D>().bounds.center,
-            GetComponent<BoxCollider2D>().bounds.size, 0,
-            Vector2.left, 0.02f, platformLayer
-        );
-
-        RaycastHit2D hitRight = Physics2D.BoxCast(
-            GetComponent<BoxCollider2D>().bounds.center,
-            GetComponent<BoxCollider2D>().bounds.size, 0,
-            Vector2.right, 0.02f, platformLayer
-        );
+        RaycastHit2D hitDown = Physics2D.BoxCast(bounds.center, bounds.size, 0f, Vector2.down, 0.02f, platformLayer);
+        RaycastHit2D hitLeft = Physics2D.BoxCast(bounds.center, bounds.size, 0f, Vector2.left, 0.02f, platformLayer);
+        RaycastHit2D hitRight = Physics2D.BoxCast(bounds.center, bounds.size, 0f, Vector2.right, 0.02f, platformLayer);
 
         if (hitDown.collider != null)
-        {
             return 0; // On floor
-        }
         if (hitLeft.collider != null)
-        {
             return 1; // On left wall
-        }
         if (hitRight.collider != null)
-        {
             return 2; // On right wall
-        }
 
-        return -1; // Not grounded
+        return -1; // In air
     }
-    
 }
