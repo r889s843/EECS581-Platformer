@@ -96,18 +96,40 @@ public class EnemyMovement : MonoBehaviour
 
     private void HandleWalkingLeftRight()
     {
-        if (Time.time >= nextActionTime)
-        {
-            movingRight = !movingRight;
-            nextActionTime = Time.time + actionInterval;
-        }
-
+        // Move the enemy
         float horizontalVelocity = movingRight ? walkSpeed : -walkSpeed;
         body.linearVelocity = new Vector2(horizontalVelocity, body.linearVelocity.y);
+        // Check for edges or lack of ground
+        if (IsAtEdge() || !IsGrounded())
+        {
+            // Change direction
+            movingRight = !movingRight;
+        }
     }
+
 
     private void Jump()
     {
         body.linearVelocity = new Vector2(body.linearVelocity.x, jumpHeight); // Apply upward velocity to jump
     }
+
+    private bool IsAtEdge()
+    {
+        // Get the bounds of the enemy's collider
+        Bounds bounds = groundCollider.bounds;
+        float rayDistance = 0.5f; // Adjust as needed based on your enemy's size
+
+        // Determine the direction and set the ray origin at the bottom front corner of the collider
+        Vector2 direction = movingRight ? Vector2.right : Vector2.left;
+        Vector2 rayOrigin = new Vector2(
+            movingRight ? bounds.max.x : bounds.min.x,
+            bounds.min.y - 0.1f // Slightly below the collider to ensure detection
+        );
+
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, rayDistance, platformLayer);
+
+        return hit.collider == null;
+    }
+
+
 }

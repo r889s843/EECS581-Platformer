@@ -619,12 +619,26 @@ MonoBehaviour:
   groundPrefab: {fileID: 975491830976439263, guid: 73765d34de6e454459d9ace5af624f64, type: 3}
   flagPrefab: {fileID: 7127516521367446038, guid: d6608245b8e89044382e3caab2e85793, type: 3}
   deathZonePrefab: {fileID: 4488341427712273626, guid: 77b42c8b6d8d3564aa5d6b81002a3e20, type: 3}
-  numberOfChunks: 12
+  numberOfChunks: 10
   startX: 6
   startY: -2
-  minY: -2
-  maxY: 2
-  currentDifficulty: 0
+  minY: -3
+  maxY: 3
+  easyEnemyPrefabs:
+  - {fileID: 946920935056350428, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
+  - {fileID: 7171921307498121515, guid: e28a98ae6c2d2b644ba81b55e00217e0, type: 3}
+  mediumEnemyPrefabs:
+  - {fileID: 4537751008494101753, guid: e07f5edb7d3afab4584f7e73a71a1e9e, type: 3}
+  - {fileID: 7171921307498121515, guid: e28a98ae6c2d2b644ba81b55e00217e0, type: 3}
+  - {fileID: 1946223034737200236, guid: a4f5f5055fd5d814a8a8c981a9278368, type: 3}
+  hardEnemyPrefabs:
+  - {fileID: 4537751008494101753, guid: e07f5edb7d3afab4584f7e73a71a1e9e, type: 3}
+  - {fileID: 568518211901533699, guid: 9dfa145ba4fa61247b2b69c1b89d75f2, type: 3}
+  - {fileID: 7171921307498121515, guid: e28a98ae6c2d2b644ba81b55e00217e0, type: 3}
+  easyEnemySpawnChance: 0.4
+  mediumEnemySpawnChance: 0.4
+  hardEnemySpawnChance: 0.4
+  currentDifficulty: 1
 --- !u!4 &1925432910
 Transform:
   m_ObjectHideFlags: 0

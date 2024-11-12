@@ -135,7 +135,7 @@ public class PlatformerAgent : Agent
         float distanceToGoal = Vector2.Distance(transform.position, goalTransform.position);
         float previousDistanceToGoal = Vector2.Distance(previousPosition, goalTransform.position);
         float progress = previousDistanceToGoal - distanceToGoal;
-        AddReward(progress * 0.1f);
+        AddReward(progress * 0.2f);
 
         AddReward(-0.001f); // Small time penalty
 
