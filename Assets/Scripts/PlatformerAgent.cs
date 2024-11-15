@@ -25,7 +25,7 @@ public class PlatformerAgent : Agent
     private bool levelCompleted = false; // Indicates if the level has been completed
 
     // Completion tracking
-    public int levelCompletionThreshold = 3; // Number of times to complete the level before moving on
+    public int levelCompletionThreshold = 100; // Number of times to complete the level before moving on
     private int currentLevelCompletions = 0; // Tracks how many times the current level has been completed
 
     public override void Initialize()

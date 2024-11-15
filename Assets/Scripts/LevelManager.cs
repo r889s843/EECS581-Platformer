@@ -48,6 +48,7 @@ public class LevelManager : MonoBehaviour
             ProcGen procGen = FindAnyObjectByType<ProcGen>();
             if (procGen != null)
             {
+                procGen.OnLevelCompleted();
                 procGen.GenerateNewLevel();
             }
             else

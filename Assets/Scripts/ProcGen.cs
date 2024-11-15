@@ -2,7 +2,7 @@
 // Authors: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
 // Date: 11/01/2024
 // Course: EECS 581
-// Purpose: Level Generator
+// Purpose: Level Generator with Dynamic Difficulty Adjustment
 
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -31,11 +31,16 @@ public class ProcGen : MonoBehaviour
     public TileBase spikeTile;           // Spike/hazard tile
 
     // Level Generation Settings
-    public int numberOfChunks = 10;      // Number of chunks to generate
+    public int numberOfChunks = 4;       // Starting Number of chunks
     public float startX = 0f;            // Starting X position
-    public float startY = 0f;           // Starting Y position
-    public float minY = -10f;             // Minimum Y position
-    public float maxY = 10f;              // Maximum Y position
+    public float startY = 0f;            // Starting Y position
+    public float minY = -10f;            // Minimum Y position
+    public float maxY = 10f;             // Maximum Y position
+
+    public int totalCompletions = 0;
+    public int completionsForGradualIncrease = 5; // Increase difficulty every 5 completions
+    public int completionsForLevelUpgrade = 100;  // Switch from Easy to Medium after 100 completions
+
 
     // Difficulty Levels
     public enum Difficulty
@@ -54,15 +59,19 @@ public class ProcGen : MonoBehaviour
 
     [Header("Spike Settings")]
     [Range(0f, 1f)]
-    public float spikeSpawnChance = 0.3f;        // 30% chance to spawn spikes
+    public float spikeSpawnChance = 0f;          // 0% chance to spawn spikes initially
 
     // Enemy spawn chances for each difficulty level
     [Range(0f, 1f)]
-    public float easyEnemySpawnChance = 0.4f;    // 40% chance for Easy enemies
+    public float easyEnemySpawnChance = 0f;      // 0% chance for Easy enemies initially
     [Range(0f, 1f)]
-    public float mediumEnemySpawnChance = 0.4f;  // 40% chance for Medium enemies
+    public float mediumEnemySpawnChance = 0f;    // 0% chance for Medium enemies initially
     [Range(0f, 1f)]
-    public float hardEnemySpawnChance = 0.4f;    // 40% chance for Hard enemies
+    public float hardEnemySpawnChance = 0f;      // 0% chance for Hard enemies initially
+
+    // Run Tracking
+    [Header("Run Tracking")]
+    public int runsPerDifficultyIncrease = 100;  // Number of runs before increasing difficulty
 
     private List<GameObject> generatedObjects = new List<GameObject>(); // List to track instantiated GameObjects
 
@@ -81,6 +90,12 @@ public class ProcGen : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        ResetLevelParameters(); // Set initial parameters
+        GenerateNewLevel();     // Generate the first level
+    }
+
     // Public method to start generating a new level
     public void GenerateNewLevel()
     {
@@ -89,7 +104,7 @@ public class ProcGen : MonoBehaviour
         Vector2 initialPlatformEnd = CreateInitialPlatform();
         float x = initialPlatformEnd.x;      // Initialize current X position after initial platform
         float y = initialPlatformEnd.y;      // Initialize current Y position after initial platform
-        float minYReached = y; // Track the lowest Y position reached
+        float minYReached = y;               // Track the lowest Y position reached
 
         // Generate the specified number of chunks
         for (int i = 0; i < numberOfChunks; i++)
@@ -109,6 +124,60 @@ public class ProcGen : MonoBehaviour
         CreateDeathZone(x, minYReached);  // Create the death zone area
     }
 
+    // Resets level generation parameters to initial settings
+    public void ResetLevelParameters()
+    {
+        numberOfChunks = 4;
+        currentDifficulty = Difficulty.Easy;
+        spikeSpawnChance = 0f;
+        easyEnemySpawnChance = 0f;
+        mediumEnemySpawnChance = 0f;
+        hardEnemySpawnChance = 0f;
+        Debug.Log("Level parameters reset to initial settings.");
+    }
+
+    // Method to be called by the agent upon successful level completion
+     public void OnLevelCompleted()
+    {
+        totalCompletions++;
+
+        // Gradually increase difficulty every 5 completions
+        if (totalCompletions % completionsForGradualIncrease == 0)
+        {
+            numberOfChunks += 1;          // Incrementally increase chunks
+            switch (currentDifficulty)
+            {
+                case Difficulty.Easy:
+                    easyEnemySpawnChance = Mathf.Min(easyEnemySpawnChance + 0.05f, 0.6f); // Cap at 60%
+                    break;
+                case Difficulty.Medium:
+                    mediumEnemySpawnChance = Mathf.Min(mediumEnemySpawnChance + 0.05f, 0.6f); // Cap at 60%
+                    break;
+                case Difficulty.Hard:
+                    hardEnemySpawnChance = Mathf.Min(hardEnemySpawnChance + 0.05f, 0.6f); // Cap at 60%
+                    break;
+            }
+        }
+
+        // Upgrade difficulty level after 100 completions
+        if (totalCompletions >= completionsForLevelUpgrade && currentDifficulty == Difficulty.Easy)
+        {
+            currentDifficulty = Difficulty.Medium;
+            numberOfChunks = 4;          // Reset chunks
+            totalCompletions = 0;
+            Debug.Log("Switched difficulty to Medium.");
+        }
+        if (totalCompletions >= completionsForLevelUpgrade && currentDifficulty == Difficulty.Medium)
+        {
+            currentDifficulty = Difficulty.Hard;
+            numberOfChunks = 4;          // Reset chunks
+            totalCompletions = 0;
+            Debug.Log("Switched difficulty to Hard.");
+        }
+
+        GenerateNewLevel(); // Generate the next level with updated parameters
+    }
+
     // Clears all previously generated level elements
     private void ClearExistingLevel()
     {
@@ -116,7 +185,7 @@ public class ProcGen : MonoBehaviour
         groundTilemap.ClearAllTiles();
         hazardTilemap.ClearAllTiles();
 
-        // Destroy all instantiated GameObjects (walls, flags, death zones)
+        // Destroy all instantiated GameObjects (walls, flags, death zones, enemies)
         foreach (GameObject obj in generatedObjects)
         {
             Destroy(obj);
@@ -148,7 +217,6 @@ public class ProcGen : MonoBehaviour
 
         return new Vector2(currentX, currentY); // Returns (4f, 0f)
     }
-
 
     // Creates a safe chunk consisting of ground/platform tiles
     private Vector2 CreateSafeChunk(float x, float y)
@@ -456,13 +524,13 @@ public class ProcGen : MonoBehaviour
         currentX += 1f; // Move to the next tile position
 
         // **2. Place the First Wall**
-        CreateWall(currentX - 3f, currentY + 7); // Instantiate the first wall at an elevated position
+        CreateWall(currentX - 3f, currentY + 7f); // Instantiate the first wall at an elevated position
         // Note: The Y offset (+7) should match your wall prefab's size and desired placement
         currentX += 1f; // Move to the next tile position
 
         // **3. Place the Second Wall**
         float wallGap = 5f; // Gap between the two walls for the player to perform wall jumps
-        CreateWall(currentX - 4f + wallGap, currentY + 5); // Instantiate the second wall
+        CreateWall(currentX - 4f + wallGap, currentY + 5f); // Instantiate the second wall
         // Note: Adjust the Y offset (+5) based on your wall prefab's size
 
         // **4. Platform at the Top Right**
@@ -497,6 +565,9 @@ public class ProcGen : MonoBehaviour
         // **5. Update currentX and currentY to the end of the exit platform**
         currentX = exitPlatformX;
         currentY = exitPlatformY;
+
+        SpawnEnemies(currentX - (exitPlatformLength * 1f), currentX, currentY); // Adjusted multiplier to 1f
+        SpawnSpikes(currentX - (exitPlatformLength * 1f), currentX, currentY); // Adjusted multiplier to 1f
 
         return new Vector2(currentX, currentY); // Return the new position after the exit platform
     }
@@ -560,6 +631,10 @@ public class ProcGen : MonoBehaviour
             {
                 agent.goalTransform = flag.transform; // Set the goal for the agent
             }
+            else
+            {
+                Debug.LogWarning("PlatformerAgent not found in the scene.");
+            }
         }
 
         return new Vector2(currentX, currentY); // Return the new position after the flag
@@ -603,7 +678,7 @@ public class ProcGen : MonoBehaviour
         return groundTilemap.WorldToCell(new Vector3(x, y, 0f)); // Convert to cell position based on ground tilemap
     }
 
-    // Spawns spikes in triplets on the platform
+    // Spawns spikes in triplets on the platform based on spikeSpawnChance
     private void SpawnSpikes(float startX, float endX, float y)
     {
         float xPos = startX;
@@ -616,7 +691,7 @@ public class ProcGen : MonoBehaviour
                 for (int i = 0; i < 3; i++)
                 {
                     PaintSpikeTile(xPos, y + 1f); // Position spikes slightly above the ground
-                    xPos += 2f;                     // Move to the next tile position
+                    xPos += 1f;                     // Move to the next tile position (1f spacing)
 
                     // Ensure spikes do not exceed the platform's end
                     if (xPos >= endX)
@@ -625,7 +700,7 @@ public class ProcGen : MonoBehaviour
             }
             else
             {
-                xPos += 2f; // Move to the next tile position without spawning spikes
+                xPos += 1f; // Move to the next tile position without spawning spikes (1f spacing)
             }
         }
     }
@@ -642,7 +717,7 @@ public class ProcGen : MonoBehaviour
         // Determine the center X position of the platform
         float centerX = startX + (endX - startX) / 2f;
 
-        // Define a range around the center to spawn enemies (e.g., center ±2 tiles)
+        // Define a range around the center to spawn enemies (e.g., center ±1 tile)
         float spawnStartX = centerX - 1f; // Adjust the range as needed
         float spawnEndX = centerX + 1f;
 
