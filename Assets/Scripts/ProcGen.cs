@@ -63,11 +63,11 @@ public class ProcGen : MonoBehaviour
 
     // Enemy spawn chances for each difficulty level
     [Range(0f, 1f)]
-    public float easyEnemySpawnChance = 0f;      // 0% chance for Easy enemies initially
-    [Range(0f, 1f)]
-    public float mediumEnemySpawnChance = 0f;    // 0% chance for Medium enemies initially
-    [Range(0f, 1f)]
-    public float hardEnemySpawnChance = 0f;      // 0% chance for Hard enemies initially
+    public float EnemySpawnChance = 0f;      // 0% chance for Easy enemies initially
+    // [Range(0f, 1f)]
+    // public float mediumEnemySpawnChance = 0f;    // 0% chance for Medium enemies initially
+    // [Range(0f, 1f)]
+    // public float hardEnemySpawnChance = 0f;      // 0% chance for Hard enemies initially
 
     // Run Tracking
     [Header("Run Tracking")]
@@ -81,8 +81,7 @@ public class ProcGen : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            // Uncomment the line below if you want the ProcGen to persist across scenes
-            // DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject); // Persist across scenes
         }
         else
         {
@@ -90,9 +89,9 @@ public class ProcGen : MonoBehaviour
         }
     }
 
+
     private void Start()
     {
-        ResetLevelParameters(); // Set initial parameters
         GenerateNewLevel();     // Generate the first level
     }
 
@@ -105,6 +104,18 @@ public class ProcGen : MonoBehaviour
         float x = initialPlatformEnd.x;      // Initialize current X position after initial platform
         float y = initialPlatformEnd.y;      // Initialize current Y position after initial platform
         float minYReached = y;               // Track the lowest Y position reached
+
+        // Retrieve current difficulty settings from LevelManager
+        Difficulty currentDifficulty = (Difficulty)LevelManager.Instance.currentDifficulty;
+        int numberOfChunks = LevelManager.Instance.numberOfChunks;
+        float spikeSpawnChance = LevelManager.Instance.spikeSpawnChance;
+        float EnemySpawnChance = LevelManager.Instance.EnemySpawnChance;
+
+        // Set ProcGen's difficulty settings based on LevelManager
+        this.currentDifficulty = currentDifficulty;
+        this.numberOfChunks = numberOfChunks;
+        this.spikeSpawnChance = spikeSpawnChance;
+        this.EnemySpawnChance = EnemySpawnChance;
 
         // Generate the specified number of chunks
         for (int i = 0; i < numberOfChunks; i++)
@@ -123,60 +134,50 @@ public class ProcGen : MonoBehaviour
         CreateEndChunk(x, y);             // Create the end chunk with the flag
         CreateDeathZone(x, minYReached);  // Create the death zone area
     }
-
-    // Resets level generation parameters to initial settings
-    public void ResetLevelParameters()
-    {
-        numberOfChunks = 4;
-        currentDifficulty = Difficulty.Easy;
-        spikeSpawnChance = 0f;
-        easyEnemySpawnChance = 0f;
-        mediumEnemySpawnChance = 0f;
-        hardEnemySpawnChance = 0f;
-        Debug.Log("Level parameters reset to initial settings.");
-    }
-
-    // Method to be called by the agent upon successful level completion
-     public void OnLevelCompleted()
-    {
-        totalCompletions++;
-
-        // Gradually increase difficulty every 5 completions
-        if (totalCompletions % completionsForGradualIncrease == 0)
-        {
-            numberOfChunks += 1;          // Incrementally increase chunks
-            switch (currentDifficulty)
-            {
-                case Difficulty.Easy:
-                    easyEnemySpawnChance = Mathf.Min(easyEnemySpawnChance + 0.05f, 0.6f); // Cap at 60%
-                    break;
-                case Difficulty.Medium:
-                    mediumEnemySpawnChance = Mathf.Min(mediumEnemySpawnChance + 0.05f, 0.6f); // Cap at 60%
-                    break;
-                case Difficulty.Hard:
-                    hardEnemySpawnChance = Mathf.Min(hardEnemySpawnChance + 0.05f, 0.6f); // Cap at 60%
-                    break;
-            }
-        }
-
-        // Upgrade difficulty level after 100 completions
-        if (totalCompletions >= completionsForLevelUpgrade && currentDifficulty == Difficulty.Easy)
-        {
-            currentDifficulty = Difficulty.Medium;
-            numberOfChunks = 4;          // Reset chunks
-            totalCompletions = 0;
-            Debug.Log("Switched difficulty to Medium.");
-        }
-        if (totalCompletions >= completionsForLevelUpgrade && currentDifficulty == Difficulty.Medium)
-        {
-            currentDifficulty = Difficulty.Hard;
-            numberOfChunks = 4;          // Reset chunks
-            totalCompletions = 0;
-            Debug.Log("Switched difficulty to Hard.");
-        }
-
-        GenerateNewLevel(); // Generate the next level with updated parameters
-    }
+// THIS HAS BEEN REFACTORED BUT STILL GOOD TO HAVE HERE SINCE I MAY NEED TO USE THIS FOR THE INFINITE RUN MODE
+    // // Method to be called by the agent upon successful level completion
+    //  public void OnLevelCompleted()
+    // {
+    //     totalCompletions++;
+    //     Debug.Log($"Level Completed! Total Completions: {totalCompletions}, Current Difficulty: {currentDifficulty}, Chunks: {numberOfChunks}, Enemy Spawn Chance: {easyEnemySpawnChance}, Spike Spawn Chance: {spikeSpawnChance}");
+    //     // Gradually increase difficulty every 5 completions
+    //     if (totalCompletions % completionsForGradualIncrease == 0)
+    //     {
+    //         numberOfChunks += 1;          // Incrementally increase chunks
+    //         switch (currentDifficulty)
+    //         {
+    //             case Difficulty.Easy:
+    //                 easyEnemySpawnChance = Mathf.Min(easyEnemySpawnChance + 0.05f, 0.6f); // Cap at 60%
+    //                 Debug.Log($"Increasing Difficulty: Spawn Chance: {easyEnemySpawnChance}, Chunk Size: {numberOfChunks}");
+    //                 break;
+    //             case Difficulty.Medium:
+    //                 mediumEnemySpawnChance = Mathf.Min(mediumEnemySpawnChance + 0.05f, 0.6f); // Cap at 60%
+    //                 Debug.Log($"Increasing Difficulty: Spawn Chance: {mediumEnemySpawnChance}, Chunk Size: {numberOfChunks}");
+    //                 break;
+    //             case Difficulty.Hard:
+    //                 hardEnemySpawnChance = Mathf.Min(hardEnemySpawnChance + 0.05f, 0.6f); // Cap at 60%
+    //                 Debug.Log($"Increasing Difficulty: Spawn Chance: {hardEnemySpawnChance}, Chunk Size: {numberOfChunks}");
+    //                 break;
+    //         }
+    //     }
+    //     // Upgrade difficulty level after 100 completions
+    //     if (totalCompletions >= completionsForLevelUpgrade && currentDifficulty == Difficulty.Easy)
+    //     {
+    //         currentDifficulty = Difficulty.Medium;
+    //         numberOfChunks = 4;          // Reset chunks
+    //         totalCompletions = 0;
+    //         Debug.Log("Switched difficulty to Medium.");
+    //     }
+    //     if (totalCompletions >= completionsForLevelUpgrade && currentDifficulty == Difficulty.Medium)
+    //     {
+    //         currentDifficulty = Difficulty.Hard;
+    //         numberOfChunks = 4;          // Reset chunks
+    //         totalCompletions = 0;
+    //         Debug.Log("Switched difficulty to Hard.");
+    //     }
+    //     GenerateNewLevel(); // Generate the next level with updated parameters
+    // }
+// THIS HAS BEEN REFACTORED BUT STILL GOOD TO HAVE HERE SINCE I MAY NEED TO USE THIS FOR THE INFINITE RUN MODE
 
     // Clears all previously generated level elements
     private void ClearExistingLevel()
@@ -645,18 +646,26 @@ public class ProcGen : MonoBehaviour
     {
         if (deathZonePrefab != null)
         {
-            // Instantiate the death zone prefab at the specified position
+            // Calculate the new X position by shifting 10 units to the left
+            // This adjustment ensures that the death zone extends 20 units more to the left
+            float deathZoneX = ((x + 10f) / 2f) - 10f; // Shifted 10 units left
+
+            // Instantiate the death zone prefab at the adjusted position
             GameObject deathZone = Instantiate(
                 deathZonePrefab,
-                new Vector3((x + 10f) / 2f, minY - 4f, 0f), // Position centered horizontally and below the lowest point
+                new Vector3(deathZoneX, minY - 4f, 0f), // Adjusted X position
                 Quaternion.identity,
                 transform
             );
-            deathZone.transform.localScale = new Vector3(x + 30f, 2f, 1f); // Scale the death zone appropriately
+
+            // Increase the scale.x by 40f to extend 20 units more to the left
+            deathZone.transform.localScale = new Vector3(x + 70f, 2f, 1f); // x + 30f + 40f = x + 70f
+
             deathZone.name = "DeathZone"; // Name the death zone for easy identification
             generatedObjects.Add(deathZone); // Track the instantiated death zone for cleanup
         }
     }
+
 
     // Paints a ground tile on the Ground Tilemap at the specified position
     private void PaintGroundTile(float x, float y, TileBase tile)
@@ -726,21 +735,21 @@ public class ProcGen : MonoBehaviour
         spawnEndX = Mathf.Min(spawnEndX, endX - 1f);
 
         // Enemy spawn chance and prefab selection based on difficulty
-        float spawnChance = 0f;
+        // float spawnChance = 0f;
         List<GameObject> enemyPrefabs = null;
 
         switch (currentDifficulty)
         {
             case Difficulty.Easy:
-                spawnChance = easyEnemySpawnChance;
+                // spawnChance = easyEnemySpawnChance;
                 enemyPrefabs = easyEnemyPrefabs;
                 break;
             case Difficulty.Medium:
-                spawnChance = mediumEnemySpawnChance;
+                // spawnChance = mediumEnemySpawnChance;
                 enemyPrefabs = mediumEnemyPrefabs;
                 break;
             case Difficulty.Hard:
-                spawnChance = hardEnemySpawnChance;
+                // spawnChance = hardEnemySpawnChance;
                 enemyPrefabs = hardEnemyPrefabs;
                 break;
         }
@@ -751,7 +760,7 @@ public class ProcGen : MonoBehaviour
             // Iterate through the spawn range with a step of 1f (tile spacing)
             for (float x = spawnStartX; x < spawnEndX; x += 1f)
             {
-                if (Random.value < spawnChance) // Check if an enemy should spawn at this position
+                if (Random.value < EnemySpawnChance) // Check if an enemy should spawn at this position
                 {
                     GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)]; // Select a random enemy prefab
                     GameObject enemy = Instantiate(enemyPrefab, new Vector3(x, y + 1f, 0f), Quaternion.identity, transform); // Instantiate the enemy

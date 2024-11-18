@@ -12,6 +12,34 @@ public class LevelManager : MonoBehaviour
     // Singleton instance
     public static LevelManager Instance { get; private set; }
 
+    [Header("Scene Settings")]
+    public string sceneName = "Test"; // Replace "Test" with your actual scene name
+
+    // Difficulty Tracking Variables
+    [Header("Difficulty Settings")]
+    public int totalCompletions = 0;
+    public int completionsForGradualIncrease = 10; // Increase difficulty every 5 completions
+    public int completionsForLevelUpgrade = 100;  // Switch from Easy to Medium after 100 completions
+
+    // Difficulty Levels
+    public enum Difficulty
+    {
+        Easy,
+        Medium,
+        Hard
+    }
+
+    public Difficulty currentDifficulty = Difficulty.Easy;  // Current game difficulty
+
+    // Enemy spawn chances for each difficulty level
+    [Range(0f, 1f)]
+    public float spikeSpawnChance = 0f;          // Spike spawn chance
+    [Range(0f, 1f)]
+    public float EnemySpawnChance = 0f;      // Easy enemy spawn chance
+
+    // Number of chunks per level based on difficulty
+    public int numberOfChunks = 4;
+
     private void Awake()
     {
         // Singleton pattern
@@ -48,13 +76,14 @@ public class LevelManager : MonoBehaviour
             ProcGen procGen = FindAnyObjectByType<ProcGen>();
             if (procGen != null)
             {
-                procGen.OnLevelCompleted();
                 procGen.GenerateNewLevel();
             }
             else
             {
                 Debug.LogError("ProcGen script not found in the scene.");
             }
+            // ProcGen.Instance.OnLevelCompleted();
+            // ProcGen.Instance.GenerateNewLevel();
         }
     }
 
@@ -63,4 +92,61 @@ public class LevelManager : MonoBehaviour
     {
         SceneManager.LoadScene(sceneIndex);
     }
+
+    // Method to handle level completion
+    public void LevelCompleted()
+    {
+        totalCompletions++;
+
+        // Gradually increase difficulty every 5 completions
+        if (totalCompletions % completionsForGradualIncrease == 0)
+        {
+            numberOfChunks += 1; // Incrementally increase chunks
+            switch (currentDifficulty)
+            {
+                case Difficulty.Easy:
+                    EnemySpawnChance = Mathf.Min(EnemySpawnChance + 0.1f, 0.6f); // Cap at 60%
+                    Debug.Log($"Increasing Difficulty: Spawn Chance: {EnemySpawnChance}, Chunk Size: {numberOfChunks}");
+                    break;
+            }
+        }
+
+        // Upgrade difficulty level after 100 completions
+        if (totalCompletions >= completionsForLevelUpgrade)
+        {
+            if (currentDifficulty == Difficulty.Easy)
+            {
+                currentDifficulty = Difficulty.Medium;
+                numberOfChunks = 4; // Significant increase in chunks
+                EnemySpawnChance = 0.1f; // Set a base spawn rate
+                spikeSpawnChance = Mathf.Max(spikeSpawnChance, 0.0f); // Optionally increase spike spawn rate
+                Debug.Log("Switched difficulty to Medium.");
+            }
+            else if (currentDifficulty == Difficulty.Medium)
+            {
+                currentDifficulty = Difficulty.Hard;
+                numberOfChunks = 4; // Significant increase in chunks
+                EnemySpawnChance = 0.1f; // Set a base spawn rate
+                spikeSpawnChance = Mathf.Max(spikeSpawnChance, 0.0f); // Optionally increase spike spawn rate
+                Debug.Log("Switched difficulty to Hard.");
+            }
+
+            totalCompletions = 0; // Reset total completions after upgrading difficulty
+            completionsForLevelUpgrade += 100; // Set next threshold for difficulty upgrade
+        }
+
+        // Notify ProcGen to generate a new level
+        if (ProcGen.Instance != null)
+        {
+            ProcGen.Instance.GenerateNewLevel();
+        }
+        else
+        {
+            Debug.LogError("ProcGen instance not found.");
+        }
+
+        // Reload the scene to generate a new level
+        LoadScene("Test");
+    }
+
 }

@@ -46,7 +46,8 @@ public class PlatformerAgent : Agent
         {
             levelCompleted = false; // Reset level completion flag
             currentLevelCompletions = 0; // Reset completion count
-            LevelManager.Instance.LoadScene(SceneManager.GetActiveScene().name); // Reload current scene
+            // LevelManager.Instance.LoadScene(SceneManager.GetActiveScene().name); // Reload current scene
+            LevelManager.Instance.LevelCompleted();
         }
 
         // Update the goalTransform to the new flag
@@ -158,10 +159,12 @@ public class PlatformerAgent : Agent
         if (collision.CompareTag("Flag"))
         {
             SetReward(5.0f);  // Reward for reaching the goal
-            Debug.Log($"Agent Won. Final reward: {GetCumulativeReward()}");
+            // Debug.Log($"Agent Won. Final reward: {GetCumulativeReward()}");
 
             currentLevelCompletions++;  // Increment completion count
-            Debug.Log($"Current Count: {currentLevelCompletions}");
+            if (currentLevelCompletions % 10 == 0) {
+                Debug.Log($"Current Count: {currentLevelCompletions}");
+            }
 
             if (currentLevelCompletions >= levelCompletionThreshold)
             {
@@ -178,7 +181,7 @@ public class PlatformerAgent : Agent
         else if (collision.CompareTag("DeathZone") || collision.CompareTag("Enemy") || collision.CompareTag("Hazard") || collision.CompareTag("Projectile"))
         {
             SetReward(-1.0f);  // Negative reward for dying or hitting a hazard
-            Debug.Log($"Agent Died. Final reward: {GetCumulativeReward()}");
+            // Debug.Log($"Agent Died. Final reward: {GetCumulativeReward()}");
             EndEpisode(); // End the episode
         }
     }

@@ -755,7 +755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2100892088925098272, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: levelCompletionThreshold
-      value: 99
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: animator
