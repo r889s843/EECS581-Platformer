@@ -263,7 +263,7 @@ MonoBehaviour:
     m_Bits: 64
   detectableLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   raycastDistance: 20
   levelCompletionThreshold: 100
 --- !u!114 &3498126155258529281

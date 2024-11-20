@@ -627,10 +627,12 @@ public class ProcGen : MonoBehaviour
             generatedObjects.Add(flag); // Track the instantiated flag for cleanup
 
             // Update the agent's goalTransform to the flag's position
-            PlatformerAgent agent = FindAnyObjectByType<PlatformerAgent>();
-            if (agent != null)
+            PlatformerAgent[] agents = FindObjectsOfType<PlatformerAgent>();
+            if (agents.Length > 0)
             {
-                agent.goalTransform = flag.transform; // Set the goal for the agent
+                foreach (PlatformerAgent agent in agents){
+                    agent.goalTransform = flag.transform; // Set the goal for the agent
+                } 
             }
             else
             {
