@@ -9,12 +9,14 @@ public class EnemyShooter : MonoBehaviour
 {
     public GameObject bullet;
     public Transform bulletPos;
+    private AudioSource audioSource;
     private float timer;
     private GameObject player;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -33,6 +35,7 @@ public class EnemyShooter : MonoBehaviour
 
     void shoot()
     {
+        audioSource.Play();
         Instantiate(bullet, bulletPos.position, Quaternion.identity);
     }
 }

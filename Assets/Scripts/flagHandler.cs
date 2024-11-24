@@ -1,16 +1,7 @@
-// Name: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
-// Date: 10/17/2024
-// Course: EECS 581
-// Purpose: This creates the DeathZone object which unity uses to track what kills a player. This is defined in every level separately and is being used to track when the player falls off the platform into the abyss.
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-// DeathZone components mark a collider which will schedule a event when the player enters the trigger.
-public class DeathZone : MonoBehaviour
+public class flagHandler : MonoBehaviour
 {
-    public Transform Respawn;
     private AudioSource audioSource;
 
     void Start()
@@ -35,4 +26,3 @@ public class DeathZone : MonoBehaviour
         }
     }
 }
-// }

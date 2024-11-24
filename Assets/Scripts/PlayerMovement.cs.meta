@@ -1,2 +1,14 @@
 fileFormatVersion: 2
 guid: 396f66f0da171e64aa56666b16a749f8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - animator: {instanceID: 0}
+  - jumpSound: {fileID: 8300000, guid: 13ac8d0fa3a0e624493194b3811fa841, type: 3}
+  - walkSound: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
