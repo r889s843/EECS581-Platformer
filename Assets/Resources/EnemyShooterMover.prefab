@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 719388173434586710, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 2886555888690879026}
+    - target: {fileID: 719388173434586710, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
       propertyPath: movementMode
       value: 2
       objectReference: {fileID: 0}
@@ -17,24 +21,40 @@ PrefabInstance:
       value: EnemyShooterMover
       objectReference: {fileID: 0}
     - target: {fileID: 1872852813444142761, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
+      propertyPath: m_Size.x
+      value: 0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1872852813444142761, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1754832787430350028, guid: f95243d4d4c204f94a6cff7a8cd1c2ae, type: 3}
+    - target: {fileID: 1872852813444142761, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
       propertyPath: m_Color.b
-      value: 0.81781626
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1872852813444142761, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1872852813444142761, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2506517721704458477, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 91abce0e700db4719b5b30daf98e2540, type: 2}
     - target: {fileID: 3839085191627356218, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3839085191627356218, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.3775368
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3839085191627356218, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.8413043
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3839085191627356218, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -68,6 +88,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4407282089678730096, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4407282089678730096, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.6875
+      objectReference: {fileID: 0}
+    - target: {fileID: 4407282089678730096, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7747274834401005031, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7747274834401005031, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.6875
+      objectReference: {fileID: 0}
+    - target: {fileID: 7747274834401005031, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -95,6 +139,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 8113815821145230964, guid: 8880ef4cc84321a40b15ab6ee0189d78, type: 3}
   bulletPos: {fileID: 4986058054480324363}
+--- !u!95 &2886555888690879026 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2506517721704458477, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
+  m_PrefabInstance: {fileID: 776848807929393887}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4986058054480324363 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5761760603527402964, guid: 4449136f732614845bbe838dbdb3920b, type: 3}

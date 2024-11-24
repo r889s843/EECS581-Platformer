@@ -16,6 +16,8 @@ public class EnemyMovement : MonoBehaviour
         WalkLeftRight
     }
 
+    public Animator animator;
+
     public MovementMode movementMode = MovementMode.None;
     public LayerMask platformLayer; // The ground the AI can walk on.
     public float jumpHeight = 10f; // How high the AI can jump.
@@ -77,6 +79,7 @@ public class EnemyMovement : MonoBehaviour
         {
             // Stop horizontal movement and keep the vertical velocity unchanged to ensure the enemy stays on the ground
             body.linearVelocity = new Vector2(0, body.linearVelocity.y);
+            animator.SetBool("isJumping", false);
         }
         else
         {
@@ -91,6 +94,7 @@ public class EnemyMovement : MonoBehaviour
         {
             Jump();
             nextActionTime = Time.time + actionInterval;
+            animator.SetBool("isJumping", true);
         }
     }
 
@@ -99,6 +103,7 @@ public class EnemyMovement : MonoBehaviour
         // Move the enemy
         float horizontalVelocity = movingRight ? walkSpeed : -walkSpeed;
         body.linearVelocity = new Vector2(horizontalVelocity, body.linearVelocity.y);
+        animator.SetFloat("Speed", Mathf.Abs(body.linearVelocity.x));
         // Check for edges or lack of ground
         if (IsAtEdge() || !IsGrounded())
         {
