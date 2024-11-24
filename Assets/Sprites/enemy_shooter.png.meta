@@ -1,22 +1,16 @@
 fileFormatVersion: 2
-guid: 72e18c7e5b84c4a76bdb880b64a48291
+guid: f95243d4d4c204f94a6cff7a8cd1c2ae
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4119065717334415502
-    second: ai_sprite_sheet_0
+      213: 1754832787430350028
+    second: enemy_shooter_0
   - first:
-      213: -4106999837772835304
-    second: ai_sprite_sheet_1
+      213: 2367194611953154604
+    second: enemy_shooter_1
   - first:
-      213: -9128606779073001357
-    second: ai_sprite_sheet_2
-  - first:
-      213: -410698102345147554
-    second: ai_sprite_sheet_3
-  - first:
-      213: -1942470112768264676
-    second: ai_sprite_sheet_4
+      213: -3522035556956107953
+    second: enemy_shooter_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -112,111 +106,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ai_idle
+      name: enemy_shooter_idle
       rect:
         serializedVersion: 2
-        x: 0
+        x: 3
         y: 0
-        width: 16
+        width: 11
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 277eac7cd8326d6c0800000000000000
-      internalID: -4119065717334415502
+      spriteID: b3bbc8b4fadb741e2892622a0c749727
+      internalID: 1754832787430350028
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ai_run_0
+      name: enemy_shooter_walking_0
       rect:
         serializedVersion: 2
-        x: 16
+        x: 19
         y: 0
-        width: 16
+        width: 11
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 81696f848610107c0800000000000000
-      internalID: -4106999837772835304
+      spriteID: a1e3d5cb4758149fe84ff9d409beb69b
+      internalID: 2367194611953154604
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ai_run_1
+      name: enemy_shooter_walking_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 35
         y: 0
-        width: 16
+        width: 11
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 3788127ff7ca05180800000000000000
-      internalID: -9128606779073001357
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ai_jump
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e5b5acb7048ec4af0800000000000000
-      internalID: -410698102345147554
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ai_crouch
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c1672ad59b5fa05e0800000000000000
-      internalID: -1942470112768264676
+      spriteID: 761cb0763b6f1411eaa6238c8bb4e01f
+      internalID: -3522035556956107953
       vertices: []
       indices: 
       edges: []
@@ -225,7 +175,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e3090460b8aef4253bc64015ccab116c
+    spriteID: 3cfb74d3d4bc546e7b1c3e612471f794
     internalID: 0
     vertices: []
     indices: 
@@ -235,11 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ai_crouch: -1942470112768264676
-      ai_idle: -4119065717334415502
-      ai_jump: -410698102345147554
-      ai_run_0: -4106999837772835304
-      ai_run_1: -9128606779073001357
+      enemy_shooter_idle: 1754832787430350028
+      enemy_shooter_walking_0: 2367194611953154604
+      enemy_shooter_walking_1: -3522035556956107953
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

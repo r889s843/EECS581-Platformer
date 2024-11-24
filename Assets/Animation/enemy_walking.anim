@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: player_crouch
+  m_Name: enemy_walking
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,7 +21,9 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 6217555554104186210, guid: f2ab60d3bc56642fda32d89b7edcf792, type: 3}
+      value: {fileID: 3680619090928529440, guid: b430c13a65e3349698743ffbca1543a4, type: 3}
+    - time: 0.125
+      value: {fileID: -6810697999950630716, guid: b430c13a65e3349698743ffbca1543a4, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -44,13 +46,14 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 6217555554104186210, guid: f2ab60d3bc56642fda32d89b7edcf792, type: 3}
+    - {fileID: 3680619090928529440, guid: b430c13a65e3349698743ffbca1543a4, type: 3}
+    - {fileID: -6810697999950630716, guid: b430c13a65e3349698743ffbca1543a4, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.125
+    m_StopTime: 0.25
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
