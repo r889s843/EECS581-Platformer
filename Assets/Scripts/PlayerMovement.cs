@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D boxCollider;
     [SerializeField] private LayerMask groundLayer;
     public Animator animator;
+    private AudioSource walkAudioSource;
+    private AudioSource jumpAudioSource;
 
     // Movement and physics parameters
     [Header("Movement Parameters")]
@@ -44,6 +46,9 @@ public class PlayerMovement : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        walkAudioSource = audioSources[0]; // Assign the first AudioSource component to walkAudioSource
+        jumpAudioSource = audioSources[1]; // Assign the second AudioSource component to jumpAudioSource
 
         // Check if the PlatformerAgent component is attached
         if (GetComponent<PlatformerAgent>() != null)
@@ -162,6 +167,12 @@ public class PlayerMovement : MonoBehaviour
 
         // Update animations
         animator.SetFloat("Speed", Mathf.Abs(body.linearVelocity.x));
+
+        // Play walk sound if moving on the ground
+        if (grounded == 0 && Mathf.Abs(horizontalInput) > 0.01f && !walkAudioSource.isPlaying)
+        {
+            walkAudioSource.Play();        
+        }
     }
 
     private void Jump(Vector2 jumpForce, bool isWallJump = false)
@@ -170,6 +181,8 @@ public class PlayerMovement : MonoBehaviour
 
         body.linearVelocity = jumpForce;
         animator.SetBool("isJumping", true);
+
+        jumpAudioSource.PlayOneShot(jumpAudioSource.clip);
 
         if (isWallJump)
         {

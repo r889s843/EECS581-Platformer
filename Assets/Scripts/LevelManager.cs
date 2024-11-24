@@ -31,6 +31,8 @@ public class LevelManager : MonoBehaviour
 
     public Difficulty currentDifficulty = Difficulty.Easy;  // Current game difficulty
 
+    public static int selectedDifficulty = 0;   // Player's selected difficulty
+
     // Enemy spawn chances for each difficulty level
     [Range(0f, 1f)]
     public float spikeSpawnChance = 0f;          // Spike spawn chance
@@ -76,6 +78,7 @@ public class LevelManager : MonoBehaviour
             ProcGen procGen = FindAnyObjectByType<ProcGen>();
             if (procGen != null)
             {
+                currentDifficulty = (Difficulty)selectedDifficulty; 
                 procGen.GenerateNewLevel();
             }
             else
