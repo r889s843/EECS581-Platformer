@@ -13,7 +13,7 @@ public class LevelManager : MonoBehaviour
     public static LevelManager Instance { get; private set; }
 
     [Header("Scene Settings")]
-    public string sceneName = "Test"; // Replace "Test" with your actual scene name
+    public string sceneName = "Test";
 
     // Difficulty Tracking Variables
     [Header("Difficulty Settings")]
@@ -56,6 +56,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+
     private void OnEnable()
     {
         // Register the callback when a scene is loaded
@@ -97,59 +98,76 @@ public class LevelManager : MonoBehaviour
     }
 
     // Method to handle level completion
-    public void LevelCompleted()
+    public void LevelCompleted(string sceneName)
     {
-        totalCompletions++;
-
-        // Gradually increase difficulty every 5 completions
-        if (totalCompletions % completionsForGradualIncrease == 0)
+    if(sceneName == "Test")
         {
-            numberOfChunks += 1; // Incrementally increase chunks
-            switch (currentDifficulty)
-            {
-                case Difficulty.Easy:
-                    EnemySpawnChance = Mathf.Min(EnemySpawnChance + 0.1f, 0.6f); // Cap at 60%
-                    Debug.Log($"Increasing Difficulty: Spawn Chance: {EnemySpawnChance}, Chunk Size: {numberOfChunks}");
-                    break;
-            }
-        }
+            totalCompletions++;
 
-        // Upgrade difficulty level after 100 completions
-        if (totalCompletions >= completionsForLevelUpgrade)
-        {
-            if (currentDifficulty == Difficulty.Easy)
+            // Gradually increase difficulty every 5 completions
+            if (totalCompletions % completionsForGradualIncrease == 0)
             {
-                currentDifficulty = Difficulty.Medium;
-                numberOfChunks = 4; // Significant increase in chunks
-                EnemySpawnChance = 0.1f; // Set a base spawn rate
-                spikeSpawnChance = Mathf.Max(spikeSpawnChance, 0.0f); // Optionally increase spike spawn rate
-                Debug.Log("Switched difficulty to Medium.");
-            }
-            else if (currentDifficulty == Difficulty.Medium)
-            {
-                currentDifficulty = Difficulty.Hard;
-                numberOfChunks = 4; // Significant increase in chunks
-                EnemySpawnChance = 0.1f; // Set a base spawn rate
-                spikeSpawnChance = Mathf.Max(spikeSpawnChance, 0.0f); // Optionally increase spike spawn rate
-                Debug.Log("Switched difficulty to Hard.");
+                numberOfChunks += 1; // Incrementally increase chunks
+                switch (currentDifficulty)
+                {
+                    case Difficulty.Easy:
+                        EnemySpawnChance = Mathf.Min(EnemySpawnChance + 0.1f, 0.6f); // Cap at 60%
+                        Debug.Log($"Increasing Difficulty: Spawn Chance: {EnemySpawnChance}, Chunk Size: {numberOfChunks}");
+                        break;
+                }
             }
 
-            totalCompletions = 0; // Reset total completions after upgrading difficulty
-            completionsForLevelUpgrade += 100; // Set next threshold for difficulty upgrade
-        }
+            // Upgrade difficulty level after 100 completions
+            if (totalCompletions >= completionsForLevelUpgrade)
+            {
+                if (currentDifficulty == Difficulty.Easy)
+                {
+                    currentDifficulty = Difficulty.Medium;
+                    numberOfChunks = 4; // Significant increase in chunks
+                    EnemySpawnChance = 0.1f; // Set a base spawn rate
+                    spikeSpawnChance = Mathf.Max(spikeSpawnChance, 0.0f); // Optionally increase spike spawn rate
+                    Debug.Log("Switched difficulty to Medium.");
+                }
+                else if (currentDifficulty == Difficulty.Medium)
+                {
+                    currentDifficulty = Difficulty.Hard;
+                    numberOfChunks = 4; // Significant increase in chunks
+                    EnemySpawnChance = 0.1f; // Set a base spawn rate
+                    spikeSpawnChance = Mathf.Max(spikeSpawnChance, 0.0f); // Optionally increase spike spawn rate
+                    Debug.Log("Switched difficulty to Hard.");
+                }
 
-        // Notify ProcGen to generate a new level
-        if (ProcGen.Instance != null)
-        {
-            ProcGen.Instance.GenerateNewLevel();
-        }
-        else
-        {
-            Debug.LogError("ProcGen instance not found.");
-        }
+                totalCompletions = 0; // Reset total completions after upgrading difficulty
+                completionsForLevelUpgrade += 100; // Set next threshold for difficulty upgrade
+            }
 
-        // Reload the scene to generate a new level
-        LoadScene("Test");
+            // Notify ProcGen to generate a new level
+            if (ProcGen.Instance != null)
+            {
+                ProcGen.Instance.GenerateNewLevel();
+            }
+            else
+            {
+                Debug.LogError("ProcGen instance not found.");
+            }
+
+            // Reload the scene to generate a new level
+            LoadScene("Test");
+        }
+    
+    else if (sceneName == "Level6")
+        {
+            LoadScene("Main Menu");
+        }
+    else {
+         int lastNumber = int.Parse(sceneName[^1].ToString());
+
+        // Increment the number
+        int nextNumber = lastNumber + 1;
+
+        // Replace the last digit with the incremented number
+        string nextLevelName = sceneName.Substring(0, sceneName.Length - 1) + nextNumber;
+        LoadScene(nextLevelName);
     }
-
+    }
 }

@@ -42,12 +42,19 @@ public class PlatformerAgent : Agent
         body.linearVelocity = Vector2.zero; // Reset velocity
         previousPosition = transform.position; // Reset previous position
 
+        if (LevelManager.Instance == null)
+{
+            Debug.LogError("LevelManager is not available in this scene.");
+            return;
+        }
+
         if (levelCompleted)
         {
             levelCompleted = false; // Reset level completion flag
             currentLevelCompletions = 0; // Reset completion count
+            Debug.Log(SceneManager.GetActiveScene().name);
             // LevelManager.Instance.LoadScene(SceneManager.GetActiveScene().name); // Reload current scene
-            LevelManager.Instance.LevelCompleted();
+            LevelManager.Instance.LevelCompleted(SceneManager.GetActiveScene().name);
         }
 
         // Update the goalTransform to the new flag
