@@ -267,7 +267,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   raycastDistance: 15
-  levelCompletionThreshold: 99
+  levelCompletionThreshold: 0
 --- !u!114 &6720324758942419461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,7 +315,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 80405790b7982aa408de00feb863744f, type: 3}
   m_Resource: {fileID: 8300000, guid: 80405790b7982aa408de00feb863744f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.036
+  m_Volume: 0.265
   m_Pitch: 2.6
   Loop: 0
   Mute: 0

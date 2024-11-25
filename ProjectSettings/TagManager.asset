@@ -11,6 +11,7 @@ TagManager:
   - Hazard
   - FallingPlatform
   - Ground
+  - AI
   layers:
   - Default
   - TransparentFX
