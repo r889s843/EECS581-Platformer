@@ -249,6 +249,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3880381174684426510, guid: d6608245b8e89044382e3caab2e85793, type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6062583078717770621, guid: d6608245b8e89044382e3caab2e85793, type: 3}
       propertyPath: m_LocalPosition.x
       value: 84.86
@@ -292,6 +296,10 @@ PrefabInstance:
     - target: {fileID: 7127516521367446038, guid: d6608245b8e89044382e3caab2e85793, type: 3}
       propertyPath: m_Name
       value: Flag
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127516521367446038, guid: d6608245b8e89044382e3caab2e85793, type: 3}
+      propertyPath: m_Layer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -354,6 +362,10 @@ PrefabInstance:
     - target: {fileID: 4488341427712273626, guid: 77b42c8b6d8d3564aa5d6b81002a3e20, type: 3}
       propertyPath: m_Name
       value: DeathZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 4488341427712273626, guid: 77b42c8b6d8d3564aa5d6b81002a3e20, type: 3}
+      propertyPath: m_Layer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -421,6 +433,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 942b814ecb71b8a43bb12e4c60444526, type: 3}
+--- !u!1001 &642171134
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 41.113743
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 13.262219
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6783863723170339077, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_Name
+      value: Invincible_Powerup (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
 --- !u!1001 &682984261
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6357,7 +6426,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3
+      value: -3.715
       objectReference: {fileID: 0}
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6417,6 +6486,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
   m_PrefabInstance: {fileID: 2135510852}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1594101926424480329
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571642307762464393, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6783863723170339077, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
+      propertyPath: m_Name
+      value: Invincible_Powerup
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 31df1f030f4cdab48bf63bb3ad61a463, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -6433,3 +6559,5 @@ SceneRoots:
   - {fileID: 1004946480}
   - {fileID: 1180957846}
   - {fileID: 1479516813}
+  - {fileID: 1594101926424480329}
+  - {fileID: 642171134}

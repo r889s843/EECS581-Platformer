@@ -759,7 +759,7 @@ MonoBehaviour:
   totalCompletions: 0
   completionsForGradualIncrease: 10
   completionsForLevelUpgrade: 100
-  currentDifficulty: 0
+  currentDifficulty: 1
   spikeSpawnChance: 0
   EnemySpawnChance: 0
   numberOfChunks: 4
@@ -1264,7 +1264,7 @@ MonoBehaviour:
   totalCompletions: 0
   completionsForGradualIncrease: 5
   completionsForLevelUpgrade: 100
-  currentDifficulty: 0
+  currentDifficulty: 1
   easyEnemyPrefabs:
   - {fileID: 946920935056350428, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
   - {fileID: 7171921307498121515, guid: e28a98ae6c2d2b644ba81b55e00217e0, type: 3}

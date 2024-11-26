@@ -29,9 +29,9 @@ public class LevelManager : MonoBehaviour
         Hard
     }
 
-    public Difficulty currentDifficulty = Difficulty.Easy;  // Current game difficulty
+    public Difficulty currentDifficulty = Difficulty.Medium;  // Current game difficulty
 
-    public static int selectedDifficulty = 0;   // Player's selected difficulty
+    public static int selectedDifficulty = 1;   // Player's selected difficulty
 
     // Enemy spawn chances for each difficulty level
     [Range(0f, 1f)]

@@ -50,7 +50,7 @@ public class ProcGen : MonoBehaviour
         Hard
     }
 
-    public Difficulty currentDifficulty = Difficulty.Easy;  // Current game difficulty
+    public Difficulty currentDifficulty = Difficulty.Medium;  // Current game difficulty
 
     // Enemy prefabs categorized by difficulty
     public List<GameObject> easyEnemyPrefabs;    // Enemies for Easy difficulty

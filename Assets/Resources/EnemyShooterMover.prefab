@@ -142,11 +142,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 8113815821145230964, guid: 8880ef4cc84321a40b15ab6ee0189d78, type: 3}
   bulletPos: {fileID: 4986058054480324363}
---- !u!95 &2886555888690879026 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 2506517721704458477, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
-  m_PrefabInstance: {fileID: 776848807929393887}
-  m_PrefabAsset: {fileID: 0}
 --- !u!82 &7599228873799664000
 AudioSource:
   m_ObjectHideFlags: 0
@@ -244,6 +239,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &2886555888690879026 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2506517721704458477, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
+  m_PrefabInstance: {fileID: 776848807929393887}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4986058054480324363 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5761760603527402964, guid: 4449136f732614845bbe838dbdb3920b, type: 3}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3160479951111109143}
   - component: {fileID: 4578869635021376130}
   - component: {fileID: 2120647455879361560}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: FlagPole
   m_TagString: Flag
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 6992272336390466139}
   - component: {fileID: -2306747583944963304}
   - component: {fileID: -8305144676117188092}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Flag
   m_TagString: Flag
   m_Icon: {fileID: 0}
