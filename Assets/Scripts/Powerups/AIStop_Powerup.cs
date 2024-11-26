@@ -31,9 +31,11 @@ public class AIStop_Powerup : MonoBehaviour
             boxCollider.enabled = false; //remove the collider
             spriteRenderer.enabled = false; //remove renderer (invisible)
 
+            //disable ai movement
             aiMovement.enabled = false;
             aiBody.linearVelocity = new Vector2(0, 0);
 
+            //after a delay of 3 sec, re-enable ai movement
             Invoke("delay", 3);
 
         }

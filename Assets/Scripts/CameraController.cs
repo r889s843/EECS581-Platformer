@@ -17,6 +17,11 @@ public class CameraController : MonoBehaviour
         //sets camera position to correct lookahead on startup FOR OLD CAMERA CONTROLLER
         //lookAhead = aheadDistance * player.localScale.x;
         //transform.position = new Vector3(player.position.x + lookAhead, transform.position.y, transform.position.z);
+
+        //if player object is empty then find it
+        if(player == null) {
+            player = GameObject.Find("Player").transform;
+        }
     }
 
     private void Update() {
