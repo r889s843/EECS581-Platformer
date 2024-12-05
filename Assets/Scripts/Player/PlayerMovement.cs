@@ -7,9 +7,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D body;
-    private BoxCollider2D boxCollider;
-    [SerializeField] private LayerMask groundLayer;
+    private Rigidbody2D body;//this player's rigidbody component
+    private BoxCollider2D boxCollider; //this player's box collider
+    [SerializeField] private LayerMask groundLayer; //ground layer mask for raycast collision detection
     public Animator animator;
     private AudioSource walkAudioSource;
     private AudioSource jumpAudioSource;
@@ -31,8 +31,8 @@ public class PlayerMovement : MonoBehaviour
     private float cyoteCounter; //how much time has passed since the player has left the ground
     
 
-    private float horizontalInput;
-    private bool jumpInput;
+    private float horizontalInput;//keyboard input for moving horizontally
+    private bool jumpInput;//keyboard input for jumping
     private int grounded; //holds returned value of onGround() -> 0 for floor, 1 for left wall, 2 for right wall, -1 for none
 
     // Wall jump variables
@@ -175,6 +175,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    //makes the player jump
     private void Jump(Vector2 jumpForce, bool isWallJump = false)
     {
         //if(cyoteCounter <= 0 && (grounded != 1 && grounded != 2)) return; //if cyote timer is up do not jump
