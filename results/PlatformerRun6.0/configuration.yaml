@@ -34,7 +34,7 @@ behaviors:
           memory: null
           goal_conditioning_type: hyper
           deterministic: false
-    init_path: C:\Users\chris\Desktop\581\RoboRacer\EECS581-Platformer\Assets\ML-Agents\PlatformerAgent-100000027.pt
+    init_path: null
     keep_checkpoints: 10
     checkpoint_interval: 500000
     max_steps: 100000000
@@ -66,8 +66,8 @@ checkpoint_settings:
   run_id: PlatformerRun6.0
   initialize_from: null
   load_model: false
-  resume: false
-  force: true
+  resume: true
+  force: false
   train_model: false
   inference: false
   results_dir: results

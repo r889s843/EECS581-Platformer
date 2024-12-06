@@ -2,103 +2,103 @@
     "PlatformerAgent": {
         "checkpoints": [
             {
-                "steps": 14999996,
-                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-14999996.onnx",
-                "reward": 1.0777575615576527,
-                "creation_time": 1732614398.2438047,
+                "steps": 96499996,
+                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-96499996.onnx",
+                "reward": 8.043699672122202,
+                "creation_time": 1733066493.0903678,
                 "auxillary_file_paths": [
-                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-14999996.pt"
+                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-96499996.pt"
                 ]
             },
             {
-                "steps": 15499996,
-                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-15499996.onnx",
-                "reward": 1.0713422298431396,
-                "creation_time": 1732616549.3563788,
+                "steps": 96999952,
+                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-96999952.onnx",
+                "reward": 6.448819626932559,
+                "creation_time": 1733068359.119755,
                 "auxillary_file_paths": [
-                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-15499996.pt"
+                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-96999952.pt"
                 ]
             },
             {
-                "steps": 15999998,
-                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-15999998.onnx",
-                "reward": 1.252518892288208,
-                "creation_time": 1732618689.545674,
+                "steps": 97499910,
+                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-97499910.onnx",
+                "reward": 6.3081032739926695,
+                "creation_time": 1733070207.0891614,
                 "auxillary_file_paths": [
-                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-15999998.pt"
+                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-97499910.pt"
                 ]
             },
             {
-                "steps": 16499998,
-                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-16499998.onnx",
-                "reward": 1.2460615634918213,
-                "creation_time": 1732620870.154192,
+                "steps": 97999952,
+                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-97999952.onnx",
+                "reward": 6.723828265646927,
+                "creation_time": 1733072052.771452,
                 "auxillary_file_paths": [
-                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-16499998.pt"
+                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-97999952.pt"
                 ]
             },
             {
-                "steps": 16999998,
-                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-16999998.onnx",
-                "reward": 1.2099578380584717,
-                "creation_time": 1732623039.1476746,
+                "steps": 98499960,
+                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-98499960.onnx",
+                "reward": 6.67710209025277,
+                "creation_time": 1733073897.4031775,
                 "auxillary_file_paths": [
-                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-16999998.pt"
+                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-98499960.pt"
                 ]
             },
             {
-                "steps": 17499998,
-                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-17499998.onnx",
-                "reward": 1.2034940719604492,
-                "creation_time": 1732625213.7545412,
+                "steps": 98999966,
+                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-98999966.onnx",
+                "reward": 7.03718971966499,
+                "creation_time": 1733075743.6961513,
                 "auxillary_file_paths": [
-                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-17499998.pt"
+                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-98999966.pt"
                 ]
             },
             {
-                "steps": 17999898,
-                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-17999898.onnx",
-                "reward": 3.6776841881614737,
-                "creation_time": 1732627380.6124625,
+                "steps": 99499953,
+                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-99499953.onnx",
+                "reward": 7.793037119231515,
+                "creation_time": 1733077590.0526497,
                 "auxillary_file_paths": [
-                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-17999898.pt"
+                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-99499953.pt"
                 ]
             },
             {
-                "steps": 18499988,
-                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-18499988.onnx",
-                "reward": 2.7898256040098066,
-                "creation_time": 1732629421.184877,
+                "steps": 99999966,
+                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-99999966.onnx",
+                "reward": 9.647317269036384,
+                "creation_time": 1733079438.2008731,
                 "auxillary_file_paths": [
-                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-18499988.pt"
+                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-99999966.pt"
                 ]
             },
             {
-                "steps": 18999952,
-                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-18999952.onnx",
-                "reward": 9.70775318081661,
-                "creation_time": 1732631428.9330425,
+                "steps": 100000078,
+                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-100000078.onnx",
+                "reward": 9.651453061627059,
+                "creation_time": 1733079438.3587356,
                 "auxillary_file_paths": [
-                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-18999952.pt"
+                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-100000078.pt"
                 ]
             },
             {
-                "steps": 19400712,
-                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-19400712.onnx",
-                "reward": 9.02204370860812,
-                "creation_time": 1732633066.4005773,
+                "steps": 100000078,
+                "file_path": "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-100000078.onnx",
+                "reward": null,
+                "creation_time": 1733175573.0622206,
                 "auxillary_file_paths": [
-                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-19400712.pt"
+                    "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-100000078.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 19400712,
+            "steps": 100000078,
             "file_path": "results\\PlatformerRun6.0\\PlatformerAgent.onnx",
-            "reward": 9.02204370860812,
-            "creation_time": 1732633066.4005773,
+            "reward": null,
+            "creation_time": 1733175573.0622206,
             "auxillary_file_paths": [
-                "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-19400712.pt"
+                "results\\PlatformerRun6.0\\PlatformerAgent\\PlatformerAgent-100000078.pt"
             ]
         }
     },

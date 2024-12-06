@@ -223,6 +223,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7398338557370521038, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8265371546771409018, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1
@@ -759,7 +763,7 @@ MonoBehaviour:
   totalCompletions: 0
   completionsForGradualIncrease: 10
   completionsForLevelUpgrade: 100
-  currentDifficulty: 1
+  currentDifficulty: 2
   spikeSpawnChance: 0
   EnemySpawnChance: 0
   numberOfChunks: 4
@@ -1264,7 +1268,7 @@ MonoBehaviour:
   totalCompletions: 0
   completionsForGradualIncrease: 5
   completionsForLevelUpgrade: 100
-  currentDifficulty: 1
+  currentDifficulty: 2
   easyEnemyPrefabs:
   - {fileID: 946920935056350428, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
   - {fileID: 7171921307498121515, guid: e28a98ae6c2d2b644ba81b55e00217e0, type: 3}

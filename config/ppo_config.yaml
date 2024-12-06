@@ -28,7 +28,7 @@ behaviors:
       extrinsic:
         gamma: 0.99
         strength: 1.0
-    init_path: C:\Users\chris\Desktop\581\RoboRacer\EECS581-Platformer\Assets\ML-Agents\PlatformerAgent-100000027.pt
+    # init_path: C:\Users\chris\Desktop\581\RoboRacer\EECS581-Platformer\Assets\ML-Agents\PlatformerAgent-medium_2.pt
     keep_checkpoints: 10
     checkpoint_interval: 500000
     max_steps: 100000000

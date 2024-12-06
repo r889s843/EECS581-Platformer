@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour
         Hard
     }
 
-    public Difficulty currentDifficulty = Difficulty.Medium;  // Current game difficulty
+    public Difficulty currentDifficulty = Difficulty.Hard;  // Current game difficulty
 
     public static int selectedDifficulty = 1;   // Player's selected difficulty
 
@@ -88,6 +88,21 @@ public class LevelManager : MonoBehaviour
             }
             // ProcGen.Instance.OnLevelCompleted();
             // ProcGen.Instance.GenerateNewLevel();
+        }
+        if (scene.name == "Freerun")
+        {
+            // Instead of ProcGen, find your freerun manager class
+            // For example, if you created a FreerunManager script:
+            FreerunProcGen freerunManager = FindObjectOfType<FreerunProcGen>();
+            if (freerunManager != null)
+            {
+                currentDifficulty = (Difficulty)selectedDifficulty; 
+                freerunManager.StartFreeRunMode(); // Call a method to begin freerun mode
+            }
+            else
+            {
+                Debug.LogError("FreerunManager not found in the scene.");
+            }
         }
     }
 
