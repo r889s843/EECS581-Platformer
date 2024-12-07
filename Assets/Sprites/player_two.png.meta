@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: e31d7764e52cbf34a94a4971cc3e4b60
+guid: bbb6e0641ece2413fa490df8e6a7860d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1560670181747891437
-    second: City Background_0
+      213: -3564301888315330258
+    second: player_two_0
+  - first:
+      213: 1240574307652717326
+    second: player_two_1
+  - first:
+      213: 5042591121900502749
+    second: player_two_2
+  - first:
+      213: 4534258427592571268
+    second: player_two_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +46,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +84,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,23 +109,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: City Background_0
+      name: player_two_idle
       rect:
         serializedVersion: 2
-        x: 0
+        x: 3
         y: 0
-        width: 1120
-        height: 614
+        width: 11
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3136f5d0db2675ae0800000000000000
-      internalID: -1560670181747891437
+      spriteID: e21f5ba215e098ec0800000000000000
+      internalID: -3564301888315330258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_two_run_0
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 0
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0bcd1d82c7673110800000000000000
+      internalID: 1240574307652717326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_two_run_1
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 0
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddefa6898e1eaf540800000000000000
+      internalID: 5042591121900502749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_two_jump
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 0
+        width: 11
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 489f970340cecee30800000000000000
+      internalID: 4534258427592571268
       vertices: []
       indices: 
       edges: []
@@ -125,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5772bb444549842229d665c12be1b8d7
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      City Background_0: -1560670181747891437
+      player_two_idle: -3564301888315330258
+      player_two_jump: 4534258427592571268
+      player_two_run_0: 1240574307652717326
+      player_two_run_1: 5042591121900502749
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -47,6 +47,9 @@ public class Player2Movement : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        walkAudioSource = audioSources[0]; // Assign the first AudioSource component to walkAudioSource
+        jumpAudioSource = audioSources[1]; // Assign the second AudioSource component to jumpAudioSource
     }
 
     // Update is called once per frame
@@ -145,6 +148,12 @@ public class Player2Movement : MonoBehaviour
 
         // Update animations
         animator.SetFloat("Speed", Mathf.Abs(body.linearVelocity.x));
+
+        // Play walk sound if moving on the ground
+        if (grounded == 0 && Mathf.Abs(horizontalInput) > 0.01f && !walkAudioSource.isPlaying)
+        {
+            walkAudioSource.Play();        
+        }
     }
 
     //makes the player jump
@@ -153,7 +162,7 @@ public class Player2Movement : MonoBehaviour
         body.linearVelocity = jumpForce;
         animator.SetBool("isJumping", true);
 
-        //jumpAudioSource.PlayOneShot(jumpAudioSource.clip);
+        jumpAudioSource.PlayOneShot(jumpAudioSource.clip);
 
         if (isWallJump)
         {
