@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
 
     void OnModeChanged(int index)
     {
+        subMenuDropdown.gameObject.SetActive(true);
         subMenuDropdown.ClearOptions(); // clear options
         subMenuDropdown.onValueChanged.RemoveAllListeners();    // clear listeners
         if (modeDropdown.options[index].text == "Levels") { //  if levels is selected
@@ -27,6 +28,9 @@ public class MainMenu : MonoBehaviour
         else if (modeDropdown.options[index].text == "Procedural") {    // if procedural is selected
             subMenuDropdown.AddOptions(new System.Collections.Generic.List<string> { "Easy", "Medium", "Hard" });   // add difficulty options
             subMenuDropdown.onValueChanged.AddListener(OnDifficultyChanged);    // add difficulty listener
+        }
+        else if (modeDropdown.options[index].text == "Freerun") {
+            subMenuDropdown.gameObject.SetActive(false);
         }
     }
 
@@ -38,12 +42,14 @@ public class MainMenu : MonoBehaviour
     void OnStartGame()
     {
         if (modeDropdown.options[modeDropdown.value].text == "Levels") {
-            int levelIndex = subMenuDropdown.value + 1; // save selected level
-            SceneManager.LoadScene(levelIndex); // load selected level
+            SceneManager.LoadScene(subMenuDropdown.value + 1); // load selected level
         }
         else if (modeDropdown.options[modeDropdown.value].text == "Procedural") {
             LevelManager.selectedDifficulty = selectedDifficulty; // pass selected difficulty to ProcGen.cs
             SceneManager.LoadScene(7); // load procedural level
+        }
+        else if (modeDropdown.options[modeDropdown.value].text == "Freerun") {
+            SceneManager.LoadScene(8); // load freerun level
         }
     }
 }
