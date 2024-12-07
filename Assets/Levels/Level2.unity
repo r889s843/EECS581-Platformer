@@ -2400,6 +2400,11 @@ MonoBehaviour:
   player: {fileID: 0}
   aheadDistance: 3
   aboveDistance: 0.5
+  player2Active: 0
+  edgeBuffer: 2
+  minZoom: 5
+  maxZoom: 20
+  zoomSpeed: 0.2
 --- !u!1 &556293522
 GameObject:
   m_ObjectHideFlags: 0
