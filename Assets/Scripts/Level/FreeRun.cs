@@ -1,3 +1,9 @@
+// FreeRun.cs
+// Authors: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 12/05/2024
+// Course: EECS 581
+// Purpose: FreeRun mode generator with Dynamic Difficulty Adjustment
+
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
