@@ -10,6 +10,11 @@ public class Player2Movement : MonoBehaviour
     private BoxCollider2D boxCollider; //this player's box collider
     [SerializeField] private LayerMask groundLayer; //ground layer mask for raycast collision detection
 
+    //animation
+    public Animator animator;
+    private AudioSource walkAudioSource;
+    private AudioSource jumpAudioSource;
+
     private float horizontalInput;//keyboard input for horizontal movement
     private bool jumpInput;//keyboard input for jumping
     private int grounded; //holds returned value of onGround() -> 0 for floor, 1 for left wall, 2 for right wall, -1 for none
@@ -59,6 +64,7 @@ public class Player2Movement : MonoBehaviour
         {
             body.gravityScale = 5;
             wallJumping = false;
+            animator.SetBool("isJumping", false);
         }
 
         // Handle wall jump timer
@@ -137,13 +143,15 @@ public class Player2Movement : MonoBehaviour
         else if (horizontalInput < -0.01f)
             transform.localScale = new Vector3(-1, 1, 1);
 
+        // Update animations
+        animator.SetFloat("Speed", Mathf.Abs(body.linearVelocity.x));
     }
 
     //makes the player jump
     private void Jump(Vector2 jumpForce, bool isWallJump = false)
     {
         body.linearVelocity = jumpForce;
-        //animator.SetBool("isJumping", true);
+        animator.SetBool("isJumping", true);
 
         //jumpAudioSource.PlayOneShot(jumpAudioSource.clip);
 
