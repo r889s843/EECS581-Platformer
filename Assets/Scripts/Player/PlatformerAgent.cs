@@ -27,6 +27,7 @@ public class PlatformerAgent : Agent
     // Completion tracking
     public int levelCompletionThreshold = 100; // Number of times to complete the level before moving on
     private int currentLevelCompletions = 0; // Tracks how many times the current level has been completed
+    public LivesUI livesUI;
 
     public override void Initialize()
     {
@@ -189,6 +190,7 @@ public class PlatformerAgent : Agent
         {
             SetReward(-1.0f);  // Negative reward for dying or hitting a hazard
             // Debug.Log($"Agent Died. Final reward: {GetCumulativeReward()}");
+            livesUI.LoseLifeP1();
             EndEpisode(); // End the episode
         }
     }

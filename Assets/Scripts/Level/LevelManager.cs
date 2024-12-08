@@ -91,8 +91,7 @@ public class LevelManager : MonoBehaviour
         }
         if (scene.name == "Freerun")
         {
-            // Instead of ProcGen, find your freerun manager class
-            // For example, if you created a FreerunManager script:
+            // Instead of ProcGen, find freerun manager class
             FreerunProcGen freerunManager = FindObjectOfType<FreerunProcGen>();
             if (freerunManager != null)
             {
@@ -111,6 +110,27 @@ public class LevelManager : MonoBehaviour
     {
         SceneManager.LoadScene(sceneIndex);
     }
+
+    public void CheckLivesCondition(bool p2, int livesP1, int livesP2)
+    {
+        if (!p2)
+        {
+            // Single player: if P1 has 0 lives, load main menu
+            if (livesP1 <= 0)
+            {
+                LoadScene("Main Menu");
+            }
+        }
+        else
+        {
+            // Co-op: if both P1 and P2 have 0 lives, load main menu
+            if (livesP1 <= 0 && livesP2 <= 0)
+            {
+                LoadScene("Main Menu");
+            }
+        }
+    }
+
 
     // Method to handle level completion
     public void LevelCompleted(string sceneName)
