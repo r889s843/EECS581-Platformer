@@ -65,7 +65,7 @@ public class LivesUI : MonoBehaviour
         Lives3.enabled = (currentLivesP1 >= 3);
     }
 
-    private void UpdateLivesDisplayP2()
+    public void UpdateLivesDisplayP2()
     {
         // Only update if P2 is active
         if (P2) {

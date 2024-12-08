@@ -19,12 +19,13 @@ public class LevelTimer : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
 
-            // Convert elapsedTime to minutes and seconds
+            // Convert elapsedTime to minutes, seconds, and milliseconds
             int minutes = Mathf.FloorToInt(elapsedTime / 60f);
             int seconds = Mathf.FloorToInt(elapsedTime % 60f);
+            int milliseconds = Mathf.FloorToInt((elapsedTime * 1000f) % 1000f);
 
-            // Update UI text
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            // Update UI text with milliseconds
+            timerText.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
         }
     }
 
