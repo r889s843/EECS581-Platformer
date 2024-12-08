@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     public TMP_Dropdown subMenuDropdown;
     public TMP_Dropdown coopDropdown;
     public GameObject startButton;
+    public GameObject[] leaderboardTabs;
 
     private int coopTrigger = 0;
     private int selectedDifficulty = 1;
@@ -22,6 +23,11 @@ public class MainMenu : MonoBehaviour
 
     void OnModeChanged(int index)
     {
+        foreach (GameObject go in leaderboardTabs)
+        {
+            go.SetActive(false);
+        }
+        leaderboardTabs[index].SetActive(true);
         subMenuDropdown.gameObject.SetActive(true);
         subMenuDropdown.ClearOptions(); // clear options
         subMenuDropdown.onValueChanged.RemoveAllListeners();    // clear listeners
