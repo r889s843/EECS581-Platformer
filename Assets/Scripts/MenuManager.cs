@@ -6,13 +6,16 @@ public class MainMenu : MonoBehaviour
 {
     public TMP_Dropdown modeDropdown;
     public TMP_Dropdown subMenuDropdown;
+    public TMP_Dropdown coopDropdown;
     public GameObject startButton;
 
-    private int selectedDifficulty = 0;
+    private int coopTrigger = 0;
+    private int selectedDifficulty = 1;
 
     void Start()
     {
         modeDropdown.onValueChanged.AddListener(OnModeChanged); // add listener for selecting mode
+        coopDropdown.onValueChanged.AddListener(OnPlayerCountChanged); // add listener for selecting coop
         subMenuDropdown.AddOptions(new System.Collections.Generic.List<string> { "1", "2", "3", "4", "5", "6" });   // subDropdown starts with level select
         startButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(OnStartGame); // initialize start button
     }
@@ -39,16 +42,26 @@ public class MainMenu : MonoBehaviour
         selectedDifficulty = index; // get selected difficulty
     }
 
+    void OnPlayerCountChanged(int index)
+    {
+        coopTrigger = index;
+    }
+
     void OnStartGame()
     {
+        Debug.Log($"coopTrigger set to: {coopTrigger}");
+        CoOpInitialize.coopTrigger = coopTrigger;
         if (modeDropdown.options[modeDropdown.value].text == "Levels") {
+            CoOpInitialize.coopTrigger = coopTrigger;
             SceneManager.LoadScene(subMenuDropdown.value + 1); // load selected level
         }
         else if (modeDropdown.options[modeDropdown.value].text == "Procedural") {
+            CoOpInitialize.coopTrigger = coopTrigger;
             LevelManager.selectedDifficulty = selectedDifficulty; // pass selected difficulty to ProcGen.cs
             SceneManager.LoadScene(7); // load procedural level
         }
         else if (modeDropdown.options[modeDropdown.value].text == "Freerun") {
+            CoOpInitialize.coopTrigger = coopTrigger;
             SceneManager.LoadScene(8); // load freerun level
         }
     }

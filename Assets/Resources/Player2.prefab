@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6203177291145748219}
   - component: {fileID: 387778630211355110}
   - component: {fileID: -5488662337156678649}
+  - component: {fileID: -6943250655177102551}
   - component: {fileID: 3447700597411594962}
   - component: {fileID: 717614621336302790}
   - component: {fileID: 3989689401576552297}
@@ -32,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 6061905224598523987}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.43404007, y: -0.8456393, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -191,6 +192,18 @@ MonoBehaviour:
   jumpHeightBonus: 0
   wallJumpX: 10
   wallJumpY: 20
+--- !u!114 &-6943250655177102551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6061905224598523987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04c744cd70b595e43a55881fcf3d4ac3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &3447700597411594962
 Animator:
   serializedVersion: 7
