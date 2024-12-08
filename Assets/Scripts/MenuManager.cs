@@ -9,6 +9,8 @@ public class MainMenu : MonoBehaviour
     public TMP_Dropdown coopDropdown;
     public GameObject startButton;
     public GameObject[] leaderboardTabs;
+    public GameObject[] levelTabs;
+    public GameObject[] difficultyTabs;
 
     private int coopTrigger = 0;
     private int selectedDifficulty = 1;
@@ -16,6 +18,7 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         modeDropdown.onValueChanged.AddListener(OnModeChanged); // add listener for selecting mode
+        subMenuDropdown.onValueChanged.AddListener(OnLevelChanged);
         coopDropdown.onValueChanged.AddListener(OnPlayerCountChanged); // add listener for selecting coop
         subMenuDropdown.AddOptions(new System.Collections.Generic.List<string> { "1", "2", "3", "4", "5", "6" });   // subDropdown starts with level select
         startButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(OnStartGame); // initialize start button
@@ -23,9 +26,9 @@ public class MainMenu : MonoBehaviour
 
     void OnModeChanged(int index)
     {
-        foreach (GameObject go in leaderboardTabs)
+        foreach (GameObject leaderboard in leaderboardTabs)
         {
-            go.SetActive(false);
+            leaderboard.SetActive(false);
         }
         leaderboardTabs[index].SetActive(true);
         subMenuDropdown.gameObject.SetActive(true);
@@ -33,6 +36,7 @@ public class MainMenu : MonoBehaviour
         subMenuDropdown.onValueChanged.RemoveAllListeners();    // clear listeners
         if (modeDropdown.options[index].text == "Levels") { //  if levels is selected
             subMenuDropdown.AddOptions(new System.Collections.Generic.List<string> { "1", "2", "3", "4", "5", "6" });   // add level options
+            subMenuDropdown.onValueChanged.AddListener(OnLevelChanged);
         }
         else if (modeDropdown.options[index].text == "Procedural") {    // if procedural is selected
             subMenuDropdown.AddOptions(new System.Collections.Generic.List<string> { "Easy", "Medium", "Hard" });   // add difficulty options
@@ -46,6 +50,20 @@ public class MainMenu : MonoBehaviour
     void OnDifficultyChanged(int index)
     {
         selectedDifficulty = index; // get selected difficulty
+        foreach (GameObject difficulty in difficultyTabs)
+        {
+            difficulty.SetActive(false);
+        }
+        difficultyTabs[index].SetActive(true);
+    }
+
+    void OnLevelChanged(int index)
+    {
+        foreach (GameObject level in levelTabs)
+        {
+            level.SetActive(false);
+        }
+        levelTabs[index].SetActive(true);
     }
 
     void OnPlayerCountChanged(int index)
