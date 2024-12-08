@@ -79,4 +79,12 @@ public class CameraController : MonoBehaviour
 
         return zoom;
     }
+
+    public void UpdateCameraTarget(Transform newPlayer, Transform newPlayer2 = null)
+    {
+        player = newPlayer;
+        player2 = newPlayer2;
+        player2Active = newPlayer2 != null;
+    }
+
 }

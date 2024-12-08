@@ -170,17 +170,52 @@ public class LevelManager : MonoBehaviour
             PlayerPrefs.SetInt("TotalCompletions", totalCompletions);
             PlayerPrefs.Save();
 
-            LevelTimer timer = FindObjectOfType<LevelTimer>();
-            timer.StopTimer();
-            float bestTime = timer.GetFinalTime();
-
-            PlayerPrefs.SetFloat("BestTime", bestTime);
-            PlayerPrefs.Save();
-
-
             // Load main menu or handle end-of-run flow
             LoadScene("Main Menu");
         }
+        else if (p2 && livesP1 <= 0 && livesP2 > 0)
+        {
+            // Destroy Player1 if Player1 is out of lives
+            GameObject player1 = GameObject.FindGameObjectWithTag("Player");
+            if (player1 != null)
+            {
+                Destroy(player1);
+
+                // Update camera to focus only on Player2
+                Camera mainCamera = Camera.main;
+                if (mainCamera != null)
+                {
+                    CameraController cameraController = mainCamera.GetComponent<CameraController>();
+                    GameObject player2 = GameObject.FindGameObjectWithTag("Player2");
+                    if (cameraController != null && player2 != null)
+                    {
+                        cameraController.UpdateCameraTarget(player2.transform);
+                    }
+                }
+            }
+        }
+        else if (p2 && livesP1 > 0 && livesP2 <= 0)
+        {
+            // Destroy Player2 if Player2 is out of lives
+            GameObject player2 = GameObject.FindGameObjectWithTag("Player2");
+            if (player2 != null)
+            {
+                Destroy(player2);
+
+                // Update camera to focus only on Player1
+                Camera mainCamera = Camera.main;
+                if (mainCamera != null)
+                {
+                    CameraController cameraController = mainCamera.GetComponent<CameraController>();
+                    GameObject player1 = GameObject.FindGameObjectWithTag("Player");
+                    if (cameraController != null && player1 != null)
+                    {
+                        cameraController.UpdateCameraTarget(player1.transform);
+                    }
+                }
+            }
+        }
+
         else if (p2 && livesP1 <= 0 && livesP2 <= 0)
         {
             // Co-op mode end
@@ -195,13 +230,6 @@ public class LevelManager : MonoBehaviour
             }
 
             PlayerPrefs.SetInt("TotalCompletions", totalCompletions);
-            PlayerPrefs.Save();
-
-            LevelTimer timer = FindObjectOfType<LevelTimer>();
-            timer.StopTimer();
-            float bestTime = timer.GetFinalTime();
-
-            PlayerPrefs.SetFloat("BestTime", bestTime);
             PlayerPrefs.Save();
 
             // UpdateLeaderboardUI(finalDistance);
@@ -271,6 +299,15 @@ public class LevelManager : MonoBehaviour
     
     else if (sceneName == "Level6")
         {
+            LevelTimer timer = FindObjectOfType<LevelTimer>();
+            timer.StopTimer();
+            float currentTime = timer.GetFinalTime();
+
+            // update leaderboard if time is less
+            float bestTime = PlayerPrefs.GetFloat("BestTime", 0f);
+            bestTime = Mathf.Min(bestTime, currentTime);
+            PlayerPrefs.SetFloat("BestTime", bestTime);
+            PlayerPrefs.Save();
             LoadScene("Main Menu");
         }
     else {

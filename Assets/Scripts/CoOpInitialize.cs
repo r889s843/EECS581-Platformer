@@ -22,6 +22,9 @@ public class CoOpInitialize : MonoBehaviour
     void Update()
     {
         if(coopTrigger == 1  && !activated) {
+            GameObject aiObject = GameObject.FindGameObjectWithTag("AI");
+            Destroy(aiObject);
+
             player2 = Instantiate(player2Prefab, new Vector3(3,2,0), Quaternion.identity) as GameObject;
             activated = true;
 
