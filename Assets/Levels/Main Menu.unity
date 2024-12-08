@@ -2017,8 +2017,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00460a886917fdf4c87ddffe6e875f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  T_Name: {fileID: 191414589}
-  T_Time: {fileID: 2042399683}
+  Freerun_Name: {fileID: 191414589}
+  Freerun_Time: {fileID: 2042399683}
+  ProcGen_Name: {fileID: 683090330}
+  ProcGen_Time: {fileID: 902317669}
+  Story_Name: {fileID: 1023934488}
+  Story_Time: {fileID: 1250208893}
 --- !u!4 &667291967
 Transform:
   m_ObjectHideFlags: 0

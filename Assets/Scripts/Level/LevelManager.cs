@@ -4,6 +4,7 @@
 // Course: EECS 581
 // Purpose: Level Manager
 
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -75,10 +76,14 @@ public class LevelManager : MonoBehaviour
 
         if (scene.name == "Main Menu"){
             float bestDist = PlayerPrefs.GetFloat("BestDistance", 0f);
+            float bestTime = PlayerPrefs.GetFloat("BestTime", 0f);
+            int totalCompletions = PlayerPrefs.GetInt("TotalCompletions", 0);
             LeaderboardUI leaderboardUI = FindObjectOfType<LeaderboardUI>();
             if (leaderboardUI != null)
             {
                 leaderboardUI.UpdateFreerunLeaderboard(bestDist);
+                leaderboardUI.UpdateProcGenLeaderboard(totalCompletions);
+                leaderboardUI.UpdateStoryLeaderboard(bestTime);
             }
             else
             {
@@ -162,6 +167,17 @@ public class LevelManager : MonoBehaviour
             // Now you can trigger the Leaderboard UI update if needed
             // UpdateLeaderboardUI(finalDistance);
 
+            PlayerPrefs.SetInt("TotalCompletions", totalCompletions);
+            PlayerPrefs.Save();
+
+            LevelTimer timer = FindObjectOfType<LevelTimer>();
+            timer.StopTimer();
+            float bestTime = timer.GetFinalTime();
+
+            PlayerPrefs.SetFloat("BestTime", bestTime);
+            PlayerPrefs.Save();
+
+
             // Load main menu or handle end-of-run flow
             LoadScene("Main Menu");
         }
@@ -177,6 +193,16 @@ public class LevelManager : MonoBehaviour
                 PlayerPrefs.SetFloat("BestDistance", finalDistance);
                 PlayerPrefs.Save();
             }
+
+            PlayerPrefs.SetInt("TotalCompletions", totalCompletions);
+            PlayerPrefs.Save();
+
+            LevelTimer timer = FindObjectOfType<LevelTimer>();
+            timer.StopTimer();
+            float bestTime = timer.GetFinalTime();
+
+            PlayerPrefs.SetFloat("BestTime", bestTime);
+            PlayerPrefs.Save();
 
             // UpdateLeaderboardUI(finalDistance);
             LoadScene("Main Menu");
