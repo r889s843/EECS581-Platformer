@@ -72,6 +72,20 @@ public class LevelManager : MonoBehaviour
     // This method is called every time a new scene is loaded
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+
+        if (scene.name == "Main Menu"){
+            float bestDist = PlayerPrefs.GetFloat("BestDistance", 0f);
+            LeaderboardUI leaderboardUI = FindObjectOfType<LeaderboardUI>();
+            if (leaderboardUI != null)
+            {
+                leaderboardUI.UpdateFreerunLeaderboard(bestDist);
+            }
+            else
+            {
+                Debug.LogWarning("LeaderboardUI not found in the Main Menu scene.");
+            }
+        }
+
         // Check if the loaded scene is one where you want to generate a level
         if (scene.name == "Test") // Replace "Test" with your scene name
         {
@@ -111,25 +125,64 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(sceneIndex);
     }
 
+    // private void UpdateLeaderboardUI(float finalDistance)
+    // {
+    //     float bestDist = PlayerPrefs.GetFloat("BestDistance", 0f);
+
+    //     LeaderboardUI leaderboardUI = FindObjectOfType<LeaderboardUI>();
+    //     if (leaderboardUI != null)
+    //     {
+    //         // Update the leaderboard with the bestDist
+    //         leaderboardUI.UpdateFreerunLeaderboard(bestDist);
+    //     }
+    //     else
+    //     {
+    //         Debug.LogWarning("LeaderboardUI not found in the scene.");
+    //     }
+    // }
+
+
     public void CheckLivesCondition(bool p2, int livesP1, int livesP2)
     {
-        if (!p2)
+        // If single player and P1 is out of lives
+        if (!p2 && livesP1 <= 0)
         {
-            // Single player: if P1 has 0 lives, load main menu
-            if (livesP1 <= 0)
+            // Get the player's final distance
+            FreerunProcGen freerunManager = FindObjectOfType<FreerunProcGen>();
+            float finalDistance = freerunManager != null ? freerunManager.playerDistance : 0f;
+
+            // Compare with stored best distance
+            float currentBest = PlayerPrefs.GetFloat("BestDistance", 0f);
+            if (finalDistance > currentBest)
             {
-                LoadScene("Main Menu");
+                PlayerPrefs.SetFloat("BestDistance", finalDistance);
+                PlayerPrefs.Save(); // Ensure data is written to disk
             }
+
+            // Now you can trigger the Leaderboard UI update if needed
+            // UpdateLeaderboardUI(finalDistance);
+
+            // Load main menu or handle end-of-run flow
+            LoadScene("Main Menu");
         }
-        else
+        else if (p2 && livesP1 <= 0 && livesP2 <= 0)
         {
-            // Co-op: if both P1 and P2 have 0 lives, load main menu
-            if (livesP1 <= 0 && livesP2 <= 0)
+            // Co-op mode end
+            FreerunProcGen freerunManager = FindObjectOfType<FreerunProcGen>();
+            float finalDistance = freerunManager != null ? freerunManager.playerDistance : 0f;
+
+            float currentBest = PlayerPrefs.GetFloat("BestDistance", 0f);
+            if (finalDistance > currentBest)
             {
-                LoadScene("Main Menu");
+                PlayerPrefs.SetFloat("BestDistance", finalDistance);
+                PlayerPrefs.Save();
             }
+
+            // UpdateLeaderboardUI(finalDistance);
+            LoadScene("Main Menu");
         }
     }
+
 
 
     // Method to handle level completion

@@ -31,14 +31,14 @@ public class FreerunProcGen : MonoBehaviour
 
     [Header("Enemy Settings")]
     public List<GameObject> enemyPrefabs; 
-    public float baseEnemySpawnChance = 0.1f; 
+    public float baseEnemySpawnChance = 0.0f; 
     public float maxEnemySpawnChance = 0.6f;  
     public float difficultyIncrementDistance = 100f; 
-    public float difficultyStep = 0.05f;      
+    public float enemyDifficultyStep = 0.05f;
+    public float spikeDifficultyStep = 0.01f;
 
     [Header("Distance Tracking")]
     public float playerDistance = 0f; 
-    private float bestDistance = 0f; 
     
     [Header("Generation Logic")]
     public float chunkSpawnThreshold = 15f; 
@@ -61,7 +61,7 @@ public class FreerunProcGen : MonoBehaviour
     float pWallJump = 0.2f;  
 
     float spikeSpawnChance = 0.0f;
-    float maxSpikeSpawnChance = 0.3f;
+    float maxSpikeSpawnChance = 0.2f;
 
     [System.Serializable]
     public class GeneratedChunk {
@@ -73,7 +73,9 @@ public class FreerunProcGen : MonoBehaviour
 
     private List<GeneratedChunk> generatedChunks = new List<GeneratedChunk>();
 
-    public float cleanupDistance = 50f; 
+    public float cleanupDistance = 50f;
+
+    public TMPro.TextMeshProUGUI distanceText;
 
     private void Start()
     {
@@ -198,6 +200,13 @@ public class FreerunProcGen : MonoBehaviour
             playerDistance = playerX;
         }
 
+        float previousBest = PlayerPrefs.GetFloat("BestDistance", 0f);
+        if (distanceText != null)
+        {
+            distanceText.text = $"Distance: {playerDistance:F2}\nBest: {previousBest:F2}";
+        }
+
+
         if (playerX + chunkSpawnThreshold > lastPlatformEndX)
         {
             Vector2 endPos;
@@ -289,7 +298,7 @@ public class FreerunProcGen : MonoBehaviour
         float finalY = currentY;
         chunk.endX = finalX;
 
-        if (spikeSpawnChance < Random.value)
+        if (Random.value < spikeSpawnChance)
         {
             // Spawn spikes near the end of platform (example)
             SpawnSpikes(chunk, finalX - 2f, finalX, finalY);
@@ -605,25 +614,11 @@ public class FreerunProcGen : MonoBehaviour
 
     private void IncreaseDifficulty()
     {
-        currentEnemySpawnChance = Mathf.Min(currentEnemySpawnChance + difficultyStep, maxEnemySpawnChance);
-        spikeSpawnChance = Mathf.Min(spikeSpawnChance + difficultyStep, maxSpikeSpawnChance);
+        currentEnemySpawnChance = Mathf.Min(currentEnemySpawnChance + enemyDifficultyStep, maxEnemySpawnChance);
+        spikeSpawnChance = Mathf.Min(spikeSpawnChance + spikeDifficultyStep, maxSpikeSpawnChance);
         Debug.Log($"Difficulty increased. Enemy Spawn Chance: {currentEnemySpawnChance}, Spike Spawn Chance: {spikeSpawnChance}, Distance: {playerDistance}");
     }
 
-    public void OnPlayerDeath()
-    {
-        playerAlive = false;
-        float previousBest = PlayerPrefs.GetFloat("BestDistance", 0f);
-        if (playerDistance > previousBest)
-        {
-            PlayerPrefs.SetFloat("BestDistance", playerDistance);
-            Debug.Log("New Best Distance: " + playerDistance);
-        }
-        else
-        {
-            Debug.Log("Distance: " + playerDistance + ", Best: " + previousBest);
-        }
-    }
 
     private bool NoMomentumJumpTest(float ground_x, float ground_y)
     {
