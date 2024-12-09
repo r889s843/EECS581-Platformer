@@ -4,6 +4,8 @@
 # RoboRacing
 Side scroller platforming game with procedurally generated levels and AI to compete with. Created by Chris Harvey, Henry Chaffin, Ian Collins, Kenny Meade, & Ryan Strong.
 
+The game can be played by running ./Game/EECS581-Platformer.exe
+
 ## Installation
 
 Use the following command to create the required conda environment:
