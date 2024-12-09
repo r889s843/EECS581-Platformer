@@ -3,36 +3,39 @@
 // Date: 11/01/2024
 // Course: EECS 581
 // Purpose: Level Generator with Dynamic Difficulty Adjustment
+
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 
 public class ProcGen : MonoBehaviour
 {
+    // Singleton instance
     public static ProcGen Instance { get; private set; }
 
-    public GameObject wallPrefab;        
-    public GameObject flagPrefab;        
-    public GameObject deathZonePrefab;   
+    // Prefabs for various game objects
+    public GameObject wallPrefab;        // Prefab for walls
+    public GameObject flagPrefab;        // Prefab for the flag at the end of the level
+    public GameObject deathZonePrefab;   // Prefab for the death zone area
 
-    public Tilemap groundTilemap;        
-    public Tilemap hazardTilemap;        
+    // Tilemap references for ground and hazards
+    public Tilemap groundTilemap;        // Tilemap for ground tiles
+    public Tilemap hazardTilemap;        // Tilemap for hazard tiles
 
-    public TileBase leftTile;            
-    public TileBase centerTile;          
-    public TileBase rightTile;           
-    public TileBase spikeTile;           
+    // Tile references for different parts of platforms and hazards
+    public TileBase leftTile;            // Tile for the left end of a platform
+    public TileBase centerTile;          // Tile for the center of a platform
+    public TileBase rightTile;           // Tile for the right end of a platform
+    public TileBase spikeTile;           // Spike/hazard tile
 
-    public int numberOfChunks = 4;       
-    public float startX = 0f;            
-    public float startY = 0f;            
-    public float minY = -10f;            
-    public float maxY = 20f;             
+    // Platform generation settings
+    public int numberOfChunks = 4;       // Number of chunks to generate per level
+    public float startX = 0f;            // Starting X position for level generation
+    public float startY = 0f;            // Starting Y position for level generation
+    public float minY = -10f;            // Minimum Y position for platforms
+    public float maxY = 20f;             // Maximum Y position for platforms
 
-    // public int totalCompletions = 0;
-    // public int completionsForGradualIncrease = 5; 
-    // public int completionsForLevelUpgrade = 100;  
-
+    // Difficulty levels enumeration
     public enum Difficulty
     {
         Easy,
@@ -40,46 +43,49 @@ public class ProcGen : MonoBehaviour
         Hard
     }
 
-    public Difficulty currentDifficulty = Difficulty.Hard;  
+    public Difficulty currentDifficulty = Difficulty.Hard; // Current game difficulty
 
-    public List<GameObject> easyEnemyPrefabs;
-    public List<GameObject> mediumEnemyPrefabs;
-    public List<GameObject> hardEnemyPrefabs;
+    // Enemy prefabs categorized by difficulty
+    public List<GameObject> easyEnemyPrefabs;    // Enemy prefabs for Easy difficulty
+    public List<GameObject> mediumEnemyPrefabs;  // Enemy prefabs for Medium difficulty
+    public List<GameObject> hardEnemyPrefabs;    // Enemy prefabs for Hard difficulty
 
+    // Spawn chance settings
     [Range(0f, 1f)]
-    public float spikeSpawnChance = 0f;
-
+    public float spikeSpawnChance = 0f;          // Chance to spawn spikes
     [Range(0f, 1f)]
-    public float EnemySpawnChance = 0f;
+    public float EnemySpawnChance = 0f;          // Chance to spawn enemies
 
+    // List to keep track of all generated objects in the level
     private List<GameObject> generatedObjects = new List<GameObject>();
 
     private void Awake()
     {
+        // Singleton pattern to ensure only one instance exists
         if (Instance == null)
         {
             Instance = this;
-            // DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject); // Uncomment to persist across scenes
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // Destroy duplicate instances
         }
     }
 
     private void Start()
     {
-        GenerateNewLevel();
+        GenerateNewLevel(); // Begin level generation when the game starts
     }
 
     public void GenerateNewLevel()
     {
-        ClearExistingLevel();
+        ClearExistingLevel(); // Clear any previously generated level
 
-        Vector2 initialPlatformEnd = CreateInitialPlatform();
-        float x = initialPlatformEnd.x;      
-        float y = initialPlatformEnd.y;      
-        float minYReached = y;               
+        Vector2 initialPlatformEnd = CreateInitialPlatform(); // Create the initial platform
+        float x = initialPlatformEnd.x;      // Current X position for generation
+        float y = initialPlatformEnd.y;      // Current Y position for generation
+        float minYReached = y;               // Track the minimum Y reached
 
         // Retrieve current difficulty settings from LevelManager
         Difficulty currentDifficulty = (Difficulty)LevelManager.Instance.currentDifficulty;
@@ -87,116 +93,121 @@ public class ProcGen : MonoBehaviour
         float spikeSpawnChance = LevelManager.Instance.spikeSpawnChance;
         float EnemySpawnChance = LevelManager.Instance.EnemySpawnChance;
 
+        // Update ProcGen's settings based on LevelManager
         this.currentDifficulty = currentDifficulty;
         this.numberOfChunks = numberOfChunks;
         this.spikeSpawnChance = spikeSpawnChance;
         this.EnemySpawnChance = EnemySpawnChance;
 
+        // Generate the specified number of chunks
         for (int i = 0; i < numberOfChunks; i++)
         {
-            Vector2 newCoords = CreateSafeChunk(x, y);    
-            x = newCoords.x;
-            y = newCoords.y;
+            Vector2 newCoords = CreateSafeChunk(x, y); // Create a safe (non-dangerous) chunk
+            x = newCoords.x; // Update X position
+            y = newCoords.y; // Update Y position
 
-            newCoords = CreateDangerChunk(x, y);          
-            x = newCoords.x;
-            y = newCoords.y;
+            newCoords = CreateDangerChunk(x, y); // Create a dangerous chunk
+            x = newCoords.x; // Update X position
+            y = newCoords.y; // Update Y position
 
-            minYReached = Mathf.Min(minYReached, y);
+            minYReached = Mathf.Min(minYReached, y); // Update the minimum Y reached
         }
 
-        CreateEndChunk(x, y);
-        CreateDeathZone(x, minYReached);
+        CreateEndChunk(x, y); // Create the ending chunk with the flag
+        CreateDeathZone(x, minYReached); // Create the death zone based on the level's end
     }
 
     private void ClearExistingLevel()
     {
-        groundTilemap.ClearAllTiles();
-        hazardTilemap.ClearAllTiles();
+        groundTilemap.ClearAllTiles(); // Clear all ground tiles
+        hazardTilemap.ClearAllTiles(); // Clear all hazard tiles
 
+        // Destroy all generated objects (enemies, walls, etc.)
         foreach (GameObject obj in generatedObjects)
         {
             Destroy(obj);
         }
-        generatedObjects.Clear();
+        generatedObjects.Clear(); // Clear the list of generated objects
     }
 
     private Vector2 CreateInitialPlatform()
     {
-        float currentX = 0f;
-        float currentY = 0f;
+        float currentX = 0f; // Starting X position
+        float currentY = 0f; // Starting Y position
 
-        PaintGroundTile(currentX, currentY, leftTile);
-        currentX += 1f;
-        PaintGroundTile(currentX, currentY, centerTile);
-        currentX += 1f;
-        PaintGroundTile(currentX, currentY, centerTile);
-        currentX += 1f;
-        PaintGroundTile(currentX, currentY, rightTile);
+        // Paint the initial platform tiles
+        PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
+        currentX += 1f; // Move to next position
+        PaintGroundTile(currentX, currentY, centerTile); // Paint center tile
+        currentX += 1f; // Move to next position
+        PaintGroundTile(currentX, currentY, centerTile); // Paint another center tile
+        currentX += 1f; // Move to next position
+        PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
 
-        float finalX = currentX; // right tile is placed at currentX=3f
-        float finalY = currentY;
-        currentX += 1f;
+        float finalX = currentX; // Final X position of the initial platform
+        float finalY = currentY; // Final Y position of the initial platform
+        currentX += 1f; // Move to next position
 
-        return new Vector2(finalX, finalY);
+        return new Vector2(finalX, finalY); // Return the end position of the initial platform
     }
 
     private Vector2 CreateSafeChunk(float x, float y)
     {
-        float currentX = x;
-        float currentY = y;
+        float currentX = x; // Current X position
+        float currentY = y; // Current Y position
 
-        int minPlatformLength = GetMinimumPlatformLength();
-        int platformLength = Random.Range(minPlatformLength, minPlatformLength + 3);
+        int minPlatformLength = GetMinimumPlatformLength(); // Determine minimum platform length based on difficulty
+        int platformLength = Random.Range(minPlatformLength, minPlatformLength + 3); // Randomize platform length
 
+        // Paint the platform tiles
         for (int i = 0; i < platformLength; i++)
         {
             if (platformLength == 2)
             {
                 if (i == 0)
-                    PaintGroundTile(currentX, currentY, leftTile);
+                    PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
                 else
-                    PaintGroundTile(currentX, currentY, rightTile);
+                    PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
             }
             else
             {
                 if (i == 0)
-                    PaintGroundTile(currentX, currentY, leftTile);
+                    PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
                 else if (i == platformLength - 1)
-                    PaintGroundTile(currentX, currentY, rightTile);
+                    PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
                 else
-                    PaintGroundTile(currentX, currentY, centerTile);
+                    PaintGroundTile(currentX, currentY, centerTile); // Paint center tile
             }
-            currentX += 1f;
+            currentX += 1f; // Move to next position
         }
 
-        float finalX = currentX - 1f; // last tile placed at currentX-1f
-        float finalY = currentY;
-        return new Vector2(finalX, finalY);
+        float finalX = currentX - 1f; // Final X position of the platform
+        float finalY = currentY; // Final Y position of the platform
+        return new Vector2(finalX, finalY); // Return the end position of the platform
     }
 
     private Vector2 CreateDangerChunk(float x, float y)
     {
-        // If near max height, spawn downward chunks
+        // Determine if the current Y position is near the maximum allowed height
         bool nearMaxHeight = y >= maxY - 1f;
 
         if (currentDifficulty == Difficulty.Easy)
         {
             if (nearMaxHeight)
             {
-                // Force downward jump if near maxY
+                // Force a downward jump if near maximum height
                 // if (Random.value < 0.5f)
                 return CreateDownJump(x, y);
                 // else
                 //     return CreateWallDownJumpSectionDown(x, y);
             }
-            int randomValue = Random.Range(0, 3);
+            int randomValue = Random.Range(0, 3); // Random value to decide chunk type
             switch (randomValue)
             {
-                case 0: return CreateGap(x, y);
-                case 1: return CreateJump(x, y);
-                case 2: return CreateShortJump(x, y);
-                default: return new Vector2(x, y);
+                case 0: return CreateGap(x, y); // Create a gap
+                case 1: return CreateJump(x, y); // Create a jump
+                case 2: return CreateShortJump(x, y); // Create a short jump
+                default: return new Vector2(x, y); // Default case
             }
         }
         else if (currentDifficulty == Difficulty.Medium)
@@ -204,18 +215,18 @@ public class ProcGen : MonoBehaviour
             if (nearMaxHeight)
             {
                 // if (Random.value < 0.5f)
-                return CreateDownJump(x, y);
+                return CreateDownJump(x, y); // Create a downward jump
                 // else
                 //     return CreateWallDownJumpSectionDown(x, y);
             }
-            int randomValue = Random.Range(0, 4);
+            int randomValue = Random.Range(0, 4); // Random value to decide chunk type
             switch (randomValue)
             {
-                case 0: return CreateGap(x, y);
-                case 1: return CreateJump(x, y);
-                case 2: return CreateShortJump(x, y);
-                case 3: return CreateWallJumpSection(x, y);
-                default: return new Vector2(x, y);
+                case 0: return CreateGap(x, y); // Create a gap
+                case 1: return CreateJump(x, y); // Create a jump
+                case 2: return CreateShortJump(x, y); // Create a short jump
+                case 3: return CreateWallJumpSection(x, y); // Create a wall jump section
+                default: return new Vector2(x, y); // Default case
             }
         }
         else // Difficulty.Hard
@@ -223,434 +234,458 @@ public class ProcGen : MonoBehaviour
             if (nearMaxHeight)
             {
                 // if (Random.value < 0.5f)
-                return CreateDownJump(x, y);
+                return CreateDownJump(x, y); // Create a downward jump
                 // else
                 //     return CreateWallDownJumpSectionDown(x, y);
             }
-            int randomValue = Random.Range(0, 3);
+            int randomValue = Random.Range(0, 3); // Random value to decide chunk type
             switch (randomValue)
             {
-                case 0: return CreateJump(x, y);
-                case 1: return CreateShortJump(x, y);
-                case 2: return CreateWallJumpSection(x, y);
-                default: return new Vector2(x, y);
+                case 0: return CreateJump(x, y); // Create a jump
+                case 1: return CreateShortJump(x, y); // Create a short jump
+                case 2: return CreateWallJumpSection(x, y); // Create a wall jump section
+                default: return new Vector2(x, y); // Default case
             }
         }
     }
 
     private Vector2 CreateGap(float x, float y)
     {
-        float currentX = x;
-        float currentY = y;
+        float currentX = x; // Current X position
+        float currentY = y; // Current Y position
 
-        float gapSize = Random.Range(5f, 8f);
-        while (!NoMomentumJumpTest(gapSize, 0f))
+        float gapSize = Random.Range(5f, 8f); // Determine the size of the gap
+        while (!NoMomentumJumpTest(gapSize, 0f)) // Ensure the gap is jumpable
         {
-            gapSize -= 0.5f;
+            gapSize -= 0.5f; // Decrease gap size if not jumpable
             if (gapSize <= 0f)
             {
-                gapSize = 1f;
+                gapSize = 1f; // Minimum gap size
                 break;
             }
         }
 
-        currentX += gapSize; 
-        float platformStartX = currentX;
+        currentX += gapSize; // Move past the gap
+        float platformStartX = currentX; // Starting X position for the next platform
 
-        int minPlatformLength = GetMinimumPlatformLength();
-        int platformLength = Random.Range(minPlatformLength, minPlatformLength + 2);
+        int minPlatformLength = GetMinimumPlatformLength(); // Determine minimum platform length
+        int platformLength = Random.Range(minPlatformLength, minPlatformLength + 2); // Randomize platform length
 
+        // Paint the platform tiles after the gap
         for (int i = 0; i < platformLength; i++)
         {
             if (platformLength == 2)
             {
                 if (i == 0)
-                    PaintGroundTile(currentX, currentY, leftTile);
+                    PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
                 else
-                    PaintGroundTile(currentX, currentY, rightTile);
+                    PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
             }
             else
             {
                 if (i == 0)
-                    PaintGroundTile(currentX, currentY, leftTile);
+                    PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
                 else if (i == platformLength - 1)
-                    PaintGroundTile(currentX, currentY, rightTile);
+                    PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
                 else
-                    PaintGroundTile(currentX, currentY, centerTile);
+                    PaintGroundTile(currentX, currentY, centerTile); // Paint center tile
             }
-            currentX += 1f;
+            currentX += 1f; // Move to next position
         }
 
-        float finalX = currentX - 1f;
-        float finalY = currentY;
+        float finalX = currentX - 1f; // Final X position of the platform
+        float finalY = currentY; // Final Y position of the platform
 
-        SpawnEnemies(platformStartX, currentX, currentY);
+        SpawnEnemies(platformStartX, currentX, currentY); // Spawn enemies on the platform
 
         if (currentDifficulty != Difficulty.Easy)
         {
-            SpawnSpikes(platformStartX, currentX, currentY);
+            SpawnSpikes(platformStartX, currentX, currentY); // Spawn spikes if difficulty is not Easy
         }
 
-        return new Vector2(finalX, finalY);
+        return new Vector2(finalX, finalY); // Return the end position of the platform
     }
 
     private Vector2 CreateJump(float x, float y)
     {
-        float currentX = x;
-        float deltaY = Random.Range(0, 2) == 0 ? 2f : -2f;
-        float currentY = Mathf.Clamp(y + deltaY, minY, maxY);
+        float currentX = x; // Current X position
+        float deltaY = Random.Range(0, 2) == 0 ? 2f : -2f; // Randomly decide to jump up or down
+        float currentY = Mathf.Clamp(y + deltaY, minY, maxY); // Clamp Y within bounds
 
-        float gapSize = Random.Range(4f, 6f);
-        while (!MomentumJumpTest(gapSize, currentY - y))
+        float gapSize = Random.Range(4f, 6f); // Determine the size of the gap
+        while (!MomentumJumpTest(gapSize, currentY - y)) // Ensure the jump is feasible
         {
-            gapSize -= 0.5f;
+            gapSize -= 0.5f; // Decrease gap size if jump is not feasible
             if (gapSize <= 0f)
             {
-                gapSize = 1f;
+                gapSize = 1f; // Minimum gap size
                 break;
             }
         }
 
-        currentX += gapSize; 
-        int minPlatformLength = GetMinimumPlatformLength();
-        int platformLength = Random.Range(minPlatformLength, minPlatformLength + 2);
+        currentX += gapSize; // Move past the gap
+        int minPlatformLength = GetMinimumPlatformLength(); // Determine minimum platform length
+        int platformLength = Random.Range(minPlatformLength, minPlatformLength + 2); // Randomize platform length
 
-        float platformStartX = currentX;
+        float platformStartX = currentX; // Starting X position for the next platform
+
+        // Paint the elevated platform tiles
         for (int i = 0; i < platformLength; i++)
         {
             if (platformLength == 2)
             {
                 if (i == 0)
-                    PaintGroundTile(currentX, currentY, leftTile);
+                    PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
                 else
-                    PaintGroundTile(currentX, currentY, rightTile);
+                    PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
             }
             else
             {
                 if (i == 0)
-                    PaintGroundTile(currentX, currentY, leftTile);
+                    PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
                 else if (i == platformLength - 1)
-                    PaintGroundTile(currentX, currentY, rightTile);
+                    PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
                 else
-                    PaintGroundTile(currentX, currentY, centerTile);
+                    PaintGroundTile(currentX, currentY, centerTile); // Paint center tile
             }
-            currentX += 1f;
+            currentX += 1f; // Move to next position
         }
 
-        float finalX = currentX - 1f;
-        float finalY = currentY;
+        float finalX = currentX - 1f; // Final X position of the platform
+        float finalY = currentY; // Final Y position of the platform
 
-        SpawnEnemies(platformStartX, currentX, currentY);
-        return new Vector2(finalX, finalY);
+        SpawnEnemies(platformStartX, currentX, currentY); // Spawn enemies on the platform
+        return new Vector2(finalX, finalY); // Return the end position of the platform
     }
 
     private Vector2 CreateShortJump(float x, float y)
     {
-        float currentX = x;
-        float currentY = y;
+        float currentX = x; // Current X position
+        float currentY = y; // Current Y position
 
-        int numPlatforms = Random.Range(2, 4);
+        int numPlatforms = Random.Range(2, 4); // Number of small platforms to create
 
-        for (int i = 0; i < numPlatforms; i++)
+        for (int i = 0; i < numPlatforms; i++) // Create multiple small platforms
         {
-            float gapSize = 2f;
-            float deltaY = Random.Range(-1, 2) * GetMinimumVerticalSpacing();
-            float nextY = Mathf.Clamp(currentY + deltaY, minY, maxY);
+            float gapSize = 2f; // Fixed small gap size
+            float deltaY = Random.Range(-1, 2) * GetMinimumVerticalSpacing(); // Random Y delta for jump
+            float nextY = Mathf.Clamp(currentY + deltaY, minY, maxY); // Clamp Y within bounds
 
-            if (Mathf.Abs(nextY - currentY) < GetMinimumVerticalSpacing())
+            if (Mathf.Abs(nextY - currentY) < GetMinimumVerticalSpacing()) // Ensure sufficient vertical change
             {
-                deltaY = GetMinimumVerticalSpacing() * Mathf.Sign(deltaY);
-                nextY = Mathf.Clamp(currentY + deltaY, minY, maxY);
+                deltaY = GetMinimumVerticalSpacing() * Mathf.Sign(deltaY); // Adjust Y delta
+                nextY = Mathf.Clamp(currentY + deltaY, minY, maxY); // Clamp Y within bounds
             }
 
-            while (!NoMomentumJumpTest(gapSize, nextY - currentY))
+            while (!NoMomentumJumpTest(gapSize, nextY - currentY)) // Ensure the jump is feasible
             {
-                gapSize -= 0.5f;
+                gapSize -= 0.5f; // Decrease gap size if jump is not feasible
                 if (gapSize <= 0f)
                 {
-                    gapSize = 1f;
+                    gapSize = 1f; // Minimum gap size
                     break;
                 }
             }
 
-            currentX += gapSize; 
-            currentY = nextY;
+            currentX += gapSize; // Move past the gap
+            currentY = nextY; // Update Y position
 
-            int minPlatformLength = GetMinimumPlatformLength();
-            int platformLength = Random.Range(minPlatformLength, minPlatformLength + 1);
+            int minPlatformLength = GetMinimumPlatformLength(); // Determine minimum platform length
+            int platformLength = Random.Range(minPlatformLength, minPlatformLength + 1); // Randomize platform length
 
-            float platformStartX = currentX;
+            float platformStartX = currentX; // Starting X position for the next platform
+
+            // Paint the small platform tiles
             for (int j = 0; j < platformLength; j++)
             {
                 if (platformLength == 2)
                 {
                     if (j == 0)
-                        PaintGroundTile(currentX, currentY, leftTile);
+                        PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
                     else
-                        PaintGroundTile(currentX, currentY, rightTile);
+                        PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
                 }
                 else
                 {
                     if (j == 0)
-                        PaintGroundTile(currentX, currentY, leftTile);
+                        PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
                     else if (j == platformLength - 1)
-                        PaintGroundTile(currentX, currentY, rightTile);
+                        PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
                     else
-                        PaintGroundTile(currentX, currentY, centerTile);
+                        PaintGroundTile(currentX, currentY, centerTile); // Paint center tile
                 }
-                currentX += 1f;
+                currentX += 1f; // Move to next position
             }
 
-            float finalX = currentX - 1f;
-            float finalY = currentY;
-            SpawnEnemies(platformStartX, currentX, currentY);
+            float finalX = currentX - 1f; // Final X position of the platform
+            float finalY = currentY; // Final Y position of the platform
+            SpawnEnemies(platformStartX, currentX, currentY); // Spawn enemies on the platform
 
             if (currentDifficulty != Difficulty.Easy)
             {
-                SpawnSpikes(platformStartX, currentX, currentY);
+                SpawnSpikes(platformStartX, currentX, currentY); // Spawn spikes if difficulty is not Easy
             }
         }
-
         return new Vector2(currentX - 1f, currentY);
     }
 
     private Vector2 CreateWallJumpSection(float x, float y)
     {
-        float currentX = x;
-        float currentY = y;
+        float currentX = x; // Current X position
+        float currentY = y; // Current Y position
 
         // Entry platform (5 tiles)
-        PaintGroundTile(currentX, currentY, leftTile);
-        currentX += 1f;
-        PaintGroundTile(currentX, currentY, centerTile);
-        currentX += 1f;
-        PaintGroundTile(currentX, currentY, centerTile);
-        currentX += 1f;
-        PaintGroundTile(currentX, currentY, centerTile);
-        currentX += 1f;
-        PaintGroundTile(currentX, currentY, rightTile);
-        currentX += 1f;
+        PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
+        currentX += 1f; // Move to next position
+        PaintGroundTile(currentX, currentY, centerTile); // Paint center tile
+        currentX += 1f; // Move to next position
+        PaintGroundTile(currentX, currentY, centerTile); // Paint center tile
+        currentX += 1f; // Move to next position
+        PaintGroundTile(currentX, currentY, centerTile); // Paint center tile
+        currentX += 1f; // Move to next position
+        PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
+        currentX += 1f; // Move to next position
 
-        CreateWall(currentX - 3f, currentY + 7f); 
-        currentX += 1f; 
+        CreateWall(currentX - 3f, currentY + 7f); // Create the first wall above the platform
+        currentX += 1f; // Move to next position
 
-        float wallGap = 5f;
-        CreateWall(currentX - 4f + wallGap, currentY + 5f);
+        float wallGap = 5f; // Gap between walls
+        CreateWall(currentX - 4f + wallGap, currentY + 5f); // Create the second wall with a gap
 
-        float wallHeight = wallPrefab.GetComponent<Renderer>().bounds.size.y;
-        float exitPlatformY = currentY + wallHeight;
-        int exitPlatformLength = 2;
+        float wallHeight = wallPrefab.GetComponent<Renderer>().bounds.size.y; // Get the height of the wall prefab
+        float exitPlatformY = currentY + wallHeight; // Determine Y position for the exit platform
+        int exitPlatformLength = 2; // Length of the exit platform
 
-        float exitPlatformX = currentX - 4f + wallGap + 1f;
+        float exitPlatformX = currentX - 4f + wallGap + 1f; // Starting X position for the exit platform
 
+        // Paint the exit platform tiles
         for (int i = 0; i < exitPlatformLength; i++)
         {
             if (exitPlatformLength == 2)
             {
                 if (i == 0)
-                    PaintGroundTile(exitPlatformX, exitPlatformY, leftTile);
+                    PaintGroundTile(exitPlatformX, exitPlatformY, leftTile); // Paint left end tile
                 else
-                    PaintGroundTile(exitPlatformX, exitPlatformY, rightTile);
+                    PaintGroundTile(exitPlatformX, exitPlatformY, rightTile); // Paint right end tile
             }
             else
             {
                 if (i == 0)
-                    PaintGroundTile(exitPlatformX, exitPlatformY, leftTile);
+                    PaintGroundTile(exitPlatformX, exitPlatformY, leftTile); // Paint left end tile
                 else if (i == exitPlatformLength - 1)
-                    PaintGroundTile(exitPlatformX, exitPlatformY, rightTile);
+                    PaintGroundTile(exitPlatformX, exitPlatformY, rightTile); // Paint right end tile
                 else
-                    PaintGroundTile(exitPlatformX, exitPlatformY, centerTile);
+                    PaintGroundTile(exitPlatformX, exitPlatformY, centerTile); // Paint center tile
             }
-            exitPlatformX += 1f;
+            exitPlatformX += 1f; // Move to next position
         }
 
-        float finalX = exitPlatformX - 1f;
-        float finalY = exitPlatformY;
+        float finalX = exitPlatformX - 1f; // Final X position of the exit platform
+        float finalY = exitPlatformY; // Final Y position of the exit platform
 
-        SpawnEnemies(finalX - (exitPlatformLength * 1f), finalX, finalY);
-        SpawnSpikes(finalX - (exitPlatformLength * 1f), finalX, finalY);
+        SpawnEnemies(finalX - (exitPlatformLength * 1f), finalX, finalY); // Spawn enemies near the end of the exit platform
+        SpawnSpikes(finalX - (exitPlatformLength * 1f), finalX, finalY); // Spawn spikes near the end of the exit platform
 
-        return new Vector2(finalX, finalY);
+        return new Vector2(finalX, finalY); // Return the end position of the exit platform
     }
 
     // New downward jump similar to CreateJump but forces a downward movement
     private Vector2 CreateDownJump(float x, float y)
     {
-        float currentX = x;
+        float currentX = x; // Current X position
         // Force a larger downward drop
-        float deltaY = Random.Range(-4, -2) * 2f;
-        float currentY = Mathf.Clamp(y + deltaY, minY, maxY);
+        float deltaY = Random.Range(-4, -2) * 2f; // Larger Y delta for downward jump
+        float currentY = Mathf.Clamp(y + deltaY, minY, maxY); // Clamp Y within bounds
 
-        float gapSize = Random.Range(4f, 6f);
-        while (!MomentumJumpTest(gapSize, currentY - y))
+        float gapSize = Random.Range(4f, 6f); // Determine the size of the gap
+        while (!MomentumJumpTest(gapSize, currentY - y)) // Ensure the jump is feasible
         {
-            gapSize -= 0.5f;
-            if (gapSize <= 1f) break;
+            gapSize -= 0.5f; // Decrease gap size if jump is not feasible
+            if (gapSize <= 1f) break; // Minimum gap size
         }
 
-        currentX += gapSize; 
-        int minPlatformLength = GetMinimumPlatformLength();
-        int platformLength = Random.Range(minPlatformLength, minPlatformLength + 2);
+        currentX += gapSize; // Move past the gap
+        int minPlatformLength = GetMinimumPlatformLength(); // Determine minimum platform length
+        int platformLength = Random.Range(minPlatformLength, minPlatformLength + 2); // Randomize platform length
 
-        float platformStartX = currentX;
+        float platformStartX = currentX; // Starting X position for the next platform
+
+        // Paint the downward platform tiles
         for (int i = 0; i < platformLength; i++)
         {
             if (platformLength == 2)
             {
                 if (i == 0)
-                    PaintGroundTile(currentX, currentY, leftTile);
+                    PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
                 else
-                    PaintGroundTile(currentX, currentY, rightTile);
+                    PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
             }
             else
             {
                 if (i == 0)
-                    PaintGroundTile(currentX, currentY, leftTile);
+                    PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
                 else if (i == platformLength - 1)
-                    PaintGroundTile(currentX, currentY, rightTile);
+                    PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
                 else
-                    PaintGroundTile(currentX, currentY, centerTile);
+                    PaintGroundTile(currentX, currentY, centerTile); // Paint center tile
             }
-            currentX += 1f;
+            currentX += 1f; // Move to next position
         }
 
-        float finalX = currentX - 1f;
-        float finalY = currentY;
+        float finalX = currentX - 1f; // Final X position of the platform
+        float finalY = currentY; // Final Y position of the platform
 
-        SpawnEnemies(platformStartX, currentX, currentY);
+        SpawnEnemies(platformStartX, currentX, currentY); // Spawn enemies on the platform
         if (currentDifficulty != Difficulty.Easy)
-            SpawnSpikes(platformStartX, currentX, currentY);
+            SpawnSpikes(platformStartX, currentX, currentY); // Spawn spikes if difficulty is not Easy
 
-        return new Vector2(finalX, finalY);
+        return new Vector2(finalX, finalY); // Return the end position of the platform
     }
 
     // New downward wall jump section
     private Vector2 CreateWallDownJumpSectionDown(float x, float y)
     {
-        float currentX = x;
-        float currentY = y;
+        float currentX = x; // Current X position
+        float currentY = y; // Current Y position
 
         // Entry platform (shorter)
-        PaintGroundTile(currentX, currentY, leftTile);
-        currentX += 1f;
-        PaintGroundTile(currentX, currentY, centerTile);
-        currentX += 1f;
-        PaintGroundTile(currentX, currentY, rightTile);
-        currentX += 1f;
+        PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
+        currentX += 1f; // Move to next position
+        PaintGroundTile(currentX, currentY, centerTile); // Paint center tile
+        currentX += 1f; // Move to next position
+        PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
+        currentX += 1f; // Move to next position
 
         // Place a wall above
-        CreateWall(currentX - 1f, currentY - 5f);
-        float gapSize = 5f;
-        CreateWall(currentX + gapSize, currentY + 1f);
-        // Move downward more significantly
-        float deltaY = Random.Range(-4, -3) * 2f;
-        float nextY = Mathf.Clamp(currentY + deltaY, minY, maxY);
+        CreateWall(currentX - 1f, currentY - 5f); // Create the first wall
+        float gapSize = 5f; // Gap size between walls
+        CreateWall(currentX + gapSize, currentY + 1f); // Create the second wall with a gap
 
-        while (!MomentumJumpTest(gapSize, nextY - currentY))
+        // Move downward more significantly
+        float deltaY = Random.Range(-4, -3) * 2f; // Larger Y delta for downward jump
+        float nextY = Mathf.Clamp(currentY + deltaY, minY, maxY); // Clamp Y within bounds
+
+        while (!MomentumJumpTest(gapSize, nextY - currentY)) // Ensure the jump is feasible
         {
-            gapSize -= 0.5f;
-            if (gapSize < 1f) gapSize = 1f;
+            gapSize -= 0.5f; // Decrease gap size if jump is not feasible
+            if (gapSize < 1f) gapSize = 1f; // Minimum gap size
         }
 
-        currentX += gapSize;
-        currentY = nextY;
+        currentX += gapSize; // Move past the gap
+        currentY = nextY; // Update Y position
 
-        int platformLength = 3;
-        float platformStartX = currentX;
+        int platformLength = 3; // Length of the exit platform
+        float platformStartX = currentX; // Starting X position for the exit platform
+
+        // Paint the exit platform tiles
         for (int i = 0; i < platformLength; i++)
         {
-            if (i == 0)
-                PaintGroundTile(currentX, currentY, leftTile);
-            else if (i == platformLength - 1)
-                PaintGroundTile(currentX, currentY, rightTile);
+            if (platformLength == 2)
+            {
+                if (i == 0)
+                    PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
+                else
+                    PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
+            }
             else
-                PaintGroundTile(currentX, currentY, centerTile);
-            currentX += 1f;
+            {
+                if (i == 0)
+                    PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
+                else if (i == platformLength - 1)
+                    PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
+                else
+                    PaintGroundTile(currentX, currentY, centerTile); // Paint center tile
+            }
+            currentX += 1f; // Move to next position
         }
 
-        float finalX = currentX - 1f;
-        float finalY = currentY;
+        float finalX = currentX - 1f; // Final X position of the exit platform
+        float finalY = currentY; // Final Y position of the exit platform
 
-        SpawnEnemies(platformStartX, currentX, currentY);
+        SpawnEnemies(platformStartX, currentX, currentY); // Spawn enemies on the platform
         if (currentDifficulty != Difficulty.Easy)
-            SpawnSpikes(platformStartX, currentX, currentY);
+            SpawnSpikes(platformStartX, currentX, finalY); // Spawn spikes if difficulty is not Easy
 
-        return new Vector2(finalX, finalY);
+        return new Vector2(finalX, finalY); // Return the end position of the exit platform
     }
 
     private void CreateWall(float x, float startY)
     {
         if (wallPrefab != null)
         {
-            GameObject wall = Instantiate(wallPrefab, new Vector3(x, startY, 0f), Quaternion.identity, transform);
-            generatedObjects.Add(wall);
+            GameObject wall = Instantiate(wallPrefab, new Vector3(x, startY, 0f), Quaternion.identity, transform); // Instantiate wall prefab
+            generatedObjects.Add(wall); // Add wall to the list of generated objects
         }
     }
 
     private Vector2 CreateEndChunk(float x, float y)
     {
-        float currentX = x;
-        float currentY = y;
+        float currentX = x; // Current X position
+        float currentY = y; // Current Y position
 
-        int platformLength = 5;
+        int platformLength = 5; // Length of the ending platform
 
+        // Paint the ending platform tiles
         for (int i = 0; i < platformLength; i++)
         {
             if (platformLength == 2)
             {
                 if (i == 0)
-                    PaintGroundTile(currentX, currentY, leftTile);
+                    PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
                 else
-                    PaintGroundTile(currentX, currentY, rightTile);
+                    PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
             }
             else
             {
                 if (i == 0)
-                    PaintGroundTile(currentX, currentY, leftTile);
+                    PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile
                 else if (i == platformLength - 1)
-                    PaintGroundTile(currentX, currentY, rightTile);
+                    PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
                 else
-                    PaintGroundTile(currentX, currentY, centerTile);
+                    PaintGroundTile(currentX, currentY, centerTile); // Paint center tile
             }
-            currentX += 1f;
+            currentX += 1f; // Move to next position
         }
 
         if (flagPrefab != null)
         {
+            // Instantiate the flag at the end of the platform
             GameObject flag = Instantiate(
                 flagPrefab,
                 new Vector3(currentX - 6f, currentY + 5f, 0f),
                 flagPrefab.transform.rotation,
                 transform
             );
-            flag.name = "Flag";
-            generatedObjects.Add(flag);
+            flag.name = "Flag"; // Name the flag object
+            generatedObjects.Add(flag); // Add flag to the list of generated objects
 
+            // Assign the flag as the goal for all PlatformerAgent instances
             PlatformerAgent[] agents = FindObjectsOfType<PlatformerAgent>();
             if (agents.Length > 0)
             {
                 foreach (PlatformerAgent agent in agents)
                 {
-                    agent.goalTransform = flag.transform; 
+                    agent.goalTransform = flag.transform; // Set the goal transform to the flag
                 }
             }
             else
             {
-                Debug.LogWarning("PlatformerAgent not found in the scene.");
+                Debug.LogWarning("PlatformerAgent not found in the scene."); // Warn if no PlatformerAgent is found
             }
         }
 
-        float finalX = currentX - 1f;
-        float finalY = currentY;
-        return new Vector2(finalX, finalY);
+        float finalX = currentX - 1f; // Final X position of the ending platform
+        float finalY = currentY; // Final Y position of the ending platform
+        return new Vector2(finalX, finalY); // Return the end position of the ending platform
     }
 
     private void CreateDeathZone(float x, float minY)
     {
         if (deathZonePrefab != null)
         {
-            float deathZoneX = ((x + 10f) / 2f) - 10f;
+            float deathZoneX = ((x + 10f) / 2f) - 10f; // Calculate X position for the death zone
 
+            // Instantiate the death zone prefab
             GameObject deathZone = Instantiate(
                 deathZonePrefab,
                 new Vector3(deathZoneX, minY - 4f, 0f),
@@ -658,66 +693,67 @@ public class ProcGen : MonoBehaviour
                 transform
             );
 
-            deathZone.transform.localScale = new Vector3(x + 70f, 2f, 1f);
-            deathZone.name = "DeathZone";
-            generatedObjects.Add(deathZone);
+            deathZone.transform.localScale = new Vector3(x + 70f, 2f, 1f); // Set the scale of the death zone
+            deathZone.name = "DeathZone"; // Name the death zone object
+            generatedObjects.Add(deathZone); // Add death zone to the list of generated objects
         }
     }
 
     private void PaintGroundTile(float x, float y, TileBase tile)
     {
-        Vector3Int tilePos = WorldToTilePosition(x, y);
-        groundTilemap.SetTile(tilePos, tile);
+        Vector3Int tilePos = WorldToTilePosition(x, y); // Convert world position to tile position
+        groundTilemap.SetTile(tilePos, tile); // Set the ground tile at the specified position
     }
 
     private void PaintSpikeTile(float x, float y)
     {
-        Vector3Int tilePos = WorldToTilePosition(x, y);
-        hazardTilemap.SetTile(tilePos, spikeTile);
+        Vector3Int tilePos = WorldToTilePosition(x, y); // Convert world position to tile position
+        hazardTilemap.SetTile(tilePos, spikeTile); // Set the spike tile at the specified position
     }
 
     private Vector3Int WorldToTilePosition(float x, float y)
     {
-        return groundTilemap.WorldToCell(new Vector3(x, y, 0f));
+        return groundTilemap.WorldToCell(new Vector3(x, y, 0f)); // Convert world coordinates to tilemap cell position
     }
 
     private void SpawnSpikes(float startX, float endX, float y)
     {
-        float xPos = startX;
+        float xPos = startX; // Starting X position
         while (xPos < endX)
         {
-            if (Random.value < spikeSpawnChance)
+            if (Random.value < spikeSpawnChance) // Check if spikes should spawn
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 3; i++) // Spawn 3 spikes
                 {
-                    PaintSpikeTile(xPos, y + 1f);
-                    xPos += 1f;
+                    PaintSpikeTile(xPos, y + 1f); // Paint spike tile above the platform
+                    xPos += 1f; // Move to next position
                     if (xPos >= endX)
-                        break;
+                        break; // Exit if end of platform is reached
                 }
             }
             else
             {
-                xPos += 1f;
+                xPos += 1f; // Move to next position without spawning spikes
             }
         }
     }
 
     private void SpawnEnemies(float startX, float endX, float y)
     {
-        float platformLength = (endX - startX);
+        float platformLength = (endX - startX); // Calculate the length of the platform
         if (platformLength <= 2)
-            return;
+            return; // Exit if the platform is too short to spawn enemies
 
-        float centerX = startX + (endX - startX) / 2f;
-        float spawnStartX = centerX - 1f;
-        float spawnEndX = centerX + 1f;
+        float centerX = startX + (endX - startX) / 2f; // Calculate the center X position of the platform
+        float spawnStartX = centerX - 1f; // Starting X position for enemy spawning
+        float spawnEndX = centerX + 1f; // Ending X position for enemy spawning
 
-        spawnStartX = Mathf.Max(spawnStartX, startX + 1f);
-        spawnEndX = Mathf.Min(spawnEndX, endX - 1f);
+        spawnStartX = Mathf.Max(spawnStartX, startX + 1f); // Clamp spawn start X within platform bounds
+        spawnEndX = Mathf.Min(spawnEndX, endX - 1f); // Clamp spawn end X within platform bounds
 
-        List<GameObject> enemyPrefabs = null;
+        List<GameObject> enemyPrefabs = null; // List to hold the appropriate enemy prefabs based on difficulty
 
+        // Select the appropriate enemy prefabs based on current difficulty
         switch (currentDifficulty)
         {
             case Difficulty.Easy:
@@ -733,13 +769,13 @@ public class ProcGen : MonoBehaviour
 
         if (enemyPrefabs != null && enemyPrefabs.Count > 0)
         {
-            for (float sx = spawnStartX; sx < spawnEndX; sx += 1f)
+            for (float sx = spawnStartX; sx < spawnEndX; sx += 1f) // Iterate through spawn range
             {
-                if (Random.value < EnemySpawnChance)
+                if (Random.value < EnemySpawnChance) // Check if an enemy should spawn
                 {
-                    GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
-                    GameObject enemy = Instantiate(enemyPrefab, new Vector3(sx, y + 1f, 0f), Quaternion.identity, transform);
-                    generatedObjects.Add(enemy);
+                    GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)]; // Select a random enemy prefab
+                    GameObject enemy = Instantiate(enemyPrefab, new Vector3(sx, y + 1f, 0f), Quaternion.identity, transform); // Instantiate the enemy
+                    generatedObjects.Add(enemy); // Add enemy to the list of generated objects
                 }
             }
         }
@@ -747,6 +783,7 @@ public class ProcGen : MonoBehaviour
 
     private int GetMinimumPlatformLength()
     {
+        // Determine the minimum platform length based on current difficulty
         switch (currentDifficulty)
         {
             case Difficulty.Easy:
@@ -761,6 +798,7 @@ public class ProcGen : MonoBehaviour
 
     private float GetMinimumVerticalSpacing()
     {
+        // Determine the minimum vertical spacing based on current difficulty
         switch (currentDifficulty)
         {
             case Difficulty.Easy:
@@ -775,31 +813,31 @@ public class ProcGen : MonoBehaviour
 
     private bool MomentumJumpTest(float ground_x, float ground_y)
     {
-        float a = -0.07367866f;
-        float b = 1.05197485f;
-        float y = a * ground_x * ground_x + b * ground_x;
-        return ground_y <= y;
+        float a = -0.07367866f; // Coefficient for X^2 in the jump equation
+        float b = 1.05197485f; // Coefficient for X in the jump equation
+        float y = a * ground_x * ground_x + b * ground_x; // Calculate Y based on the jump equation
+        return ground_y <= y; // Return true if the ground Y is within feasible jump range
     }
 
     private bool NoMomentumJumpTest(float ground_x, float ground_y)
     {
-        float a = -0.92504437f;
-        float b = 4.32346315f;
-        float y = a * ground_x * ground_x + b * ground_x;
-        return ground_y <= y;
+        float a = -0.92504437f; // Coefficient for X^2 in the jump equation
+        float b = 4.32346315f; // Coefficient for X in the jump equation
+        float y = a * ground_x * ground_x + b * ground_x; // Calculate Y based on the jump equation
+        return ground_y <= y; // Return true if the ground Y is within feasible jump range
     }
 
     private bool WallJumpTest(float player_x, float ground_x, float ground_y)
     {
         if (player_x < ground_x)
         {
-            ground_x = ground_x + (player_x - ground_x) * 2f;
+            ground_x = ground_x + (player_x - ground_x) * 2f; // Adjust ground X based on player position
         }
 
-        float a = -0.19835401f;
-        float b = 1.45395189f;
-        float y = a * ground_x * ground_x + b * ground_x;
+        float a = -0.19835401f; // Coefficient for X^2 in the wall jump equation
+        float b = 1.45395189f; // Coefficient for X in the wall jump equation
+        float y = a * ground_x * ground_x + b * ground_x; // Calculate Y based on the wall jump equation
 
-        return ground_y <= y;
+        return ground_y <= y; // Return true if the ground Y is within feasible jump range
     }
 }

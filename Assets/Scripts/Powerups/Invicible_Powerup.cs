@@ -28,14 +28,14 @@ public class Invincible_Powerup : MonoBehaviour
         playerSpriteRenderer = playerObject.GetComponent<SpriteRenderer>(); // Get the player's sprite renderer
 
         // Get the layers for enemies and the player
-        playerLayer = LayerMask.NameToLayer("Player"); // Replace "Player" with your player layer name
+        playerLayer = LayerMask.NameToLayer("Player"); // Get the player's layer
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.name == "Player") // If the player collides with the powerup
         {
-            ActivatePowerup();
+            ActivatePowerup(); // activate it
         }
     }
 
