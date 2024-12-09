@@ -1,3 +1,8 @@
+// LevelCompletions.cs
+// Authors: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 12/08/2024
+// Course: EECS 581
+// Purpose: Tracks level completions for leader board updates
 using UnityEngine;
 using UnityEngine.UI;
 

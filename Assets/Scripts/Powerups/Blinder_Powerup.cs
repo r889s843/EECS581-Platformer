@@ -1,3 +1,8 @@
+// Blinder_Powerup.cs
+// Authors: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 10/17/2024
+// Course: EECS 581
+// Purpose: Defines the blind screen power up
 using UnityEngine;
 
 public class Blinder_Powerup : MonoBehaviour

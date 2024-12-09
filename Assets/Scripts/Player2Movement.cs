@@ -1,5 +1,6 @@
+// Player2Movement.cs
 // Name: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
-// Date: 12/5/2024
+// Date: 12/6/2024
 // Course: EECS 581
 // Purpose: Controls how player 2 interacts with movement and collidable objects.
 using UnityEngine;

@@ -1,3 +1,8 @@
+// LeaderboardUI.cs
+// Authors: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 12/07/2024
+// Course: EECS 581
+// Purpose: Updates leader board on game completion
 using UnityEngine;
 using UnityEngine.UI; // or using TMPro if using TextMeshPro
 

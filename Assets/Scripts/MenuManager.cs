@@ -1,3 +1,8 @@
+// MenuManager.cs
+// Authors: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 10/17/2024
+// Course: EECS 581
+// Purpose: Manages the different menus on the start screen
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;

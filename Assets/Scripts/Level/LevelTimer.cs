@@ -1,3 +1,8 @@
+// LevelTimer.cs
+// Authors: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 12/05/2024
+// Course: EECS 581
+// Purpose: Tracks timer for leader board updates
 using UnityEngine;
 using UnityEngine.UI;
 
