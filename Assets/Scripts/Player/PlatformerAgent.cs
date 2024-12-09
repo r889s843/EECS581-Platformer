@@ -40,7 +40,9 @@ public class PlatformerAgent : Agent
 
         livesUI = FindObjectOfType<LivesUI>();
         GameObject flag = GameObject.FindGameObjectWithTag("Flag");
-        goalTransform = flag.transform;
+        if (flag != null) {
+            goalTransform = flag.transform;
+        }
     }
 
     public override void OnEpisodeBegin()

@@ -1,8 +1,8 @@
 // LivesUI.cs
 // Authors: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
-// Date: 10/17/2024
+// Date: 12/05/2024
 // Course: EECS 581
-// Purpose: 
+// Purpose: Manage lives of players
 
 using UnityEngine;
 using UnityEngine.UI;

@@ -478,4 +478,3 @@ MonoBehaviour:
     m_Bits: 4294967295
   raycastDistance: 15
   levelCompletionThreshold: 100
-  livesUI: {fileID: 0}
