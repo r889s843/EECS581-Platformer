@@ -4,6 +4,7 @@
 // Course: EECS 581
 // Purpose: Level Manager
 
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -72,6 +73,24 @@ public class LevelManager : MonoBehaviour
     // This method is called every time a new scene is loaded
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+
+        if (scene.name == "Main Menu"){
+            float bestDist = PlayerPrefs.GetFloat("BestDistance", 0f);
+            float bestTime = PlayerPrefs.GetFloat("BestTime", 0f);
+            int totalCompletions = PlayerPrefs.GetInt("TotalCompletions", 0);
+            LeaderboardUI leaderboardUI = FindObjectOfType<LeaderboardUI>();
+            if (leaderboardUI != null)
+            {
+                leaderboardUI.UpdateFreerunLeaderboard(bestDist);
+                leaderboardUI.UpdateProcGenLeaderboard(totalCompletions);
+                leaderboardUI.UpdateStoryLeaderboard(bestTime);
+            }
+            else
+            {
+                Debug.LogWarning("LeaderboardUI not found in the Main Menu scene.");
+            }
+        }
+
         // Check if the loaded scene is one where you want to generate a level
         if (scene.name == "Test") // Replace "Test" with your scene name
         {
@@ -111,25 +130,113 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(sceneIndex);
     }
 
+    // private void UpdateLeaderboardUI(float finalDistance)
+    // {
+    //     float bestDist = PlayerPrefs.GetFloat("BestDistance", 0f);
+
+    //     LeaderboardUI leaderboardUI = FindObjectOfType<LeaderboardUI>();
+    //     if (leaderboardUI != null)
+    //     {
+    //         // Update the leaderboard with the bestDist
+    //         leaderboardUI.UpdateFreerunLeaderboard(bestDist);
+    //     }
+    //     else
+    //     {
+    //         Debug.LogWarning("LeaderboardUI not found in the scene.");
+    //     }
+    // }
+
+
     public void CheckLivesCondition(bool p2, int livesP1, int livesP2)
     {
-        if (!p2)
+        // If single player and P1 is out of lives
+        if (!p2 && livesP1 <= 0)
         {
-            // Single player: if P1 has 0 lives, load main menu
-            if (livesP1 <= 0)
+            // Get the player's final distance
+            FreerunProcGen freerunManager = FindObjectOfType<FreerunProcGen>();
+            float finalDistance = freerunManager != null ? freerunManager.playerDistance : 0f;
+
+            // Compare with stored best distance
+            float currentBest = PlayerPrefs.GetFloat("BestDistance", 0f);
+            if (finalDistance > currentBest)
             {
-                LoadScene("Main Menu");
+                PlayerPrefs.SetFloat("BestDistance", finalDistance);
+                PlayerPrefs.Save(); // Ensure data is written to disk
+            }
+
+            // Now you can trigger the Leaderboard UI update if needed
+            // UpdateLeaderboardUI(finalDistance);
+
+            PlayerPrefs.SetInt("TotalCompletions", totalCompletions);
+            PlayerPrefs.Save();
+
+            // Load main menu or handle end-of-run flow
+            LoadScene("Main Menu");
+        }
+        else if (p2 && livesP1 <= 0 && livesP2 > 0)
+        {
+            // Destroy Player1 if Player1 is out of lives
+            GameObject player1 = GameObject.FindGameObjectWithTag("Player");
+            if (player1 != null)
+            {
+                Destroy(player1);
+
+                // Update camera to focus only on Player2
+                Camera mainCamera = Camera.main;
+                if (mainCamera != null)
+                {
+                    CameraController cameraController = mainCamera.GetComponent<CameraController>();
+                    GameObject player2 = GameObject.FindGameObjectWithTag("Player2");
+                    if (cameraController != null && player2 != null)
+                    {
+                        cameraController.UpdateCameraTarget(player2.transform);
+                    }
+                }
             }
         }
-        else
+        else if (p2 && livesP1 > 0 && livesP2 <= 0)
         {
-            // Co-op: if both P1 and P2 have 0 lives, load main menu
-            if (livesP1 <= 0 && livesP2 <= 0)
+            // Destroy Player2 if Player2 is out of lives
+            GameObject player2 = GameObject.FindGameObjectWithTag("Player2");
+            if (player2 != null)
             {
-                LoadScene("Main Menu");
+                Destroy(player2);
+
+                // Update camera to focus only on Player1
+                Camera mainCamera = Camera.main;
+                if (mainCamera != null)
+                {
+                    CameraController cameraController = mainCamera.GetComponent<CameraController>();
+                    GameObject player1 = GameObject.FindGameObjectWithTag("Player");
+                    if (cameraController != null && player1 != null)
+                    {
+                        cameraController.UpdateCameraTarget(player1.transform);
+                    }
+                }
             }
+        }
+
+        else if (p2 && livesP1 <= 0 && livesP2 <= 0)
+        {
+            // Co-op mode end
+            FreerunProcGen freerunManager = FindObjectOfType<FreerunProcGen>();
+            float finalDistance = freerunManager != null ? freerunManager.playerDistance : 0f;
+
+            float currentBest = PlayerPrefs.GetFloat("BestDistance", 0f);
+            if (finalDistance > currentBest)
+            {
+                PlayerPrefs.SetFloat("BestDistance", finalDistance);
+                PlayerPrefs.Save();
+            }
+
+            PlayerPrefs.SetInt("TotalCompletions", totalCompletions);
+            PlayerPrefs.Save();
+
+            // UpdateLeaderboardUI(finalDistance);
+            LoadScene("Main Menu");
         }
     }
+
 
 
     // Method to handle level completion
@@ -192,6 +299,15 @@ public class LevelManager : MonoBehaviour
     
     else if (sceneName == "Level6")
         {
+            LevelTimer timer = FindObjectOfType<LevelTimer>();
+            timer.StopTimer();
+            float currentTime = timer.GetFinalTime();
+
+            // update leaderboard if time is less
+            float bestTime = PlayerPrefs.GetFloat("BestTime", 0f);
+            bestTime = Mathf.Min(bestTime, currentTime);
+            PlayerPrefs.SetFloat("BestTime", bestTime);
+            PlayerPrefs.Save();
             LoadScene("Main Menu");
         }
     else {

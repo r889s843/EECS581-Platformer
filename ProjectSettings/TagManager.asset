@@ -13,6 +13,7 @@ TagManager:
   - Ground
   - AI
   - Invincible
+  - Player2
   layers:
   - Default
   - TransparentFX

@@ -27,7 +27,9 @@ public class PlatformerAgent : Agent
     // Completion tracking
     public int levelCompletionThreshold = 100; // Number of times to complete the level before moving on
     private int currentLevelCompletions = 0; // Tracks how many times the current level has been completed
-    public LivesUI livesUI;
+    // public LivesUI livesUI;
+
+    private LivesUI livesUI;
 
     public override void Initialize()
     {
@@ -35,6 +37,10 @@ public class PlatformerAgent : Agent
         startPosition = transform.position; // Store the starting position
         previousPosition = startPosition; // Initialize previous position
         playerMovement = GetComponent<PlayerMovement>(); // Get the PlayerMovement component
+
+        livesUI = FindObjectOfType<LivesUI>();
+        GameObject flag = GameObject.FindGameObjectWithTag("Flag");
+        goalTransform = flag.transform;
     }
 
     public override void OnEpisodeBegin()
@@ -190,7 +196,11 @@ public class PlatformerAgent : Agent
         {
             SetReward(-1.0f);  // Negative reward for dying or hitting a hazard
             // Debug.Log($"Agent Died. Final reward: {GetCumulativeReward()}");
-            livesUI.LoseLifeP1();
+            if (CompareTag("Player")){
+                livesUI.LoseLifeP1();
+            } else if (CompareTag("Player2")){
+                livesUI.LoseLifeP2();
+            }
             EndEpisode(); // End the episode
         }
     }
