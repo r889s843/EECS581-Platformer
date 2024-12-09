@@ -1,3 +1,9 @@
+// Invicible_Powerup.cs
+// Authors: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 10/17/2024
+// Course: EECS 581
+// Purpose: Defines the behavior and collision of the invicible power up 
+
 using System.Collections;
 using UnityEngine;
 

@@ -1,3 +1,8 @@
+// Name: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 11/24/2024
+// Course: EECS 581
+// Purpose: Intializes the game state to render, spawn, and update the 2nd player
+
 using UnityEngine;
 
 public class CoOpInitialize : MonoBehaviour

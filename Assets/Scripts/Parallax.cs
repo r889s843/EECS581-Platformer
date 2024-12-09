@@ -1,3 +1,8 @@
+// Name: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 11/24/2024
+// Course: EECS 581
+// Purpose: Track the change in movement as time goes on to help move the camera
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -1,9 +1,15 @@
+// Name: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 11/24/2024
+// Course: EECS 581
+// Purpose: Handles any audio that is triggered by a collision event
+
 using UnityEngine;
 
 public class flagHandler : MonoBehaviour
 {
     private AudioSource audioSource;
 
+    // Gets audio source
     void Start()
     {
         audioSource = GetComponent<AudioSource>(); // Get the AudioSource component

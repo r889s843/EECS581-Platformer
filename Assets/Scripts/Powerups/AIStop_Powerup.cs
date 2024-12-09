@@ -1,3 +1,9 @@
+// AIStop_Powerups.cs
+// Authors: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 10/17/2024
+// Course: EECS 581
+// Purpose: Defines the stop AI player powerup collision and behavior
+
 using UnityEngine;
 
 public class AIStop_Powerup : MonoBehaviour
