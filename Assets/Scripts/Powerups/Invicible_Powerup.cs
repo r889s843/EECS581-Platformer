@@ -9,8 +9,8 @@ using UnityEngine;
 
 public class Invincible_Powerup : MonoBehaviour
 {
-    private BoxCollider2D powerupCollider; // This object's box collider
-    private Renderer powerupRenderer; // This object's renderer
+    // private BoxCollider2D powerupCollider; // This object's box collider
+    // private Renderer powerupRenderer; // This object's renderer
 
     private GameObject playerObject; // Reference to the player object
     private SpriteRenderer playerSpriteRenderer; // The player's sprite renderer
@@ -21,8 +21,8 @@ public class Invincible_Powerup : MonoBehaviour
 
     private void Start()
     {
-        powerupCollider = GetComponent<BoxCollider2D>();
-        powerupRenderer = GetComponent<Renderer>();
+        // powerupCollider = GetComponent<BoxCollider2D>();
+        // powerupRenderer = GetComponent<Renderer>();
 
         playerObject = GameObject.Find("Player"); // Find the player object
         playerSpriteRenderer = playerObject.GetComponent<SpriteRenderer>(); // Get the player's sprite renderer
@@ -39,11 +39,11 @@ public class Invincible_Powerup : MonoBehaviour
         }
     }
 
-    private void ActivatePowerup()
+    public void ActivatePowerup()
     {
         // Make the powerup invisible and inactive
-        powerupCollider.enabled = false;
-        powerupRenderer.enabled = false;
+        // powerupCollider.enabled = false;
+        // powerupRenderer.enabled = false;
 
         // Start the invincibility process
         StartCoroutine(InvincibilityRoutine());

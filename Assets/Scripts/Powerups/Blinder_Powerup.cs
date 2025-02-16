@@ -7,8 +7,8 @@ using UnityEngine;
 
 public class Blinder_Powerup : MonoBehaviour
 {
-    private BoxCollider2D boxCollider; //this object's box collider
-    private Renderer spriteRenderer; //this object's renderer
+    // private BoxCollider2D boxCollider; //this object's box collider
+    // private Renderer spriteRenderer; //this object's renderer
     [SerializeField] private GameObject blinderPrefab; //prefab of blinder object for instantiation when activated
     private GameObject blinder; //actual instantiated blinder
     private SpriteRenderer blinderRenderer; //sprite renderer for blinder 
@@ -16,8 +16,8 @@ public class Blinder_Powerup : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        boxCollider = GetComponent<BoxCollider2D>();
-        spriteRenderer = GetComponent<Renderer>();
+        // boxCollider = GetComponent<BoxCollider2D>();
+        // spriteRenderer = GetComponent<Renderer>();
     }
 
     // Update is called once per frame
@@ -30,16 +30,21 @@ public class Blinder_Powerup : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider)
     {
         if(collider.gameObject.name == "Player") { //if it is the player that collided
-            boxCollider.enabled = false; //remove the collider
-            spriteRenderer.enabled = false; //remove renderer (invisible)
+            // boxCollider.enabled = false; //remove the collider
+            // spriteRenderer.enabled = false; //remove renderer (invisible)
 
-            //instantiate blinder object
-            blinder = Instantiate(blinderPrefab, Vector3.zero, Quaternion.identity) as GameObject;
-            blinderRenderer = blinder.GetComponent<SpriteRenderer>(); //get renderer for fadeout
-            
-            //destroy blinder
-            Destroy(blinder, 2f); //2sec time
+            ActivatePowerup(); // activate it
         }
+    }
+
+    public void ActivatePowerup()
+    {
+        //instantiate blinder object
+        blinder = Instantiate(blinderPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+        blinderRenderer = blinder.GetComponent<SpriteRenderer>(); //get renderer for fadeout
+        
+        //destroy blinder
+        Destroy(blinder, 2f); //2sec time
     }
 
 }

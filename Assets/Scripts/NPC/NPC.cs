@@ -1,3 +1,9 @@
+// NPC.cs
+// Authors: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 2/12/2025
+// Course: EECS 582
+// Purpose: Adds NPC dialogue options to the game
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
