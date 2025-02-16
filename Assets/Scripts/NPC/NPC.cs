@@ -18,7 +18,7 @@ public class NPC : MonoBehaviour
     private int index;
 
     public GameObject continueButton;
-    public float wordSpeed;
+    public float wordSpeed; // default is 0.06
     public bool playerIsClose;
 
     void Start()
