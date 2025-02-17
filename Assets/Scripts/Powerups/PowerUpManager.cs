@@ -36,10 +36,15 @@ public class PowerUpManager : MonoBehaviour
     public AIStop_Powerup aiStopPowerupScript;
     public Blinder_Powerup blinderPowerupScript;
 
+    // New booleans indicating if the ability is unlocked
+    public bool invincibilityUnlocked = false;
+    public bool aiStopUnlocked = false;
+    public bool blinderUnlocked = false;
+
         void Update()
     {
         // Key 1: AI Stop Power-Up
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !aiStopOnCooldown)
+        if (Input.GetKeyDown(KeyCode.Alpha1) && aiStopUnlocked && !aiStopOnCooldown)
         {
             aiStopPowerupScript.ActivatePowerup();
             StartCoroutine(CooldownRoutine(aiStopIcon, aiStopCooldownText, aiStopCooldownDuration, () => aiStopOnCooldown = false));
@@ -48,7 +53,7 @@ public class PowerUpManager : MonoBehaviour
         }
 
         // Key 2: Invincibility Power-Up
-        if (Input.GetKeyDown(KeyCode.Alpha2) && !invincibilityOnCooldown)
+        if (Input.GetKeyDown(KeyCode.Alpha2) && invincibilityUnlocked && !invincibilityOnCooldown)
         {
             invinciblePowerupScript.ActivatePowerup();
             StartCoroutine(CooldownRoutine(invincibilityIcon, invincibilityCooldownText, invincibilityCooldownDuration, () => invincibilityOnCooldown = false));
@@ -57,7 +62,7 @@ public class PowerUpManager : MonoBehaviour
         }
 
         // Key 3: Blinder Power-Up
-        if (Input.GetKeyDown(KeyCode.Alpha3) && !blinderOnCooldown)
+        if (Input.GetKeyDown(KeyCode.Alpha3) && blinderUnlocked && !blinderOnCooldown)
         {
             blinderPowerupScript.ActivatePowerup();
             StartCoroutine(CooldownRoutine(blinderIcon, blinderCooldownText, blinderCooldownDuration, () => blinderOnCooldown = false));

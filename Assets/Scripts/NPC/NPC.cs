@@ -18,12 +18,15 @@ public class NPC : MonoBehaviour
     private int index;
 
     public GameObject continueButton;
-    public float wordSpeed; // default is 0.06
+    public float wordSpeed = 0.06f; // default is 0.06
     public bool playerIsClose;
+
+    public GameObject shopPanel;
 
     void Start()
     {
         dialogueText.text = "";
+        shopPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -56,6 +59,15 @@ public class NPC : MonoBehaviour
         }
     }
 
+    public void CloseShop()
+    {
+        if (shopPanel != null)
+        {
+            shopPanel.SetActive(false);
+        }
+    }
+
+
     public void NextLine(){
         continueButton.SetActive(false);
 
@@ -64,11 +76,16 @@ public class NPC : MonoBehaviour
             dialogueText.text = "";
             StartCoroutine(Typing());
         } else {
-            zeroText();
+            // Dialogue has ended
+            zeroText(); // Close the dialogue panel
+
+            // Activate the shop panel
+            if (shopPanel != null)
+            {
+                shopPanel.SetActive(true);
+            }
         }
-
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
