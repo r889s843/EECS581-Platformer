@@ -1,0 +1,110 @@
+// PowerUpManager.cs
+// Authors: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
+// Date: 2/15/2025
+// Course: EECS 582
+// Purpose: Controls the activation of player inventory powerup/abilities
+
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+
+public class PowerUpManager : MonoBehaviour
+{
+    [Header("UI References")]
+    public Image invincibilityIcon;
+    public Image aiStopIcon;
+    public Image blinderIcon;
+
+    public TMPro.TextMeshProUGUI invincibilityCooldownText;
+    public TMPro.TextMeshProUGUI aiStopCooldownText;
+    public TMPro.TextMeshProUGUI blinderCooldownText;
+
+    [Header("Cooldown Settings")]
+    public float invincibilityCooldownDuration = 5f;
+    public float aiStopCooldownDuration = 6f;
+    public float blinderCooldownDuration = 7f;
+
+    private bool invincibilityOnCooldown = false;
+    private bool aiStopOnCooldown = false;
+    private bool blinderOnCooldown = false;
+
+    private float invincibilityCooldownTimer = 0f;
+    private float aiStopCooldownTimer = 0f;
+    private float blinderCooldownTimer = 0f;
+
+    public Invincible_Powerup invinciblePowerupScript;
+    public AIStop_Powerup aiStopPowerupScript;
+    public Blinder_Powerup blinderPowerupScript;
+
+    // New booleans indicating if the ability is unlocked
+    public bool invincibilityUnlocked = false;
+    public bool aiStopUnlocked = false;
+    public bool blinderUnlocked = false;
+
+        void Update()
+    {
+        // Key 1: AI Stop Power-Up
+        if (Input.GetKeyDown(KeyCode.Alpha1) && aiStopUnlocked && !aiStopOnCooldown)
+        {
+            aiStopPowerupScript.ActivatePowerup();
+            StartCoroutine(CooldownRoutine(aiStopIcon, aiStopCooldownText, aiStopCooldownDuration, () => aiStopOnCooldown = false));
+            aiStopOnCooldown = true;
+            aiStopCooldownTimer = aiStopCooldownDuration;
+        }
+
+        // Key 2: Invincibility Power-Up
+        if (Input.GetKeyDown(KeyCode.Alpha2) && invincibilityUnlocked && !invincibilityOnCooldown)
+        {
+            invinciblePowerupScript.ActivatePowerup();
+            StartCoroutine(CooldownRoutine(invincibilityIcon, invincibilityCooldownText, invincibilityCooldownDuration, () => invincibilityOnCooldown = false));
+            invincibilityOnCooldown = true;
+            invincibilityCooldownTimer = invincibilityCooldownDuration;
+        }
+
+        // Key 3: Blinder Power-Up
+        if (Input.GetKeyDown(KeyCode.Alpha3) && blinderUnlocked && !blinderOnCooldown)
+        {
+            blinderPowerupScript.ActivatePowerup();
+            StartCoroutine(CooldownRoutine(blinderIcon, blinderCooldownText, blinderCooldownDuration, () => blinderOnCooldown = false));
+            blinderOnCooldown = true;
+            blinderCooldownTimer = blinderCooldownDuration;
+        }
+
+        // Update cooldown UI
+        UpdateCooldownUI(ref invincibilityCooldownTimer, invincibilityCooldownText, ref invincibilityOnCooldown);
+        UpdateCooldownUI(ref aiStopCooldownTimer, aiStopCooldownText, ref aiStopOnCooldown);
+        UpdateCooldownUI(ref blinderCooldownTimer, blinderCooldownText, ref blinderOnCooldown);
+    }
+
+    private IEnumerator CooldownRoutine(Image icon, TMPro.TextMeshProUGUI cooldownText, float duration, System.Action onCooldownEnd)
+    {
+        icon.color = new Color(0.5f, 0.5f, 0.5f);
+        float timer = duration;
+
+        while (timer > 0)
+        {
+            cooldownText.text = Mathf.Ceil(timer).ToString();
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+
+        cooldownText.text = "";
+        icon.color = Color.white;
+        onCooldownEnd?.Invoke();
+    }
+
+    private void UpdateCooldownUI(ref float timer, TMPro.TextMeshProUGUI cooldownText, ref bool isOnCooldown)
+    {
+        if (isOnCooldown)
+        {
+            timer -= Time.deltaTime;
+            cooldownText.text = Mathf.Ceil(timer).ToString();
+
+            if (timer <= 0f)
+            {
+                cooldownText.text = "";
+                isOnCooldown = false;
+            }
+        }
+    }
+}
