@@ -103,3 +103,7 @@ MonoBehaviour:
   player: {fileID: 0}
   aheadDistance: 3
   aboveDistance: 0.5
+  player2Active: 0
+  minZoom: 5
+  maxZoom: 20
+  zoomSpeed: 0.2

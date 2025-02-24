@@ -41,6 +41,26 @@ public class PowerUpManager : MonoBehaviour
     public bool aiStopUnlocked = false;
     public bool blinderUnlocked = false;
 
+     [Header("Dash / Teleport")]
+    public Dash_Powerup dashPowerupScript;
+    public Teleport_Powerup teleportPowerupScript;
+
+    public bool dashUnlocked = false;
+    public bool teleportUnlocked = false;
+
+    public Image dashIcon;
+    public Image teleportIcon;
+    public TMPro.TextMeshProUGUI dashCooldownText;
+    public TMPro.TextMeshProUGUI teleportCooldownText;
+
+    public float dashCooldownDuration = 3f;
+    public float teleportCooldownDuration = 5f;
+
+    private bool dashOnCooldown = false;
+    private bool teleportOnCooldown = false;
+    private float dashCooldownTimer;
+    private float teleportCooldownTimer;
+
         void Update()
     {
         // Key 1: AI Stop Power-Up
@@ -70,10 +90,30 @@ public class PowerUpManager : MonoBehaviour
             blinderCooldownTimer = blinderCooldownDuration;
         }
 
+        // Key 4 to Dash
+        if (Input.GetKeyDown(KeyCode.Alpha4)  && !dashOnCooldown)
+        {
+            dashPowerupScript.ActivatePowerup();
+            StartCoroutine(CooldownRoutine(dashIcon, dashCooldownText, dashCooldownDuration, () => dashOnCooldown = false));
+            dashOnCooldown = true;
+            dashCooldownTimer = dashCooldownDuration;
+        }
+
+        // Key 5 to Teleport
+        if (Input.GetKeyDown(KeyCode.Alpha5) && !teleportOnCooldown)
+        {
+            teleportPowerupScript.ActivatePowerup();
+            StartCoroutine(CooldownRoutine(teleportIcon, teleportCooldownText, teleportCooldownDuration, () => teleportOnCooldown = false));
+            teleportOnCooldown = true;
+            teleportCooldownTimer = teleportCooldownDuration;
+        }
+
         // Update cooldown UI
         UpdateCooldownUI(ref invincibilityCooldownTimer, invincibilityCooldownText, ref invincibilityOnCooldown);
         UpdateCooldownUI(ref aiStopCooldownTimer, aiStopCooldownText, ref aiStopOnCooldown);
         UpdateCooldownUI(ref blinderCooldownTimer, blinderCooldownText, ref blinderOnCooldown);
+        UpdateCooldownUI(ref dashCooldownTimer, dashCooldownText, ref dashOnCooldown);
+        UpdateCooldownUI(ref teleportCooldownTimer, teleportCooldownText, ref teleportOnCooldown);
     }
 
     private IEnumerator CooldownRoutine(Image icon, TMPro.TextMeshProUGUI cooldownText, float duration, System.Action onCooldownEnd)
