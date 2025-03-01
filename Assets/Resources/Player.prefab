@@ -195,7 +195,7 @@ MonoBehaviour:
   jumpHeightBonus: 0
   wallJumpX: 10
   wallJumpY: 20
-  cyoteTime: 0
+  coyoteTime: 0.1
   agentActive: 0
 --- !u!114 &7179274755119001291
 MonoBehaviour:
@@ -219,7 +219,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: a97ab075207ad754abfad52022444f39, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: PlatformerAgent
@@ -315,7 +315,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 80405790b7982aa408de00feb863744f, type: 3}
   m_Resource: {fileID: 8300000, guid: 80405790b7982aa408de00feb863744f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.265
+  m_Volume: 0.344
   m_Pitch: 2.6
   Loop: 0
   Mute: 0

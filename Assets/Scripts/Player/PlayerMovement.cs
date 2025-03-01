@@ -28,9 +28,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpHeightBonus = 0f; // Additional jump height based on speed
     [SerializeField] private float wallJumpX = 10f;
     [SerializeField] private float wallJumpY = 20f;
-    [SerializeField] private float cyoteTime; //how much time after the player leaves the ground they can jump
-    private float cyoteCounter; //how much time has passed since the player has left the ground
-    
+    [SerializeField] private float coyoteTime; //how much time after the player leaves the ground they can jump
+    private float coyoteCounter; //how much time has passed since the player has left the ground
+    private bool coyoteSpent = false; // tracks if player has used coyote time jump to prevent extra jumping    
 
     private float horizontalInput;//keyboard input for moving horizontally
     private bool jumpInput;//keyboard input for jumping
@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         AudioSource[] audioSources = GetComponents<AudioSource>();
         walkAudioSource = audioSources[0]; // Assign the first AudioSource component to walkAudioSource
         jumpAudioSource = audioSources[1]; // Assign the second AudioSource component to jumpAudioSource
+        coyoteCounter = coyoteTime; //initalize timer
 
         // Check if the PlatformerAgent component is attached
         if (GetComponent<PlatformerAgent>() != null)
@@ -83,11 +84,12 @@ public class PlayerMovement : MonoBehaviour
             body.gravityScale = 5;
             wallJumping = false;
             animator.SetBool("isJumping", false);
-            cyoteCounter = cyoteTime; //reset cyote counter when on ground
+            coyoteCounter = coyoteTime; //reset coyote counter when on ground  
+            coyoteSpent = false; //resets coyote jump tracker
         }
         else
         {
-            cyoteCounter -= Time.deltaTime; //start cyote counter
+            coyoteCounter -= Time.deltaTime; //decrease coyote counter
         }
 
         // Handle wall jump timer
@@ -139,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
                 float speedFactor = Mathf.Abs(body.linearVelocity.x) / maxSpeed;
                 float adjustedJumpHeight = jumpHeight + speedFactor * jumpHeightBonus;
                 Jump(new Vector2(body.linearVelocity.x, adjustedJumpHeight));
+                coyoteSpent = true; //prevents a double jump when coyote time activates very close to ground after normal jump
             }
             else if (grounded == 1) //wall on left
             {
@@ -151,6 +154,14 @@ public class PlayerMovement : MonoBehaviour
                 // Wall jump to the left
                 Vector2 wallJumpDirection = new Vector2(-wallJumpX, wallJumpY);  
                 Jump(wallJumpDirection, isWallJump: true);
+            }
+            else if (grounded == -1 && coyoteCounter > 0 && !coyoteSpent) //coyote time
+            {
+                // Jump height increases with movement speed
+                float speedFactor = Mathf.Abs(body.linearVelocity.x) / maxSpeed;
+                float adjustedJumpHeight = jumpHeight + speedFactor * jumpHeightBonus;
+                Jump(new Vector2(body.linearVelocity.x, adjustedJumpHeight));
+                coyoteSpent = true;
             }
         }
 
@@ -179,8 +190,6 @@ public class PlayerMovement : MonoBehaviour
     //makes the player jump
     private void Jump(Vector2 jumpForce, bool isWallJump = false)
     {
-        //if(cyoteCounter <= 0 && (grounded != 1 && grounded != 2)) return; //if cyote timer is up do not jump
-
         body.linearVelocity = jumpForce;
         animator.SetBool("isJumping", true);
 
@@ -197,22 +206,24 @@ public class PlayerMovement : MonoBehaviour
     //returns 0 for floor, 1 for left wall, 2 for right wall, and -1 if in the air
     private int onGround()
     {
+        float rayDistance = 0.02f;
+
         RaycastHit2D hitDown = Physics2D.BoxCast(
             boxCollider.bounds.center,
             boxCollider.bounds.size, 0,
-            Vector2.down, 0.02f, groundLayer
+            Vector2.down, rayDistance, groundLayer
         );
 
         RaycastHit2D hitLeft = Physics2D.BoxCast(
             boxCollider.bounds.center,
             boxCollider.bounds.size, 0,
-            Vector2.left, 0.02f, groundLayer
+            Vector2.left, rayDistance, groundLayer
         );
 
         RaycastHit2D hitRight = Physics2D.BoxCast(
             boxCollider.bounds.center,
             boxCollider.bounds.size, 0,
-            Vector2.right, 0.02f, groundLayer
+            Vector2.right, rayDistance, groundLayer
         );
 
         if (hitDown.collider != null)
@@ -227,12 +238,6 @@ public class PlayerMovement : MonoBehaviour
         {
             return 2; // On right wall
         }
-
-        //check for cyote time
-        // if(cyoteCounter > 0)
-        // {
-        //     return 0; //player is not on the ground but is within cyote time so act as if player is on ground
-        // }
 
         return -1; // not grounded
     }
