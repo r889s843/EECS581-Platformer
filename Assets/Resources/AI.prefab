@@ -195,7 +195,7 @@ MonoBehaviour:
   jumpHeightBonus: 0
   wallJumpX: 10
   wallJumpY: 20
-  cyoteTime: 0
+  coyoteTime: 0
   agentActive: 0
 --- !u!114 &7398338557370521038
 MonoBehaviour:

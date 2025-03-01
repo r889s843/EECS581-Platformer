@@ -235,11 +235,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6566144401125976642, guid: 5272fb7bd0d174543a98231790b71f5e, type: 3}
       propertyPath: m_ChunkCullingBounds.x
-      value: 0.13999999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6566144401125976642, guid: 5272fb7bd0d174543a98231790b71f5e, type: 3}
       propertyPath: m_ChunkCullingBounds.y
-      value: 0.01999998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7350860271370130897, guid: 5272fb7bd0d174543a98231790b71f5e, type: 3}
       propertyPath: m_Size.x
@@ -2675,8 +2675,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5022602860645237092, guid: 7fb008f72e9ebca489ebec28844f05b8, type: 3}
     - target: {fileID: 8265371546771409018, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8265371546771409018, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.9850001
+      value: -4.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3718,7 +3722,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 5346068963677902523}
   aheadDistance: 3
-  aboveDistance: 0.5
   player2Active: 0
   minZoom: 5
   maxZoom: 20
@@ -3835,7 +3838,7 @@ Transform:
   m_GameObject: {fileID: 2117075891}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: -3, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3982,11 +3985,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.86
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.015
+      value: -4.5
       objectReference: {fileID: 0}
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4170,12 +4173,12 @@ SceneRoots:
   - {fileID: 2117075896}
   - {fileID: 619394802}
   - {fileID: 5346068963677902522}
+  - {fileID: 952454507}
   - {fileID: 5629720258197997038}
   - {fileID: 1883415631}
   - {fileID: 1592545561}
   - {fileID: 198323561572128985}
   - {fileID: 771681575922209916}
-  - {fileID: 952454507}
   - {fileID: 110970907}
   - {fileID: 1154247608}
   - {fileID: 1414067025}

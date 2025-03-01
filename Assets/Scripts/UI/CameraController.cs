@@ -10,8 +10,12 @@ public class CameraController : MonoBehaviour
 {
     private Camera mainCamera; //camera game object
     [SerializeField] private Transform player;
-    [SerializeField] private float aheadDistance; //distance that camera will look ahead
-    [SerializeField] private float aboveDistance; //distance that cameral will look above
+    [SerializeField] private float aheadDistance; //distance camera centers ahead of player
+    private float cameraHeight; //y value hight of camera
+    private float groundLevel; //y value of ground in level
+    private float zoomOffset; //distance to move camera upward when zooming out so ground stays anchored at bottom of screen
+    private float zoomPreClamp;
+    private float zoom; //camera's zoom value
 
     //2 player variables
     private Transform player2; //player2's transform
@@ -20,16 +24,19 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float minZoom = 5.0f; //min size of camera
     [SerializeField] private float maxZoom = 20.0f; //max size of camera
     [SerializeField] private float zoomSpeed = 0.2f; //zoom speed
-    private float smoothTime;//
+    private float smoothTime;
 
 
     private void Awake() {
-        mainCamera = Camera.main;
-
         //if player object is empty then find it
         if(player == null) {
             player = GameObject.Find("Player").transform;
         }
+
+        mainCamera = Camera.main;
+        groundLevel = player.transform.position.y - 0.5f;
+        cameraHeight = groundLevel + 4.0f;
+        zoomOffset = 0.0f;
     }
 
     private void Update() {
@@ -38,16 +45,21 @@ public class CameraController : MonoBehaviour
             player2 = GameObject.Find("Player2(Clone)").transform; //assign player2's transform
         }
 
-        //make camera follow player
+        //update zoom
+        updateZoom();
+        mainCamera.orthographicSize = Mathf.SmoothDamp(mainCamera.orthographicSize, zoom, ref smoothTime, zoomSpeed); //set new zoom
+
+        //need to smooth damp zoomOffset here 
+        //zoomOffset = zoom / 2 idea works - just need zoom before clamp here
+
+        //update camera position
         if(player2Active) { //multiplayer
             Vector3 avgPos = getNewPosition(); //get average position
             transform.position = new Vector3(avgPos.x, avgPos.y, transform.position.z); //set new position
-
-            //set new size
-            mainCamera.orthographicSize = Mathf.SmoothDamp(mainCamera.orthographicSize, getNewZoom(), ref smoothTime, zoomSpeed);
         }
         else { //single player
-            transform.position = new Vector3(player.position.x + aheadDistance, player.position.y + aboveDistance, transform.position.z);
+            cameraHeight = (groundLevel + 4.0f) + zoomOffset; //calculate new camera height
+            transform.position = new Vector3(player.position.x + aheadDistance, cameraHeight, transform.position.z); //set new position
         }
 
     }
@@ -68,17 +80,18 @@ public class CameraController : MonoBehaviour
     }
 
     //returns new camera zoom
-    //calculates based on distance between players
-    private float getNewZoom(){
-        float zoom = 0.0f;
-
-        //zoom is proportional to distance between players
-        zoom = Vector3.Distance(player.position, player2.position);
-
-        //restrict zoom to min and max
-        zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
-
-        return zoom;
+    //single player -> calculates based on distance from ground level
+    //2player -> calculates based on distance between players
+    private void updateZoom(){
+        //2 player
+        if(player2Active){
+            zoom = Vector3.Distance(player.position, player2.position);//zoom is proportional to distance between players
+            zoom = Mathf.Clamp(zoom, minZoom, maxZoom); //restrict zoom to min and max
+        }
+        else { //single player
+            zoom = (player.position.y - 0.5f) - groundLevel; //zoom is proportional to player's distance from the ground
+            zoom = Mathf.Clamp(zoom, minZoom, zoom); //restrict zoom to min
+        }
     }
 
     public void UpdateCameraTarget(Transform newPlayer, Transform newPlayer2 = null)

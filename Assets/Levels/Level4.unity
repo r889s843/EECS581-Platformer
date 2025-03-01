@@ -134,11 +134,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.61
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.91
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -219,11 +219,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8265371546771409018, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.5199194
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 8265371546771409018, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.788537
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8265371546771409018, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
       propertyPath: m_LocalPosition.z
@@ -868,7 +868,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1903868474}
   aheadDistance: 3
-  aboveDistance: 0.5
   player2Active: 0
   minZoom: 5
   maxZoom: 20
@@ -985,7 +984,7 @@ Transform:
   m_GameObject: {fileID: 836526714}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12381,11 +12380,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9109026585486348293, guid: 4c26b3319190f5e4d9d426ffa6e8e68a, type: 3}
       propertyPath: m_ChunkCullingBounds.x
-      value: 0.13999999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9109026585486348293, guid: 4c26b3319190f5e4d9d426ffa6e8e68a, type: 3}
       propertyPath: m_ChunkCullingBounds.y
-      value: 0.01999998
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12399,6 +12398,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 836526719}
   - {fileID: 296181863}
   - {fileID: 1195536264}
   - {fileID: 1742089395}
@@ -12411,5 +12411,4 @@ SceneRoots:
   - {fileID: 1761921288}
   - {fileID: 1946212221}
   - {fileID: 1890940028}
-  - {fileID: 836526719}
   - {fileID: 2102278102}
