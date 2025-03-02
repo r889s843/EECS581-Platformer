@@ -10,10 +10,14 @@ public class Start : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+    public void StartProcGen()
+    {
+        SceneManager.LoadScene(8);
+    }
 
     public void StartFreeRun()
     {
-        SceneManager.LoadScene(8);
+        SceneManager.LoadScene(9);
     }
 
     public void OpenOptions()

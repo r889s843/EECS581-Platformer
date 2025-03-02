@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3254881379552708859
+--- !u!1 &3088311692786969045
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4932087405242863195}
-  - component: {fileID: 7943493813120465573}
+  - component: {fileID: 2231061303667205216}
+  - component: {fileID: 2883139126502485270}
   m_Layer: 0
-  m_Name: LivesUI
+  m_Name: LeaderboardUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4932087405242863195
+--- !u!4 &2231061303667205216
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3254881379552708859}
+  m_GameObject: {fileID: 3088311692786969045}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.347024, y: -0.91573924, z: -0.09477177}
+  m_LocalPosition: {x: 2015.5399, y: 1073.5135, z: -2.4442165}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7943493813120465573
+--- !u!114 &2883139126502485270
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3254881379552708859}
+  m_GameObject: {fileID: 3088311692786969045}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d3c2cf68b23f424da41d9e0e4245863, type: 3}
+  m_Script: {fileID: 11500000, guid: 00460a886917fdf4c87ddffe6e875f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Lives1: {fileID: 0}
-  Lives2: {fileID: 0}
-  Lives3: {fileID: 0}
-  P2Lives1: {fileID: 0}
-  P2Lives2: {fileID: 0}
-  P2Lives3: {fileID: 0}
-  P2: 0
-  currentLivesP1: 3
-  currentLivesP2: 3
+  Freerun_Name: {fileID: 0}
+  Freerun_Time: {fileID: 0}
+  ProcGen_Name: {fileID: 0}
+  ProcGen_Time: {fileID: 0}
+  Story_Name: {fileID: 0}
+  Story_Time: {fileID: 0}
