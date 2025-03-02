@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Levels/Main Menu.unity
     guid: e5aa4ceb06332479d8869fb4269c7048
   - enabled: 1
+    path: Assets/Levels/Shop.unity
+    guid: 072fea9f08dfa1947ad34d540f78b612
+  - enabled: 1
     path: Assets/Levels/Level1.unity
     guid: f51ae66b1d90c5c438b0db2322aa1006
   - enabled: 1

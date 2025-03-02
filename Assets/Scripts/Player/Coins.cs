@@ -10,6 +10,19 @@ public class Coin : MonoBehaviour
 {
     public int coinValue = 10; // Value of the coin
 
+    public float amp = 0.1f;
+    public float freq = 3f;
+    Vector3 initPos;
+    private void Start()
+    {
+        initPos = transform.position;
+    }
+
+    private void Update()
+    {
+        transform.position = new Vector3(initPos.x, Mathf.Sin(Time.time * freq) * amp + initPos.y, 0);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player")) // Make sure Player has "Player" tag
