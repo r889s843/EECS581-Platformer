@@ -344,17 +344,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &148435605 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1825480471375379503, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
-  m_PrefabInstance: {fileID: 899486417}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &161833386 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 936288830547839266, guid: 015078de0b2ed444984cc12b26b16ad9, type: 3}
@@ -1283,14 +1272,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 650951429}
-    - target: {fileID: 3451499681048895521, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4854267391589639495, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5988400055321082847, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1369,10 +1350,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5988400055321082847, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6927231453440814806, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8198399490679642025, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
@@ -1858,17 +1835,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1122030295}
   m_CullTransparentMesh: 1
---- !u!114 &1150759232 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1389518749519416510, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
-  m_PrefabInstance: {fileID: 899486417}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1192813331
 GameObject:
   m_ObjectHideFlags: 0
@@ -2005,17 +1971,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192813331}
   m_CullTransparentMesh: 1
---- !u!114 &1243908102 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2711377937081850387, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
-  m_PrefabInstance: {fileID: 899486417}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1375722817
 GameObject:
   m_ObjectHideFlags: 0
@@ -6224,17 +6179,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1630872801}
   m_CullTransparentMesh: 1
---- !u!114 &1664154045 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3250801689695932983, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
-  m_PrefabInstance: {fileID: 899486417}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1768017267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6539,6 +6483,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1772790829562179376, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: powerUpManager
+      value: 
+      objectReference: {fileID: 1116632887}
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.26
@@ -6582,7 +6530,7 @@ PrefabInstance:
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: dashIcon
       value: 
-      objectReference: {fileID: 1664154045}
+      objectReference: {fileID: 718336924}
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: aiStopIcon
       value: 
@@ -6594,15 +6542,15 @@ PrefabInstance:
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: teleportIcon
       value: 
-      objectReference: {fileID: 1243908102}
+      objectReference: {fileID: 593486698}
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: dashCooldownText
       value: 
-      objectReference: {fileID: 1150759232}
+      objectReference: {fileID: 708546570}
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: invincibilityIcon
       value: 
-      objectReference: {fileID: 593486698}
+      objectReference: {fileID: 713383370}
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: aiStopCooldownText
       value: 
@@ -6614,11 +6562,11 @@ PrefabInstance:
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: teleportCooldownText
       value: 
-      objectReference: {fileID: 148435605}
+      objectReference: {fileID: 1526825437}
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: invincibilityCooldownText
       value: 
-      objectReference: {fileID: 1526825437}
+      objectReference: {fileID: 1098453651}
     - target: {fileID: 6863099006183901435, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: moneyText
       value: 

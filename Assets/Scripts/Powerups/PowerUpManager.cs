@@ -11,69 +11,66 @@ using System.Collections;
 public class PowerUpManager : MonoBehaviour
 {
     [Header("UI References")]
-    public Image invincibilityIcon;
-    public Image aiStopIcon;
-    public Image blinderIcon;
-
-    public TMPro.TextMeshProUGUI invincibilityCooldownText;
-    public TMPro.TextMeshProUGUI aiStopCooldownText;
-    public TMPro.TextMeshProUGUI blinderCooldownText;
-
-    [Header("Cooldown Settings")]
-    public float invincibilityCooldownDuration = 5f;
-    public float aiStopCooldownDuration = 6f;
-    public float blinderCooldownDuration = 7f;
-
-    private bool invincibilityOnCooldown = false;
-    private bool aiStopOnCooldown = false;
-    private bool blinderOnCooldown = false;
-
-    private float invincibilityCooldownTimer = 0f;
-    private float aiStopCooldownTimer = 0f;
-    private float blinderCooldownTimer = 0f;
-
-    public Invincible_Powerup invinciblePowerupScript;
-    public AIStop_Powerup aiStopPowerupScript;
-    public Blinder_Powerup blinderPowerupScript;
-
-    // New booleans indicating if the ability is unlocked
-    public bool invincibilityUnlocked = false;
-    public bool aiStopUnlocked = false;
-    public bool blinderUnlocked = false;
-
-     [Header("Dash / Teleport")]
-    public Dash_Powerup dashPowerupScript;
-    public Teleport_Powerup teleportPowerupScript;
-
-    public bool dashUnlocked = false;
-    public bool teleportUnlocked = false;
-
     public Image dashIcon;
     public Image teleportIcon;
+    public Image invincibilityIcon;
+    // public Image dashIcon;
+    // public Image hookshotIcon;
+
     public TMPro.TextMeshProUGUI dashCooldownText;
     public TMPro.TextMeshProUGUI teleportCooldownText;
+    public TMPro.TextMeshProUGUI invincibilityCooldownText;
+    // public TMPro.TextMeshProUGUI dashCooldownText;
+    // public TMPro.TextMeshProUGUI hookshotCooldownText;
 
+    [Header("Cooldown Settings")]
     public float dashCooldownDuration = 3f;
     public float teleportCooldownDuration = 5f;
+    public float invincibilityCooldownDuration = 5f;
+    // public float aiStopCooldownDuration = 6f;
+    // public float blinderCooldownDuration = 7f;
 
     private bool dashOnCooldown = false;
     private bool teleportOnCooldown = false;
+    private bool invincibilityOnCooldown = false;
+    // private bool aiStopOnCooldown = false;
+    // private bool blinderOnCooldown = false;
+
     private float dashCooldownTimer;
     private float teleportCooldownTimer;
+    private float invincibilityCooldownTimer;
+    // private float aiStopCooldownTimer = 0f;
+    // private float blinderCooldownTimer = 0f;
+    
+    public Dash_Powerup dashPowerupScript;
+    public Teleport_Powerup teleportPowerupScript;
+    public Invincible_Powerup invinciblePowerupScript;
+    // public AIStop_Powerup aiStopPowerupScript;
+    // public Blinder_Powerup blinderPowerupScript;
+
+
+    // New booleans indicating if the ability is unlocked
+    public bool invincibilityUnlocked = false;
+    public bool dashUnlocked = false;
+    public bool teleportUnlocked = false;
+    // public bool aiStopUnlocked = false;
+    // public bool blinderUnlocked = false;
+
+
 
         void Update()
     {
-        // Key 1: AI Stop Power-Up
-        if (Input.GetKeyDown(KeyCode.Alpha1) && aiStopUnlocked && !aiStopOnCooldown)
-        {
-            aiStopPowerupScript.ActivatePowerup();
-            StartCoroutine(CooldownRoutine(aiStopIcon, aiStopCooldownText, aiStopCooldownDuration, () => aiStopOnCooldown = false));
-            aiStopOnCooldown = true;
-            aiStopCooldownTimer = aiStopCooldownDuration;
-        }
+        // // Key 1: AI Stop Power-Up
+        // if (Input.GetKeyDown(KeyCode.Alpha1) && aiStopUnlocked && !aiStopOnCooldown)
+        // {
+        //     aiStopPowerupScript.ActivatePowerup();
+        //     StartCoroutine(CooldownRoutine(aiStopIcon, aiStopCooldownText, aiStopCooldownDuration, () => aiStopOnCooldown = false));
+        //     aiStopOnCooldown = true;
+        //     aiStopCooldownTimer = aiStopCooldownDuration;
+        // }
 
         // Key 2: Invincibility Power-Up
-        if (Input.GetKeyDown(KeyCode.Alpha2) && invincibilityUnlocked && !invincibilityOnCooldown)
+        if (Input.GetKeyDown(KeyCode.Alpha3) && invincibilityUnlocked && !invincibilityOnCooldown)
         {
             invinciblePowerupScript.ActivatePowerup();
             StartCoroutine(CooldownRoutine(invincibilityIcon, invincibilityCooldownText, invincibilityCooldownDuration, () => invincibilityOnCooldown = false));
@@ -81,17 +78,17 @@ public class PowerUpManager : MonoBehaviour
             invincibilityCooldownTimer = invincibilityCooldownDuration;
         }
 
-        // Key 3: Blinder Power-Up
-        if (Input.GetKeyDown(KeyCode.Alpha3) && blinderUnlocked && !blinderOnCooldown)
-        {
-            blinderPowerupScript.ActivatePowerup();
-            StartCoroutine(CooldownRoutine(blinderIcon, blinderCooldownText, blinderCooldownDuration, () => blinderOnCooldown = false));
-            blinderOnCooldown = true;
-            blinderCooldownTimer = blinderCooldownDuration;
-        }
+        // // Key 3: Blinder Power-Up
+        // if (Input.GetKeyDown(KeyCode.Alpha3) && blinderUnlocked && !blinderOnCooldown)
+        // {
+        //     blinderPowerupScript.ActivatePowerup();
+        //     StartCoroutine(CooldownRoutine(blinderIcon, blinderCooldownText, blinderCooldownDuration, () => blinderOnCooldown = false));
+        //     blinderOnCooldown = true;
+        //     blinderCooldownTimer = blinderCooldownDuration;
+        // }
 
         // Key 4 to Dash
-        if (Input.GetKeyDown(KeyCode.Alpha4)  && !dashOnCooldown)
+        if (Input.GetKeyDown(KeyCode.Alpha1)  && !dashOnCooldown)
         {
             dashPowerupScript.ActivatePowerup();
             StartCoroutine(CooldownRoutine(dashIcon, dashCooldownText, dashCooldownDuration, () => dashOnCooldown = false));
@@ -100,7 +97,7 @@ public class PowerUpManager : MonoBehaviour
         }
 
         // Key 5 to Teleport
-        if (Input.GetKeyDown(KeyCode.Alpha5) && !teleportOnCooldown)
+        if (Input.GetKeyDown(KeyCode.Alpha2) && !teleportOnCooldown)
         {
             teleportPowerupScript.ActivatePowerup();
             StartCoroutine(CooldownRoutine(teleportIcon, teleportCooldownText, teleportCooldownDuration, () => teleportOnCooldown = false));
@@ -110,8 +107,8 @@ public class PowerUpManager : MonoBehaviour
 
         // Update cooldown UI
         UpdateCooldownUI(ref invincibilityCooldownTimer, invincibilityCooldownText, ref invincibilityOnCooldown);
-        UpdateCooldownUI(ref aiStopCooldownTimer, aiStopCooldownText, ref aiStopOnCooldown);
-        UpdateCooldownUI(ref blinderCooldownTimer, blinderCooldownText, ref blinderOnCooldown);
+        // UpdateCooldownUI(ref aiStopCooldownTimer, aiStopCooldownText, ref aiStopOnCooldown);
+        // UpdateCooldownUI(ref blinderCooldownTimer, blinderCooldownText, ref blinderOnCooldown);
         UpdateCooldownUI(ref dashCooldownTimer, dashCooldownText, ref dashOnCooldown);
         UpdateCooldownUI(ref teleportCooldownTimer, teleportCooldownText, ref teleportOnCooldown);
     }

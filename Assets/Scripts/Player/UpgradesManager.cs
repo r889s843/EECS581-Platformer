@@ -13,7 +13,7 @@ public class UpgradesManager : MonoBehaviour
     public int cost = 10;
 
     // Which ability are we unlocking?
-    public enum AbilityType { Invincibility, AIStop, Blinder }
+    public enum AbilityType { Invincibility, Dash, Hookshot }
     public AbilityType abilityToUnlock;
 
     public void PurchaseUpgrade()
@@ -33,12 +33,12 @@ public class UpgradesManager : MonoBehaviour
                 powerUpManager.invincibilityUnlocked = true;
                 break;
 
-            case AbilityType.AIStop:
-                powerUpManager.aiStopUnlocked = true;
+            case AbilityType.Dash:
+                powerUpManager.dashUnlocked = true;
                 break;
 
-            case AbilityType.Blinder:
-                powerUpManager.blinderUnlocked = true;
+            case AbilityType.Hookshot:
+                powerUpManager.teleportUnlocked = true;
                 break;
         }
 

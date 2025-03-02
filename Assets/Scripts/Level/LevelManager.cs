@@ -72,7 +72,7 @@ public class LevelManager : MonoBehaviour
     // This method is called every time a new scene is loaded
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Main Menu")
+        if (scene.name == "Start")
         {
             // Retrieve saved player statistics
             float bestDist = PlayerPrefs.GetFloat("BestDistance", 0f);
@@ -153,7 +153,7 @@ public class LevelManager : MonoBehaviour
             PlayerPrefs.Save(); // Ensure data is written to disk
 
             // Load main menu or handle end-of-run flow
-            LoadScene("Main Menu"); // Transition to Main Menu
+            LoadScene("Start"); // Transition to Main Menu
         }
         else if (p2 && livesP1 <= 0 && livesP2 > 0)
         {
@@ -213,7 +213,7 @@ public class LevelManager : MonoBehaviour
             PlayerPrefs.SetInt("TotalCompletions", totalCompletions); // Update total completions
             PlayerPrefs.Save(); // Ensure data is written to disk
 
-            LoadScene("Main Menu"); // Transition to Main Menu
+            LoadScene("Start"); // Transition to Main Menu
         }
     }
 
@@ -285,7 +285,7 @@ public class LevelManager : MonoBehaviour
             bestTime = Mathf.Min(bestTime, currentTime); // Keep the lower time
             PlayerPrefs.SetFloat("BestTime", bestTime); // Save the best time
             PlayerPrefs.Save(); // Ensure data is written to disk
-            LoadScene("Main Menu"); // Transition to Main Menu
+            LoadScene("Start"); // Transition to Main Menu
         }
         else
         {

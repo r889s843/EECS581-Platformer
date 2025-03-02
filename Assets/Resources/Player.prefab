@@ -62,7 +62,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4326873493693996885
 Transform:
   m_ObjectHideFlags: 0
@@ -239,7 +239,7 @@ MonoBehaviour:
   blinderCooldownDuration: 7
   invinciblePowerupScript: {fileID: 51776379038202088}
   aiStopPowerupScript: {fileID: 3510136035710230222}
-  blinderPowerupScript: {fileID: 6906904958358819973}
+  blinderPowerupScript: {fileID: 0}
   invincibilityUnlocked: 1
   aiStopUnlocked: 1
   blinderUnlocked: 1
@@ -253,51 +253,6 @@ MonoBehaviour:
   teleportCooldownText: {fileID: 0}
   dashCooldownDuration: 3
   teleportCooldownDuration: 5
---- !u!1 &6646013941302266642
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3152162689274718420}
-  - component: {fileID: 6906904958358819973}
-  m_Layer: 8
-  m_Name: Blinder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3152162689274718420
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6646013941302266642}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1802557755064146918}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6906904958358819973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6646013941302266642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd23ae56548977e499fedd3013be2ce4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blinderPrefab: {fileID: 8926240661689315012, guid: 10633e4384d7ba6479a04e1cff907fd5, type: 3}
 --- !u!1 &6822391475435936479
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,7 +390,6 @@ Transform:
   - {fileID: 5918237010615582161}
   - {fileID: 9069839491339337241}
   - {fileID: 4326873493693996885}
-  - {fileID: 3152162689274718420}
   - {fileID: 4250356899896888946}
   - {fileID: 2632786037414318544}
   - {fileID: 128997411297667334}
