@@ -11,20 +11,22 @@ public class CameraController : MonoBehaviour
     private Camera mainCamera; //camera game object
     [SerializeField] private Transform player;
     [SerializeField] private float aheadDistance; //distance camera centers ahead of player
+    private float smoothTime;
     private float cameraHeight; //y value hight of camera
-    private float groundLevel; //y value of ground in level
-    private float zoomOffset; //distance to move camera upward when zooming out so ground stays anchored at bottom of screen
-    private float zoomPreClamp;
+    private float zoomOffset; //vertical offset to move camera to account for zooming - keeps camera anchored on ground
     private float zoom; //camera's zoom value
+
+    private float groundLevel; //y value of ground in level
+    private bool updateGroundLevel; //tracks if ground level needs to be updated
+    private bool playerHeightStorage; //contains player height at specific time to smooth damp to while player is moving elsewhere
 
     //2 player variables
     private Transform player2; //player2's transform
     public bool player2Active; //tracks whether game is single or 2 player at the moment
-    // [SerializeField] private float edgeBuffer; //space of player to edge
     [SerializeField] private float minZoom = 5.0f; //min size of camera
     [SerializeField] private float maxZoom = 20.0f; //max size of camera
     [SerializeField] private float zoomSpeed = 0.2f; //zoom speed
-    private float smoothTime;
+
 
 
     private void Awake() {
@@ -46,11 +48,8 @@ public class CameraController : MonoBehaviour
         }
 
         //update zoom
-        updateZoom();
+        zoom = getZoom();
         mainCamera.orthographicSize = Mathf.SmoothDamp(mainCamera.orthographicSize, zoom, ref smoothTime, zoomSpeed); //set new zoom
-
-        //need to smooth damp zoomOffset here 
-        //zoomOffset = zoom / 2 idea works - just need zoom before clamp here
 
         //update camera position
         if(player2Active) { //multiplayer
@@ -58,9 +57,18 @@ public class CameraController : MonoBehaviour
             transform.position = new Vector3(avgPos.x, avgPos.y, transform.position.z); //set new position
         }
         else { //single player
+            zoomOffset = Mathf.SmoothDamp(zoomOffset, zoom - minZoom, ref smoothTime, zoomSpeed); //calculate and smooth damp zoomOffset
             cameraHeight = (groundLevel + 4.0f) + zoomOffset; //calculate new camera height
             transform.position = new Vector3(player.position.x + aheadDistance, cameraHeight, transform.position.z); //set new position
         }
+
+        /*PROBABLY NEED PUBLIC UPDATER FUNCTION TO TRIGGER
+        //check for update to ground level
+        if(updateGroundLevel){
+
+            updateGroundLevel = false; //turns off the gl update when smooth damp complete
+        }*/
+
 
     }
 
@@ -79,10 +87,17 @@ public class CameraController : MonoBehaviour
         return averagePosition;
     }
 
+    //returns vertical offset for camera to zoom out and still be anchored to the ground
+    private float getZoomOffset()
+    {
+        return 0.0f;
+    }
+
     //returns new camera zoom
     //single player -> calculates based on distance from ground level
     //2player -> calculates based on distance between players
-    private void updateZoom(){
+    private float getZoom(){
+        float zoom = 0.0f;
         //2 player
         if(player2Active){
             zoom = Vector3.Distance(player.position, player2.position);//zoom is proportional to distance between players
@@ -92,6 +107,8 @@ public class CameraController : MonoBehaviour
             zoom = (player.position.y - 0.5f) - groundLevel; //zoom is proportional to player's distance from the ground
             zoom = Mathf.Clamp(zoom, minZoom, zoom); //restrict zoom to min
         }
+
+        return zoom;
     }
 
     public void UpdateCameraTarget(Transform newPlayer, Transform newPlayer2 = null)
