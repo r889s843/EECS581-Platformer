@@ -61,7 +61,7 @@ public class PlatformerAgent : Agent
         {
             levelCompleted = false; // Reset level completion flag
             currentLevelCompletions = 0; // Reset completion count
-            Debug.Log(SceneManager.GetActiveScene().name);
+            // Debug.Log(SceneManager.GetActiveScene().name);
             // LevelManager.Instance.LoadScene(SceneManager.GetActiveScene().name); // Reload current scene
             LevelManager.Instance.LevelCompleted(SceneManager.GetActiveScene().name);
         }

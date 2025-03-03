@@ -19,12 +19,18 @@ public class FreerunProcGen : MonoBehaviour
 
     // Tilemap references
     public Tilemap groundTilemap;        // Assign Ground Tilemap in Inspector
+    public Tilemap  wallTilemap;        // Tilemap for walls
     public Tilemap hazardTilemap;        // Assign Hazard Tilemap in Inspector
 
     // Tile references for ground
     public TileBase leftTile;            // Tile for the left end of a platform
     public TileBase centerTile;          // Tile for the center of a platform
     public TileBase rightTile;           // Tile for the right end of a platform
+
+    public TileBase leftBottomWallTile;           // Tile for the left end of the wall tile
+    public TileBase rightBottomWallTile;           // Tile for the right end of the wall tile
+    public TileBase leftTopWallTile;           // Tile for the left end of the wall tile
+    public TileBase rightTopWallTile;           // Tile for the right end of the wall tile
 
     // Tile reference for hazards
     public TileBase spikeTile;           // Spike/hazard tile
@@ -117,6 +123,13 @@ public class FreerunProcGen : MonoBehaviour
         chunk.tilePositions.Add(tilePos); // Add tile position to chunk
     }
 
+    private void AddWallTile(GeneratedChunk chunk, float x, float y, TileBase tile)
+    {
+        Vector3Int tilePos = WorldToTilePosition(x, y); // Convert world position to tile position
+        wallTilemap.SetTile(tilePos, tile); // Set the ground tile at the specified position
+        chunk.tilePositions.Add(tilePos); // Add tile position to chunk
+    }
+
     private void AddSpikeTile(GeneratedChunk chunk, float x, float y)
     {
         Vector3Int tilePos = WorldToTilePosition(x, y); // Convert to tile position
@@ -175,6 +188,7 @@ public class FreerunProcGen : MonoBehaviour
                 foreach (var tilePos in chunk.tilePositions) {
                     groundTilemap.SetTile(tilePos, null); // Remove ground tile
                     hazardTilemap.SetTile(tilePos, null); // Remove hazard tile
+                    wallTilemap.SetTile(tilePos, null); // Remove ground tile
                 }
 
                 // Destroy spawned objects like enemies and walls
@@ -435,20 +449,26 @@ public class FreerunProcGen : MonoBehaviour
         AddGroundTile(chunk, currentX, currentY, rightTile); // Add right tile
         currentX += 1f; // Move to next position
 
-        // Create walls as obstacles
-        GameObject w1 = CreateWall(currentX - 3f, currentY + 7f); // Create first wall
-        if (w1 != null) chunk.spawnedObjects.Add(w1); // Add wall to chunk
+        for (int i=0; i < 10; i++) {
+            // Create walls as obstacles
+            AddWallTile(chunk, currentX - 2f, currentY + i + 3f, new TileBase[] { leftBottomWallTile, leftTopWallTile }[Random.Range(0, 2)]); // Create first wall
+            AddWallTile(chunk, currentX - 1f, currentY + i + 3f, new TileBase[] { rightBottomWallTile, rightTopWallTile }[Random.Range(0, 2)]);
+        }
 
-        float wallGap = 6f; // Gap between walls
-        GameObject w2 = CreateWall(currentX - 4f + wallGap, currentY + 5f); // Create second wall
-        if (w2 != null) chunk.spawnedObjects.Add(w2); // Add wall to chunk
+        float wallGap = 4f; // Gap between walls
+        
+        for (int i=0; i < 10; i++) {
+            // Create walls as obstacles
+            AddWallTile(chunk, currentX + wallGap, currentY + i, new TileBase[] { leftBottomWallTile, leftTopWallTile }[Random.Range(0, 2)]); // Create first wall
+            AddWallTile(chunk, currentX + wallGap+ 1f, currentY + i, new TileBase[] { rightBottomWallTile, rightTopWallTile }[Random.Range(0, 2)]);
+        }
 
         // Exit platform
-        float wallHeight = wallPrefab.GetComponent<Renderer>().bounds.size.y; // Get wall height
+        float wallHeight = 9f; // Get wall height
         float exitPlatformY = currentY + wallHeight; // Set exit platform Y position
         int exitPlatformLength = 3; // Exit platform length
 
-        float exitPlatformX = currentX - 4f + wallGap + 1f; // Exit platform X position
+        float exitPlatformX = currentX + wallGap + 2f; // Exit platform X position
 
         for (int i = 0; i < exitPlatformLength; i++) // Create exit platform tiles
         {
@@ -469,6 +489,7 @@ public class FreerunProcGen : MonoBehaviour
         generatedChunks.Add(chunk); // Add chunk to list
         return new Vector2(finalX, finalY); // Return end position
     }
+
 
     private Vector2 CreateDownJumpSection(float x, float y)
     {
@@ -531,13 +552,20 @@ public class FreerunProcGen : MonoBehaviour
         AddGroundTile(chunk, currentX, currentY, rightTile); // Add right tile
         currentX += 1f; // Move to next position
 
-        // Place walls as obstacles
-        GameObject w1 = CreateWall(currentX - 1f, currentY - 5f); // Create first wall
-        if (w1 != null) chunk.spawnedObjects.Add(w1); // Add wall to chunk
+        for (int i=0; i < 10; i++) {
+            // Create walls as obstacles
+            AddWallTile(chunk, currentX, currentY - i, new TileBase[] { leftBottomWallTile, leftTopWallTile }[Random.Range(0, 2)]); // Create first wall
+            AddWallTile(chunk, currentX+1f, currentY - i, new TileBase[] { rightBottomWallTile, rightTopWallTile }[Random.Range(0, 2)]);
+        }
 
-        float wallGap = 5f; // Gap between walls
-        GameObject w2 = CreateWall(currentX + wallGap, currentY + 1f); // Create second wall
-        if (w2 != null) chunk.spawnedObjects.Add(w2); // Add wall to chunk
+        float wallGap = 6f; // Gap between walls
+        currentX += wallGap; // Move to next position
+        
+        for (int i=0; i < 10; i++) {
+            // Create walls as obstacles
+            AddWallTile(chunk, currentX, currentY - i+2f, new TileBase[] { leftBottomWallTile, leftTopWallTile }[Random.Range(0, 2)]); // Create first wall
+            AddWallTile(chunk, currentX + 1f, currentY - i+2f, new TileBase[] { rightBottomWallTile, rightTopWallTile }[Random.Range(0, 2)]);
+        }
 
         float deltaY = Random.Range(-4, -3) * 2f; // Random Y delta for descending
         float nextY = Mathf.Clamp(currentY + deltaY, minY, maxY); // Clamp Y within bounds
@@ -548,19 +576,18 @@ public class FreerunProcGen : MonoBehaviour
             if (wallGap < 1f) wallGap = 1f; // Minimum gap size
         }
 
-        currentX += wallGap; // Move past the gap
         currentY = nextY; // Update Y position
 
         // Exit platform after walls
-        int platformLength = 3; // Exit platform length
+        int platformLength = 4; // Exit platform length
         for (int i = 0; i < platformLength; i++) // Create exit platform tiles
         {
             if (i == 0)
-                AddGroundTile(chunk, currentX, currentY, leftTile); // Add left tile
+                AddGroundTile(chunk, currentX + 1f, currentY-4f, leftTile); // Add left tile
             else if (i == platformLength - 1)
-                AddGroundTile(chunk, currentX, currentY, rightTile); // Add right tile
+                AddGroundTile(chunk, currentX + 1f, currentY-4f, rightTile); // Add right tile
             else
-                AddGroundTile(chunk, currentX, currentY, centerTile); // Add center tile
+                AddGroundTile(chunk, currentX + 1f, currentY-4f, centerTile); // Add center tile
 
             currentX += 1f; // Move to next position
         }
@@ -573,15 +600,15 @@ public class FreerunProcGen : MonoBehaviour
         return new Vector2(finalX, finalY); // Return end position
     }
 
-    private GameObject CreateWall(float x, float startY)
-    {
-        if (wallPrefab != null)
-        {
-            GameObject wall = Instantiate(wallPrefab, new Vector3(x, startY, 0f), Quaternion.identity, transform); // Instantiate wall
-            return wall; // Return wall object
-        }
-        return null; // Return null if prefab not set
-    }
+    // private GameObject CreateWall(float x, float startY)
+    // {
+    //     if (wallPrefab != null)
+    //     {
+    //         GameObject wall = Instantiate(wallPrefab, new Vector3(x, startY, 0f), Quaternion.identity, transform); // Instantiate wall
+    //         return wall; // Return wall object
+    //     }
+    //     return null; // Return null if prefab not set
+    // }
 
     private void SpawnEnemies(GeneratedChunk chunk, float startX, float endX, float y)
     {

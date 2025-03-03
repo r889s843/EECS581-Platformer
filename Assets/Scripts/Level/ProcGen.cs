@@ -109,16 +109,16 @@ public class ProcGen : MonoBehaviour
             Vector2 newCoords = CreateSafeChunk(x, y); // Create a safe (non-dangerous) chunk
             x = newCoords.x; // Update X position
             y = newCoords.y; // Update Y position
-            Debug.Log($"SafeChunk ended at: x = {x}, y = {y}");
+            // Debug.Log($"SafeChunk ended at: x = {x}, y = {y}");
 
             newCoords = CreateDangerChunk(x, y); // Create a dangerous chunk
             x = newCoords.x; // Update X position
             y = newCoords.y; // Update Y position
-            Debug.Log($"DangerChunk ended at: x = {x}, y = {y}");
+            // Debug.Log($"DangerChunk ended at: x = {x}, y = {y}");
 
             minYReached = Mathf.Min(minYReached, y); // Update the minimum Y reached
         }
-        Debug.Log($"Gen ended at: x = {x}, y = {y}");
+        // Debug.Log($"Gen ended at: x = {x}, y = {y}");
 
         CreateEndChunk(x, y); // Create the ending chunk with the flag
         CreateDeathZone(x, minYReached); // Create the death zone based on the level's end
