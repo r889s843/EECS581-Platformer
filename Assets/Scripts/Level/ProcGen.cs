@@ -14,18 +14,22 @@ public class ProcGen : MonoBehaviour
     public static ProcGen Instance { get; private set; }
 
     // Prefabs for various game objects
-    public GameObject wallPrefab;        // Prefab for walls
     public GameObject flagPrefab;        // Prefab for the flag at the end of the level
     public GameObject deathZonePrefab;   // Prefab for the death zone area
 
     // Tilemap references for ground and hazards
     public Tilemap groundTilemap;        // Tilemap for ground tiles
+    public Tilemap  wallTilemap;        // Tilemap for walls
     public Tilemap hazardTilemap;        // Tilemap for hazard tiles
 
     // Tile references for different parts of platforms and hazards
     public TileBase leftTile;            // Tile for the left end of a platform
     public TileBase centerTile;          // Tile for the center of a platform
     public TileBase rightTile;           // Tile for the right end of a platform
+    public TileBase leftBottomWallTile;           // Tile for the left end of the wall tile
+    public TileBase rightBottomWallTile;           // Tile for the right end of the wall tile
+    public TileBase leftTopWallTile;           // Tile for the left end of the wall tile
+    public TileBase rightTopWallTile;           // Tile for the right end of the wall tile
     public TileBase spikeTile;           // Spike/hazard tile
 
     // Platform generation settings
@@ -75,7 +79,7 @@ public class ProcGen : MonoBehaviour
 
     private void Start()
     {
-        GenerateNewLevel(); // Begin level generation when the game starts
+        // GenerateNewLevel(); // Begin level generation when the game starts
     }
 
     public void GenerateNewLevel()
@@ -105,13 +109,16 @@ public class ProcGen : MonoBehaviour
             Vector2 newCoords = CreateSafeChunk(x, y); // Create a safe (non-dangerous) chunk
             x = newCoords.x; // Update X position
             y = newCoords.y; // Update Y position
+            Debug.Log($"SafeChunk ended at: x = {x}, y = {y}");
 
             newCoords = CreateDangerChunk(x, y); // Create a dangerous chunk
             x = newCoords.x; // Update X position
             y = newCoords.y; // Update Y position
+            Debug.Log($"DangerChunk ended at: x = {x}, y = {y}");
 
             minYReached = Mathf.Min(minYReached, y); // Update the minimum Y reached
         }
+        Debug.Log($"Gen ended at: x = {x}, y = {y}");
 
         CreateEndChunk(x, y); // Create the ending chunk with the flag
         CreateDeathZone(x, minYReached); // Create the death zone based on the level's end
@@ -446,13 +453,24 @@ public class ProcGen : MonoBehaviour
         PaintGroundTile(currentX, currentY, rightTile); // Paint right end tile
         currentX += 1f; // Move to next position
 
-        CreateWall(currentX - 3f, currentY + 7f); // Create the first wall above the platform
+        for (int i=0; i < 10; i++) {
+            // Use the selected tile in the method call
+            PaintWallTile(currentX - 3f, currentY+i+3, new TileBase[] { leftBottomWallTile, leftTopWallTile }[Random.Range(0, 2)]);
+            PaintWallTile(currentX - 3f + 1f, currentY+i+3, new TileBase[] { rightBottomWallTile, rightTopWallTile }[Random.Range(0, 2)]);
+        }
+
         currentX += 1f; // Move to next position
 
         float wallGap = 5f; // Gap between walls
-        CreateWall(currentX - 4f + wallGap, currentY + 5f); // Create the second wall with a gap
+        // CreateWall(currentX - 4f + wallGap, currentY + 5f); // Create the second wall with a gap
 
-        float wallHeight = wallPrefab.GetComponent<Renderer>().bounds.size.y; // Get the height of the wall prefab
+        for (int i=0; i < 10; i++) {
+            // Use the selected tile in the method call
+            PaintWallTile(currentX - 4f + wallGap, currentY+i, new TileBase[] { leftBottomWallTile, leftTopWallTile }[Random.Range(0, 2)]); // Paint right end tile
+            PaintWallTile(currentX - 4f + 1 + wallGap, currentY+i, new TileBase[] { rightBottomWallTile, rightTopWallTile }[Random.Range(0, 2)]); // Paint right end tile
+        }
+
+        float wallHeight = 9; // Get the height of the wall prefab
         float exitPlatformY = currentY + wallHeight; // Determine Y position for the exit platform
         int exitPlatformLength = 2; // Length of the exit platform
 
@@ -557,21 +575,39 @@ public class ProcGen : MonoBehaviour
         currentX += 1f; // Move to next position
 
         // Place a wall above
-        CreateWall(currentX - 1f, currentY - 5f); // Create the first wall
-        float gapSize = 5f; // Gap size between walls
-        CreateWall(currentX + gapSize, currentY + 1f); // Create the second wall with a gap
+        // CreateWall(currentX - 1f, currentY - 5f); // Create the first wall
+        // CreateWall(currentX + gapSize, currentY + 1f); // Create the second wall with a gap
+
+
+
+        for (int i=0; i < 10; i++) {
+            // Use the selected tile in the method call
+            PaintWallTile(currentX - 1f, currentY-i-2f, new TileBase[] { leftBottomWallTile, leftTopWallTile }[Random.Range(0, 2)]);
+            PaintWallTile(currentX - 1f + 1f, currentY-i-2f, new TileBase[] { rightBottomWallTile, rightTopWallTile }[Random.Range(0, 2)]);
+        }
+
+        float wallGap = 5f; // Gap size between walls
+        currentX += 1f; // Move to next position
+
+        for (int i=0; i < 10; i++) {
+            // Use the selected tile in the method call
+            PaintWallTile(currentX + wallGap, currentY-i+1f, new TileBase[] { leftBottomWallTile, leftTopWallTile }[Random.Range(0, 2)]); // Paint right end tile
+            PaintWallTile(currentX + 1 + wallGap, currentY-i+1f, new TileBase[] { rightBottomWallTile, rightTopWallTile }[Random.Range(0, 2)]); // Paint right end tile
+        }
+
+        // float wallHeight = 9; // Get the height of the wall prefab
 
         // Move downward more significantly
         float deltaY = Random.Range(-4, -3) * 2f; // Larger Y delta for downward jump
         float nextY = Mathf.Clamp(currentY + deltaY, minY, maxY); // Clamp Y within bounds
 
-        while (!MomentumJumpTest(gapSize, nextY - currentY)) // Ensure the jump is feasible
+        while (!MomentumJumpTest(wallGap, nextY - currentY)) // Ensure the jump is feasible
         {
-            gapSize -= 0.5f; // Decrease gap size if jump is not feasible
-            if (gapSize < 1f) gapSize = 1f; // Minimum gap size
+            wallGap -= 0.5f; // Decrease gap size if jump is not feasible
+            if (wallGap < 1f) wallGap = 1f; // Minimum gap size
         }
 
-        currentX += gapSize; // Move past the gap
+        currentX += wallGap; // Move past the gap
         currentY = nextY; // Update Y position
 
         int platformLength = 3; // Length of the exit platform
@@ -609,14 +645,14 @@ public class ProcGen : MonoBehaviour
         return new Vector2(finalX, finalY); // Return the end position of the exit platform
     }
 
-    private void CreateWall(float x, float startY)
-    {
-        if (wallPrefab != null)
-        {
-            GameObject wall = Instantiate(wallPrefab, new Vector3(x, startY, 0f), Quaternion.identity, transform); // Instantiate wall prefab
-            generatedObjects.Add(wall); // Add wall to the list of generated objects
-        }
-    }
+    // private void CreateWall(float x, float startY)
+    // {
+    //     if (wallPrefab != null)
+    //     {
+    //         GameObject wall = Instantiate(wallPrefab, new Vector3(x, startY, 0f), Quaternion.identity, transform); // Instantiate wall prefab
+    //         generatedObjects.Add(wall); // Add wall to the list of generated objects
+    //     }
+    // }
 
     private Vector2 CreateEndChunk(float x, float y)
     {
@@ -703,6 +739,11 @@ public class ProcGen : MonoBehaviour
     {
         Vector3Int tilePos = WorldToTilePosition(x, y); // Convert world position to tile position
         groundTilemap.SetTile(tilePos, tile); // Set the ground tile at the specified position
+    }
+    private void PaintWallTile(float x, float y, TileBase tile)
+    {
+        Vector3Int tilePos = WorldToTilePosition(x, y); // Convert world position to tile position
+        wallTilemap.SetTile(tilePos, tile); // Set the ground tile at the specified position
     }
 
     private void PaintSpikeTile(float x, float y)
