@@ -1516,7 +1516,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6
+      value: 4.2
       objectReference: {fileID: 0}
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2361,7 +2361,7 @@ MonoBehaviour:
   chunkSpawnThreshold: 20
   startX: 0
   startY: 0
-  minY: -10
+  minY: 0
   maxY: 10
   cleanupDistance: 50
   distanceText: {fileID: 762832971}

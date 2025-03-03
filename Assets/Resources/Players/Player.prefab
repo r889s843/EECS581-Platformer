@@ -228,31 +228,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac7b82c6516be8140b70b6cd0fa0342e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  invincibilityIcon: {fileID: 0}
-  aiStopIcon: {fileID: 0}
-  blinderIcon: {fileID: 0}
-  invincibilityCooldownText: {fileID: 0}
-  aiStopCooldownText: {fileID: 0}
-  blinderCooldownText: {fileID: 0}
-  invincibilityCooldownDuration: 5
-  aiStopCooldownDuration: 6
-  blinderCooldownDuration: 7
-  invinciblePowerupScript: {fileID: 51776379038202088}
-  aiStopPowerupScript: {fileID: 3510136035710230222}
-  blinderPowerupScript: {fileID: 0}
-  invincibilityUnlocked: 1
-  aiStopUnlocked: 1
-  blinderUnlocked: 1
-  dashPowerupScript: {fileID: 4146731470915871877}
-  teleportPowerupScript: {fileID: 360386666909058061}
-  dashUnlocked: 1
-  teleportUnlocked: 1
   dashIcon: {fileID: 0}
   teleportIcon: {fileID: 0}
+  invincibilityIcon: {fileID: 0}
   dashCooldownText: {fileID: 0}
   teleportCooldownText: {fileID: 0}
+  invincibilityCooldownText: {fileID: 0}
   dashCooldownDuration: 3
   teleportCooldownDuration: 5
+  invincibilityCooldownDuration: 5
+  dashPowerupScript: {fileID: 4146731470915871877}
+  teleportPowerupScript: {fileID: 360386666909058061}
+  invinciblePowerupScript: {fileID: 51776379038202088}
+  invincibilityUnlocked: 1
+  dashUnlocked: 1
+  teleportUnlocked: 1
 --- !u!1 &6822391475435936479
 GameObject:
   m_ObjectHideFlags: 0
