@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     private float horizontalInput;//keyboard input for moving horizontally
     private bool jumpInput;//keyboard input for jumping
-    private int grounded; //holds returned value of onGround() -> 0 for floor, 1 for left wall, 2 for right wall, -1 for none
+    [SerializeField] private int grounded; //holds returned value of onGround() -> 0 for floor, 1 for left wall, 2 for right wall, -1 for none
 
     // Wall jump variables
     private bool wallJumping = false;
@@ -241,4 +241,15 @@ public class PlayerMovement : MonoBehaviour
 
         return -1; // not grounded
     }
+
+    //public getter function for if the player is grounded or not
+    public bool getGrounded()
+    {
+        if(onGround() == 0){
+            return true;
+        }
+
+        return false;
+    }
 }
+

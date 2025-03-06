@@ -410,13 +410,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b10067da59932b48a54afc68c662b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   aheadDistance: 3
-  groundLevel: 0
-  player2Active: 0
   minZoom: 5
   maxZoom: 8
   zoomSpeed: 1
+  player2Active: 0
 --- !u!114 &564948464
 MonoBehaviour:
   m_ObjectHideFlags: 0
