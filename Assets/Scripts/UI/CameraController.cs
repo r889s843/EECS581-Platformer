@@ -13,10 +13,10 @@ public class CameraController : MonoBehaviour
     private Rigidbody2D playerBody; //player's rigidbody
     [SerializeField] private float aheadDistance; //distance camera centers ahead of player
     private float smoothTime;
-    private float cameraHeight; //y value hight of camera
+    private float camHeight; //y value hight of camera
     private float zoomOffset; //vertical offset to move camera to account for zooming - keeps camera anchored on ground
-    [SerializeField] private float zoom; //camera's zoom value
-    private float groundLevel; //y value of ground in level
+    private float zoom; //camera's zoom value
+    [SerializeField] private float groundLevel; //y value of ground in level
     private float targetGroundLevel; //y value of target ground level for smooth damp
 
     //2 player variables
@@ -25,6 +25,10 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float minZoom; //min size of camera
     [SerializeField] private float maxZoom; //max size of camera
     [SerializeField] private float zoomSpeed; //zoom speed
+
+    //NOTES HERE
+    //maybe I need to not damp zoomOffset but damp camHeight on old controller
+
 
 
 
@@ -38,7 +42,7 @@ public class CameraController : MonoBehaviour
         mainCamera = Camera.main;
         groundLevel = player.transform.position.y - 0.5f;
         targetGroundLevel = groundLevel;
-        cameraHeight = groundLevel + 4.0f;
+        camHeight = groundLevel + 4.0f;
         zoomOffset = 0.0f;
     }
 
@@ -48,6 +52,19 @@ public class CameraController : MonoBehaviour
             player2 = GameObject.Find("Player2(Clone)").transform; //assign player2's transform
         }
 
+        /**NEW CONTROLLER WORKS BUT NOT WITH CHANGING GL
+        //calc groundLevel
+        //groundLevel = groundLevel;
+
+        zoom = calcZoom(groundLevel, player.position.y); //calc zoom
+        mainCamera.orthographicSize = Mathf.SmoothDamp(mainCamera.orthographicSize, zoom, ref smoothTime, zoomSpeed); //set zoom
+
+        camHeight = Mathf.SmoothDamp(camHeight, calcCamHeight(groundLevel, zoom), ref smoothTime, zoomSpeed); //calc height and smooth damp
+        transform.position = new Vector3(player.position.x + aheadDistance, camHeight, transform.position.z); //set position
+        **/
+        
+
+        ///** OLD CONTROLLER - SUPER UGLY BUT WORKS 
         //update groundLevel
         //if player is too far up -> move gl up to them
         if(zoom > maxZoom) {
@@ -57,7 +74,7 @@ public class CameraController : MonoBehaviour
             }
         }
         //groundLevel = Mathf.SmoothDamp(groundLevel, targetGroundLevel, ref smoothTime, zoomSpeed); DOESNT WORK
-        groundLevel = targetGroundLevel; //works but doesnt transition
+        groundLevel = targetGroundLevel; //works but not smooth
 
         //update zoom
         zoom = getZoom();
@@ -70,10 +87,35 @@ public class CameraController : MonoBehaviour
         }
         else { //single player
             zoomOffset = Mathf.SmoothDamp(zoomOffset, zoom - minZoom, ref smoothTime, zoomSpeed); //calculate and smooth damp zoomOffset
-            cameraHeight = (groundLevel + 4.0f) + zoomOffset; //calculate new camera height
-            //cameraHeight = Mathf.SmoothDamp(cameraHeight, targetCamHeight, ref smoothTime, zoomSpeed); //smooth damp cam height transition
-            transform.position = new Vector3(player.position.x + aheadDistance, cameraHeight, transform.position.z); //set new position
+            camHeight = (groundLevel + 4.0f) + zoomOffset; //calculate new camera height
+            //camHeight = Mathf.SmoothDamp(camHeight, targetCamHeight, ref smoothTime, zoomSpeed); //smooth damp cam height transition
+            transform.position = new Vector3(player.position.x + aheadDistance, camHeight, transform.position.z); //set new position
         }
+        //**/
+    }
+
+    //calculate camera zoom
+    //gl = groundLevel
+    //playerY = player's current y pos
+    private float calcZoom(float gl, float playerY)
+    {
+        float newZoom = (playerY - 0.5f) - gl; //zoom proportional to distance player is from gl
+        newZoom = Mathf.Clamp(newZoom, minZoom, newZoom); //restrict zoom to min
+        return newZoom;
+    }
+
+    //calculate camera height
+    //baseOffset -> makes camera look above player not directly at it - currently static at 4.0
+    //groundLevel = bottom anchor for cam
+    //zoomOffset = amount that cam needs to move up while zooming to stay anchored at bottom
+    //camHeight = groundLevel + zoomOffset + baseOffset
+    private float calcCamHeight(float gl, float zoom)
+    {
+        float newCamHeight = 0.0f;
+        float zoomOffset = zoom - minZoom;
+        newCamHeight = gl + zoomOffset + 4.0f;
+
+        return newCamHeight;
     }
 
     //returns average position of both players
@@ -91,7 +133,7 @@ public class CameraController : MonoBehaviour
         return averagePosition;
     }
 
-    //returns new camera zoom
+    //returns new camera zoom 
     //single player -> calculates based on distance from ground level
     //2player -> calculates based on distance between players
     private float getZoom(){
