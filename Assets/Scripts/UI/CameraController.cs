@@ -5,9 +5,8 @@
 // Purpose: This creates a camera to track the player while the game is going.
 
 //TODO
-//camera lookahead in direction player is facing
-//ledge detection to move cam down
-//individual zoom speeds
+//camera lookahead and raycast in player direction - super buggy idk why
+//multiplayer cam
 
 using UnityEngine;
 
@@ -17,23 +16,27 @@ public class CameraController : MonoBehaviour
     private Transform player; //player's transform
     private Rigidbody2D playerBody; //player's rigidbody
     private PlayerMovement playerMovement; //player's movement script
-    [SerializeField] private float aheadDistance; //distance camera centers ahead of player
 
-    //height variables
-    private float camHeight; //y value hight of camera
-    private float groundLevel; //y value of ground in level
+    [Header("Dynamic Settings")]
+    [SerializeField] private float heightChangeSpeed; //speed that cam changes height
+    [SerializeField] private float zoomSpeed; //zoom speed
 
-    //zoom variables
+    [Header("Static Settings")]
     [SerializeField] private float minZoom; //min size of camera
     [SerializeField] private float maxZoom; //max size of camera
-    [SerializeField] private float zoomSpeed; //zoom speed
+    [SerializeField] private float aheadDistance; //distance camera centers ahead of player
+    [SerializeField] private float rayDistanceAhead; //distance that the raycast will look ahead to detect lower ledges
+
+    //height & zoom
+    private float camHeight; //y value hight of camera
+    private float groundLevel; //y value of ground in level
     private float zoom; //camera's zoom value
     private float zoomOffset; //vertical offset to move camera to account for zooming - keeps camera anchored on ground
 
-    //vars for smooth damp
-    private float smoothTimeZoom;
-    private float smoothTimeHeight;
-    private float smoothTimeLookAhead;
+    //interpolation
+    private float zoomCurrentVelo;
+    private float heightCurrentVelo;
+    private float lookAheadCurrentVelo;
 
     //2 player variables
     private Transform player2; //player2's transform
@@ -78,7 +81,7 @@ public class CameraController : MonoBehaviour
 
         //update zoom
         zoom = calcZoom();
-        mainCamera.orthographicSize = Mathf.SmoothDamp(mainCamera.orthographicSize, zoom, ref smoothTimeZoom, zoomSpeed); //set new zoom
+        mainCamera.orthographicSize = Mathf.SmoothDamp(mainCamera.orthographicSize, zoom, ref zoomCurrentVelo, zoomSpeed); //set new zoom
 
         //update camera position
         if(player2Active) { //multiplayer
@@ -87,7 +90,8 @@ public class CameraController : MonoBehaviour
         }
         else { //single player
             zoomOffset = zoom - minZoom;
-            camHeight = Mathf.SmoothDamp(camHeight, (groundLevel + 4.0f + zoomOffset), ref smoothTimeHeight, zoomSpeed);
+            camHeight = Mathf.SmoothDamp(camHeight, (groundLevel + 4.0f + zoomOffset), ref heightCurrentVelo, heightChangeSpeed);
+            //lerp camHeight instead of smoothdamp
             transform.position = new Vector3(player.position.x + aheadDistance, camHeight, transform.position.z); 
         }
     }
@@ -125,6 +129,19 @@ public class CameraController : MonoBehaviour
         }
 
         //if a platform ahead of the player is below current ground level -> lower it to there
+        Vector2 rayOrigin = Vector2.zero;
+        rayOrigin = new Vector2(player.position.x + rayDistanceAhead, player.position.y - 2.0f); //2.0 is just enough to start ray beneath existing floor
+        /*For facing left and right. super buggy
+        if(player.localScale.x < 0) { //facing left
+            rayOrigin = new Vector2(player.position.x - rayDistanceAhead, player.position.y - 2.0f); //2.0 is just enough to start ray beneath existing floor
+        }
+        else { //facing right
+            rayOrigin = new Vector2(player.position.x + rayDistanceAhead, player.position.y - 2.0f); //2.0 is just enough to start ray beneath existing floor
+        }*/
+        RaycastHit2D detector = Physics2D.Raycast(rayOrigin, Vector2.down);//raycast
+        if(detector && detector.collider.gameObject.name != "DeathZone") { //set new gl if ground detected
+            newGroundLevel = detector.point.y;
+        }
 
         return newGroundLevel;
     }
