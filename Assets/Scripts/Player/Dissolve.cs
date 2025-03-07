@@ -9,6 +9,8 @@ using System.Collections;
 
 public class Dissolve: MonoBehaviour{
     [SerializeField] public Material material;
+    [SerializeField] private ParticleSystem OneParticles; // Particle System Reference
+    [SerializeField] private ParticleSystem ZeroParticles; // Particle System Reference
 
     private float dissolveAmount;
     public bool isDissolving;
@@ -21,10 +23,34 @@ public class Dissolve: MonoBehaviour{
     //     material.SetFloat("_DissolveAmount", 0f);
     // }
 
+
+
+
     public void StartDissolve(float dissolveSpeed)
     {
         isDissolving = true;
         this.dissolveSpeed = dissolveSpeed;
+
+        OneParticles.transform.position = transform.position;
+        // Scale the particle effect
+        OneParticles.transform.localScale = transform.localScale;
+        var mainModule = OneParticles.main;
+        mainModule.startSizeMultiplier = transform.localScale.x; // Scale particles with object
+        var shapeModule = OneParticles.shape;
+        shapeModule.scale = transform.localScale; // Scale shape of particles
+        OneParticles.Play();
+
+
+        ZeroParticles.transform.position = transform.position;
+        // Scale the particle effect
+        ZeroParticles.transform.localScale = transform.localScale;
+        var mainModule2 = ZeroParticles.main;
+        mainModule.startSizeMultiplier = transform.localScale.x; // Scale particles with object
+        var shapeModule2 = ZeroParticles.shape;
+        shapeModule.scale = transform.localScale; // Scale shape of particles
+        ZeroParticles.Play();
+
+
         StartCoroutine(DissolveRoutine(true));
     }
 
