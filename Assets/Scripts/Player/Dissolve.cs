@@ -5,39 +5,50 @@
 // Purpose: Manages the dissolve effect
 
 using UnityEngine;
+using System.Collections;
 
 public class Dissolve: MonoBehaviour{
-    [SerializeField] private Material material;
+    [SerializeField] public Material material;
 
     private float dissolveAmount;
-    private bool isDissolving;
+    public bool isDissolving;
     public float dissolveSpeed;
 
-    private void Update()
-    {
-        if (isDissolving){
-            dissolveAmount = Mathf.Clamp(dissolveAmount + dissolveSpeed * Time.deltaTime, 0, 1.1f);
-            material.SetFloat("_DissolveAmount", dissolveAmount);
-        } else {
-            dissolveAmount = Mathf.Clamp(dissolveAmount - dissolveSpeed * Time.deltaTime, 0, 1.1f);
-            material.SetFloat("_DissolveAmount", dissolveAmount);
-        }
-        if (Input.GetKeyDown(KeyCode.T)){
-            isDissolving = true;
-            Debug.Log("I should be dying");
-        }
-        if (Input.GetKeyDown(KeyCode.Y)){
-            isDissolving = false;
-            Debug.Log("I should be alive");
-        }
-    }
+    // private void Start()
+    // {
+    //     material = new Material(material);
+    //     GetComponent<Renderer>().material = material;
+    //     material.SetFloat("_DissolveAmount", 0f);
+    // }
 
-    public void StartDissolve(float dissolveSpeed){
+    public void StartDissolve(float dissolveSpeed)
+    {
         isDissolving = true;
         this.dissolveSpeed = dissolveSpeed;
+        StartCoroutine(DissolveRoutine(true));
     }
-    public void StopDissolve(float dissolveSpeed){
+
+    public void StopDissolve(float dissolveSpeed)
+    {
         isDissolving = false;
         this.dissolveSpeed = dissolveSpeed;
+        StartCoroutine(DissolveRoutine(false));
     }
+
+    private IEnumerator DissolveRoutine(bool dissolving)
+    {
+        while ((dissolving && dissolveAmount < 1.1f) || (!dissolving && dissolveAmount > 0f))
+        {
+            dissolveAmount = Mathf.Clamp(
+                dissolveAmount + (dissolving ? dissolveSpeed : -dissolveSpeed) * Time.deltaTime,
+                0, 1.1f
+            );
+
+            material.SetFloat("_DissolveAmount", dissolveAmount);
+            yield return null; // Wait for next frame
+        }
+
+        // Debug.Log(dissolving ? "Dissolve Complete" : "Restore Complete");
+    }
+
 }

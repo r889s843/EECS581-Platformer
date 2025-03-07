@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 407041457868127905}
   - component: {fileID: 6880300375975874345}
   - component: {fileID: 2829458068230082656}
+  - component: {fileID: 1018566675259256265}
   m_Layer: 0
   m_Name: coin
   m_TagString: Money
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2279594192295786537}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.05, y: -0.4, z: 0.03547602}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
@@ -141,3 +142,18 @@ MonoBehaviour:
   coinValue: 10
   amp: 0.1
   freq: 3
+  dissolveSpeed: 1
+--- !u!114 &1018566675259256265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2279594192295786537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23fb009a71196234495eb822ce3add81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: -876546973899608171, guid: a97b1a59cd689c64d91db25ac1ee2e7f, type: 3}
+  dissolveSpeed: 1
