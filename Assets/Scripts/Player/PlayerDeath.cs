@@ -10,13 +10,92 @@ using System.Collections.Generic;
 
 public class PlayerDeath : MonoBehaviour
 {
-    // detect any collisions with enemies or DeathZone and trigger death events (destroy)
-    private void OnCollisionEnter2D(Collision2D collision){
-        if (collision.gameObject.CompareTag("DeathZone")){ // track if the player hit the no no zone.
-            Destroy(gameObject); // kill the player
+    [Header("References")]
+    private Material originalMaterial;
+    public Dissolve dissolveEffect;
+    public LivesUI livesUI;
+    public PlayerMovement playerMovement;  // Reference to our PlayerMovement script
+    public Transform respawnPoint;         // Assign a spawn location in the Inspector (optional)
+
+    [Header("Dissolve Settings")]
+    public float dissolveSpeed = 2f;
+
+    private Vector2 startPosition;
+
+    private void Start()
+    {
+        // If you prefer the original position as the respawn, store it
+        startPosition = transform.position;
+
+        originalMaterial = GetComponent<Renderer>().material;
+
+        // If we didn’t assign them in the Inspector:
+        if (dissolveEffect == null)
+            dissolveEffect = GetComponent<Dissolve>();
+
+        if (playerMovement == null)
+            playerMovement = GetComponent<PlayerMovement>();
+        
+        if (livesUI == null)
+            livesUI = FindObjectOfType<LivesUI>();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // For any lethal collision tags:
+        if (collision.CompareTag("DeathZone") || collision.CompareTag("Enemy") ||
+            collision.CompareTag("Hazard")   || collision.CompareTag("Projectile"))
+        {
+            // Decrement the appropriate player's life
+            if (CompareTag("Player"))
+                livesUI.LoseLifeP1();
+            else if (CompareTag("Player2"))
+                livesUI.LoseLifeP2();
+
+            // Disable movement so player can’t move while dissolving
+            if (playerMovement != null)
+                playerMovement.enabled = false;
+
+            // Reset dissolveAmount in a fresh material instance
+            Renderer renderer = GetComponent<Renderer>();
+            Material newMat = new Material(dissolveEffect.material);
+            newMat.SetFloat("_DissolveAmount", 0f);
+            renderer.material = newMat;
+            dissolveEffect.material = newMat;
+
+            // Start the dissolve effect
+            dissolveEffect.StartDissolve(dissolveSpeed);
+
+            // Respawn after the dissolve completes
+            StartCoroutine(HandleDeathAndRespawn());
         }
-        // if (collision.gameObject.CompareTag("Enemy")){ // same but with enemies.
-        //     Destroy(gameObject); // kill the player
-        // } // WE WILL NEED TO ADD MORE HERE AS WE ADD SPIKES / ENEMY PROJECTILES
+    }
+
+    private IEnumerator HandleDeathAndRespawn()
+    {
+        // Wait for dissolve to complete
+        // (1.5f / dissolveSpeed) is what you’re using now, adjust as you wish
+        yield return new WaitForSeconds(1.6f / dissolveSpeed);
+
+        // Actually respawn: Move to spawn point (or back to startPosition)
+        if (respawnPoint != null)
+            transform.position = respawnPoint.position;
+        else
+            transform.position = startPosition;
+
+        // Optionally reset velocity if using Rigidbody2D
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+            rb.linearVelocity = Vector2.zero;
+
+        // Now that we’re “alive” again, re-enable movement
+        if (playerMovement != null)
+            playerMovement.enabled = true;
+
+        dissolveEffect.StopDissolve(dissolveSpeed);
+
+        yield return new WaitForSeconds(1.5f / dissolveSpeed);
+
+        GetComponent<Renderer>().material = originalMaterial; // Restore original material
     }
 }

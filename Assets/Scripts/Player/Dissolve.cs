@@ -12,18 +12,12 @@ public class Dissolve: MonoBehaviour{
     [SerializeField] private ParticleSystem OneParticles; // Particle System Reference
     [SerializeField] private ParticleSystem ZeroParticles; // Particle System Reference
 
+    [SerializeField] private ParticleSystem OneParticlesInverse; // Particle System Reference
+    [SerializeField] private ParticleSystem ZeroParticlesInverse; // Particle System Reference
+
     private float dissolveAmount;
     public bool isDissolving;
     public float dissolveSpeed;
-
-    // private void Start()
-    // {
-    //     material = new Material(material);
-    //     GetComponent<Renderer>().material = material;
-    //     material.SetFloat("_DissolveAmount", 0f);
-    // }
-
-
 
 
     public void StartDissolve(float dissolveSpeed)
@@ -45,9 +39,9 @@ public class Dissolve: MonoBehaviour{
         // Scale the particle effect
         ZeroParticles.transform.localScale = transform.localScale;
         var mainModule2 = ZeroParticles.main;
-        mainModule.startSizeMultiplier = transform.localScale.x; // Scale particles with object
+        mainModule2.startSizeMultiplier = transform.localScale.x; // Scale particles with object
         var shapeModule2 = ZeroParticles.shape;
-        shapeModule.scale = transform.localScale; // Scale shape of particles
+        shapeModule2.scale = transform.localScale; // Scale shape of particles
         ZeroParticles.Play();
 
 
@@ -58,6 +52,31 @@ public class Dissolve: MonoBehaviour{
     {
         isDissolving = false;
         this.dissolveSpeed = dissolveSpeed;
+
+        Vector3 newPosition = ZeroParticlesInverse.transform.position;
+        newPosition.x = transform.position.x;
+        newPosition.y = transform.position.y+2f;
+
+        OneParticlesInverse.transform.position = newPosition;
+        // Scale the particle effect
+        OneParticlesInverse.transform.localScale = transform.localScale;
+        var mainModule3 = OneParticlesInverse.main;
+        mainModule3.startSizeMultiplier = transform.localScale.x; // Scale particles with object
+        var shapeModule3 = OneParticlesInverse.shape;
+        shapeModule3.scale = transform.localScale; // Scale shape of particles
+        OneParticlesInverse.Play();
+
+
+        ZeroParticlesInverse.transform.position = newPosition;
+        // Scale the particle effect
+        ZeroParticlesInverse.transform.localScale = transform.localScale;
+        var mainModule4 = ZeroParticlesInverse.main;
+        mainModule4.startSizeMultiplier = transform.localScale.x; // Scale particles with object
+        var shapeModule4 = ZeroParticlesInverse.shape;
+        shapeModule4.scale = transform.localScale; // Scale shape of particles
+        ZeroParticlesInverse.Play();
+
+
         StartCoroutine(DissolveRoutine(false));
     }
 

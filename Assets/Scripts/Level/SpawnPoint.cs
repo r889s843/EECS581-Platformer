@@ -8,5 +8,7 @@ using UnityEngine;
     // Marks a gameobject as a spawnpoint in a scene.
     public class Respawn : MonoBehaviour
     {
+
+        
         // is currently empty as this will just grab the ingame object from unity and we aren't assigning any customizable properties to it.
     }
