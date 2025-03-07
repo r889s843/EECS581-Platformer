@@ -5,6 +5,7 @@
 // Purpose: Handles any audio that is triggered by a collision event
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class flagHandler : MonoBehaviour
 {
@@ -22,11 +23,14 @@ public class flagHandler : MonoBehaviour
         // Check if the collider belongs to the player
         if (collider.gameObject.CompareTag("Player"))
         {
-            // Play the death sound
             if (audioSource != null)
             {
+                // play level win sound
                 audioSource.Play();
             }
+
+            LevelManager.Instance.LevelCompleted(SceneManager.GetActiveScene().name);
+
             // THIS WORKS BUT I HAVE IT TURNED OFF FOR THE AI. THIS SHOULDN'T NEED MUCH UPDATING UNLESS WE PLAN TO ADD HEALTH
             // collider.gameObject.GetComponent<PlayerMovement>(); // this checks the players movement when a collison occurs
             // collider.transform.position = Respawn.position; // this teleports the player back to the respawn point.
