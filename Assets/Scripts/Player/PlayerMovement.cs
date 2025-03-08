@@ -5,253 +5,611 @@
 // Purpose: Physics engine. Decides how the player interacts with movement and collidable objects.
 
 using UnityEngine;
+using System.Collections;
 
+// ---------------------------------------------------
+// MERGED SCRIPT EXAMPLE
+// ---------------------------------------------------
+[RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D body;//this player's rigidbody component
-    private BoxCollider2D boxCollider; //this player's box collider
-    [SerializeField] private LayerMask groundLayer; //ground layer mask for raycast collision detection
+    // ---------------------------------------------------
+    // 1) References & Components
+    // ---------------------------------------------------
+    private Rigidbody2D body;
+    private BoxCollider2D boxCollider;
+    [SerializeField] private LayerMask groundLayer;
+    
+    // Animator & Audio
     public Animator animator;
     private AudioSource walkAudioSource;
     private AudioSource jumpAudioSource;
 
-    // Movement and physics parameters
-    [Header("Movement Parameters")]
-    [SerializeField] private float maxSpeed = 15f;
-    [SerializeField] private float acceleration = 40f;
-    [SerializeField] private float deceleration = 80f;
-    [SerializeField] private float airAcceleration = 15f;
-    [SerializeField] private float airDeceleration = 10f;
+    // Keeping these from your original script for controlling AI vs. Player input:
+    [HideInInspector] public bool agentActive = false;
+    private float horizontalInput;
+    private bool jumpInput;
 
-    [Header("Jumping Parameters")]
-    [SerializeField] private float jumpHeight = 20f;
-    [SerializeField] private float jumpHeightBonus = 0f; // Additional jump height based on speed
-    [SerializeField] private float wallJumpX = 10f;
-    [SerializeField] private float wallJumpY = 20f;
-    [SerializeField] private float coyoteTime; //how much time after the player leaves the ground they can jump
-    private float coyoteCounter; //how much time has passed since the player has left the ground
-    private bool coyoteSpent = false; // tracks if player has used coyote time jump to prevent extra jumping    
+    // ---------------------------------------------------
+    // 2) “isGrounded/onWall” from First Script
+    //    (Returning 0=Floor, 1=LeftWall, 2=RightWall, -1=None)
+    // ---------------------------------------------------
+    private int groundedState; // 0=floor,1=left wall,2=right wall,-1=none
 
-    private float horizontalInput;//keyboard input for moving horizontally
-    private bool jumpInput;//keyboard input for jumping
-    [SerializeField] private int grounded; //holds returned value of onGround() -> 0 for floor, 1 for left wall, 2 for right wall, -1 for none
+    // We'll treat “isGrounded” as “(groundedState == 0)”.
+    // We'll treat “onWall” as “(groundedState == 1 or 2)”.
+    
+    private struct GroundState
+    {
+        public bool onFloor;
+        public bool onLeftWall;
+        public bool onRightWall;
+    }
 
-    // Wall jump variables
-    private bool wallJumping = false;
-    private float wallJumpTime = 0.2f;
-    private float wallJumpCounter;
+    private GroundState CheckGround()
+    {
+        float rayDistance = 0.02f;
+        GroundState state = new GroundState();
 
-    [HideInInspector] public bool agentActive = false; // Indicates if the agent is controlling the player
+        RaycastHit2D hitDown = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, rayDistance, groundLayer);
+        RaycastHit2D hitLeft = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.left, rayDistance, groundLayer);
+        RaycastHit2D hitRight = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.right, rayDistance, groundLayer);
 
-    private LivesUI livesUI;
+        state.onFloor = hitDown.collider != null;
+        state.onLeftWall = hitLeft.collider != null;
+        state.onRightWall = hitRight.collider != null;
 
+        return state;
+    }
+
+    // ---------------------------------------------------
+    // 3) Horizontal Movement (from Advanced Script)
+    //    We’ll unify it with the “isGrounded” check above.
+    // ---------------------------------------------------
+    [Header("=== Horizontal Movement ===")]
+    [Range(0f, 30f)] public float maxSpeed = 10f;
+    [Range(0f, 100f)] public float maxAcceleration = 52f;
+    [Range(0f, 100f)] public float maxDecceleration = 52f;
+    [Range(0f, 100f)] public float maxTurnSpeed = 80f;
+    [Range(0f, 100f)] public float maxAirAcceleration = 25f;
+    [Range(0f, 100f)] public float maxAirDeceleration = 25f;
+    [Range(0f, 100f)] public float maxAirTurnSpeed = 60f;
+    [Tooltip("When false, the character instantly moves to max speed with no acceleration.")]
+    public bool useAcceleration = true;
+    [Tooltip("Friction to apply if you want to reduce effective max speed.")]
+    public float friction = 0f;
+
+    private Vector2 velocity;
+    private Vector2 moveInput;
+    private bool pressingHorizontal;
+
+    // ---------------------------------------------------
+    // 4) Jump & Gravity (from Advanced Script)
+    //    We keep your original “jump” animations & sfx.
+    //    We unify coyote time by bridging with onGround().
+    // ---------------------------------------------------
+    [Header("=== Jumping ===")]
+    [Range(0f, 10f)] public float jumpHeight = 3f;
+    [Range(0.2f, 1.25f)] public float timeToJumpApex = 0.5f;
+    [Range(0f, 10f)] public float upwardMovementMultiplier = 1f;
+    [Range(1f, 10f)] public float downwardMovementMultiplier = 6f;
+    [Range(1f, 10f)] public float jumpCutOff = 3f;
+    [Tooltip("Max downward speed.")] public float speedLimit = 20f;
+    public float coyoteTime = 0.1f;
+    public float jumpBuffer = 0.2f;
+    public bool canDoubleJump = true;
+    public bool variableJumpHeight = true;
+
+    // Internal jump state
+    public bool isJumping; 
+    private bool pressingJump;
+    private float coyoteCounter;
+    private float jumpBufferCounter;
+    private bool canJumpAgain;
+    private bool desiredJump;
+    
+    // Gravity
+    private float defaultGravityScale = 1f;
+    private float gravMultiplier = 1f;
+    private float jumpSpeed;
+
+    // ---------------------------------------------------
+    // 5) Dash & Wall-Jump (from Advanced Script)
+    //    We can integrate your “on wall = 1 or 2” checks.
+    // ---------------------------------------------------
+    [Header("=== Dash Settings ===")]
+    public bool canDash = true;
+    public int dashAmount = 1;
+    public float dashSpeed = 15f;
+    public float dashAttackTime = 0.15f;
+    public float dashEndTime = 0.1f;
+    public float dashEndSpeed = 8f;
+    public float dashRefillTime = 0.5f;
+    public float dashSleepTime = 0.05f;
+    public float dashInputBufferTime = 0.2f;
+
+    private bool isDashing;
+    private bool isDashAttacking;
+    private int dashesLeft;
+    private bool dashRefilling;
+    private float lastPressedDashTime;
+    private bool isWallDashing;
+    private bool hasDashed;
+
+    [Header("=== Wall Jump Settings ===")]
+    public Vector2 wallJumpForce = new Vector2(1f, 12f);
+    private bool isWallJumping;
+    private float wallJumpStartTime;
+    private int lastWallJumpDir; // +1 or -1
+    
+    // We’ll flip the sprite using the first script’s approach 
+    // (checking horizontalInput > 0 or < 0).
+    
+    // ---------------------------------------------------
+    // 6) Input Timers
+    // ---------------------------------------------------
+    private float lastPressedJumpTime;
+
+    // ---------------------------------------------------
+    // Initialization
+    // ---------------------------------------------------
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
+        
+        // From first script: get audio sources
         AudioSource[] audioSources = GetComponents<AudioSource>();
-        walkAudioSource = audioSources[0]; // Assign the first AudioSource component to walkAudioSource
-        jumpAudioSource = audioSources[1]; // Assign the second AudioSource component to jumpAudioSource
-        coyoteCounter = coyoteTime; //initalize timer
+        walkAudioSource = audioSources[0];
+        jumpAudioSource = audioSources[1];
 
-        // Check if the PlatformerAgent component is attached
+        defaultGravityScale = body.gravityScale;
+        UpdateJumpPhysics(); // Add this
+        dashesLeft = dashAmount;
+        hasDashed = false; // Initialize as false
+        canJumpAgain = true; // Initialize as true
+
+        // If there's a PlatformerAgent attached, assume AI control
         if (GetComponent<PlatformerAgent>() != null)
         {
             agentActive = true;
         }
     }
 
-    // Method to set inputs from the AI agent
+    private void UpdateJumpPhysics()
+    {
+        float g = Physics2D.gravity.y * defaultGravityScale;
+        jumpSpeed = Mathf.Sqrt(2f * jumpHeight * -g);
+    }
+
+    // If AI is controlling the player, we set these externally:
     public void SetInput(float horizontal, bool jump)
     {
         horizontalInput = horizontal;
         jumpInput = jump;
     }
 
+    // ---------------------------------------------------
+    // 7) Update Loop
+    // ---------------------------------------------------
     private void Update()
     {
-        // Get input from player controls if not controlled by the agent
+        // (1) Get Input from either AI or Player
         if (!agentActive)
         {
-            horizontalInput = Input.GetAxis("Horizontal");
-            jumpInput = Input.GetKeyDown(KeyCode.Space);
-        }
-
-        // Check if player is grounded and/or on a wall
-        grounded = onGround();
-
-        // Reset gravity and movement if on floor
-        if (grounded == 0)
-        {
-            body.gravityScale = 5;
-            wallJumping = false;
-            animator.SetBool("isJumping", false);
-            coyoteCounter = coyoteTime; //reset coyote counter when on ground  
-            coyoteSpent = false; //resets coyote jump tracker
-        }
-        else
-        {
-            coyoteCounter -= Time.deltaTime; //decrease coyote counter
-        }
-
-        // Handle wall jump timer
-        if (wallJumping)
-        {
-            wallJumpCounter -= Time.deltaTime;
-            if (wallJumpCounter <= 0)
+            // Use advanced script’s style: raw horizontal
+            horizontalInput = Input.GetAxisRaw("Horizontal");
+            // But also track jump “key down”:
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                wallJumping = false;
+                jumpInput = true;
+            }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                jumpInput = false;
+            }
+            // Dashing input
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                lastPressedDashTime = dashInputBufferTime;
             }
         }
-
-        // Calculate target speed based on input and max speed
-        float targetSpeed = horizontalInput * maxSpeed;
-        float speedDifference = targetSpeed - body.linearVelocity.x;
-
-        // Determine acceleration rate
-        float accelRate;
-        if (grounded == 0) //if on floor
-            accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : deceleration;
-        else
-            accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? airAcceleration : airDeceleration;
-
-        // Apply acceleration to reach target speed
-        if (!wallJumping || grounded == 0)
-        {
-            float movement = accelRate * Time.deltaTime;
-            float newVelocityX = Mathf.MoveTowards(body.linearVelocity.x, targetSpeed, movement);
-            body.linearVelocity = new Vector2(newVelocityX, body.linearVelocity.y);
-        }
-
-        // Wall sliding logic
-        if ( (grounded == 1 || grounded == 2) && !wallJumping) //if on a wall AND not on floor AND not wall jumping
-        {
-            body.gravityScale = 2; // Reduce gravity to create sliding effect
-            body.linearVelocity = new Vector2(0, Mathf.Clamp(body.linearVelocity.y, -5, float.MaxValue));
-        }
         else
         {
-            body.gravityScale = 5; // Reset gravity to normal
+            // AI input was set via SetInput(). Also handle dash if needed, etc.
         }
 
-        // Handle jumping
+        // (2) Ground & Wall Checking: use your boxcast method
+        GroundState groundState = CheckGround();
+        bool isOnFloor = groundState.onFloor;
+        bool isOnLeftWall = groundState.onLeftWall;
+        bool isOnRightWall = groundState.onRightWall;
+        bool isGrounded = isOnFloor;
+
+        // (3) Movement Input in vector form for dash logic
+        moveInput.x = horizontalInput;
+        moveInput.y = 0; // Not really needed except for vertical inputs if you want them
+
+        // (4) Jump Buffer & Coyote Time
         if (jumpInput)
         {
-            if (grounded == 0) //if on floor
-            {
-                // Jump height increases with movement speed
-                float speedFactor = Mathf.Abs(body.linearVelocity.x) / maxSpeed;
-                float adjustedJumpHeight = jumpHeight + speedFactor * jumpHeightBonus;
-                Jump(new Vector2(body.linearVelocity.x, adjustedJumpHeight));
-                coyoteSpent = true; //prevents a double jump when coyote time activates very close to ground after normal jump
-            }
-            else if (grounded == 1) //wall on left
-            {
-                // Wall jump to the right
-                Vector2 wallJumpDirection = new Vector2(wallJumpX, wallJumpY);  
-                Jump(wallJumpDirection, isWallJump: true);
-            }
-            else if (grounded == 2) //wall on right
-            {
-                // Wall jump to the left
-                Vector2 wallJumpDirection = new Vector2(-wallJumpX, wallJumpY);  
-                Jump(wallJumpDirection, isWallJump: true);
-            }
-            else if (grounded == -1 && coyoteCounter > 0 && !coyoteSpent) //coyote time
-            {
-                // Jump height increases with movement speed
-                float speedFactor = Mathf.Abs(body.linearVelocity.x) / maxSpeed;
-                float adjustedJumpHeight = jumpHeight + speedFactor * jumpHeightBonus;
-                Jump(new Vector2(body.linearVelocity.x, adjustedJumpHeight));
-                coyoteSpent = true;
-            }
+            desiredJump = true;
+            pressingJump = true;
+            lastPressedJumpTime = jumpBuffer;
+            jumpBufferCounter = 0f;
         }
-
-        //smaller jump when space bar released
-        if(Input.GetKeyUp(KeyCode.Space) && body.linearVelocity.y > 0) //if space is released and player is already jumping
+        else
         {
-            body.linearVelocity = new Vector2(body.linearVelocity.x, body.linearVelocity.y / 2); //cuts vertical velocity in half
+            // If the user physically released jump for variable jump height
+            pressingJump = false;
         }
 
-        // Flip player direction based on movement
-        if (horizontalInput > 0.01f)
-            transform.localScale = Vector3.one;
-        else if (horizontalInput < -0.01f)
-            transform.localScale = new Vector3(-1, 1, 1);
+        // Decrement timers
+        lastPressedDashTime -= Time.deltaTime;
+        lastPressedJumpTime -= Time.deltaTime;
 
-        // Update animations
+        // Reset jump and dash abilities on ground or wall contact
+        if (isGrounded || isOnLeftWall || isOnRightWall)
+        {
+            coyoteCounter = coyoteTime;
+            canJumpAgain = true; // Reset double jump
+            hasDashed = false;   // Reset dash
+        }
+        else
+        {
+            coyoteCounter -= Time.deltaTime;
+        }
+
+        // Keep a jump buffer if jump was pressed slightly before landing
+        if (desiredJump)
+        {
+            jumpBufferCounter += Time.deltaTime;
+            if (jumpBufferCounter > jumpBuffer)
+            {
+                desiredJump = false;
+                jumpBufferCounter = 0f;
+            }
+        }
+
+        // (6) Attempt Jump
+        TryPerformJump(isGrounded, isOnLeftWall, isOnRightWall);
+
+        // (7) Attempt Dash
+        TryPerformDash(isGrounded, isOnLeftWall, isOnRightWall);
+
+        // (8) Flip sprite & handle walking animations from first script
+        if (!isWallDashing)
+        {
+            if (horizontalInput > 0.01f)
+            {
+                transform.localScale = Vector3.one;
+            }
+            else if (horizontalInput < -0.01f)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+        }
+
+        // (9) Handle “walking” sound if on the ground and moving
+        if (isOnFloor && Mathf.Abs(horizontalInput) > 0.01f && !walkAudioSource.isPlaying)
+        {
+            walkAudioSource.Play();
+        }
+
+        // (10) Animation speed param
         animator.SetFloat("Speed", Mathf.Abs(body.linearVelocity.x));
 
-        // Play walk sound if moving on the ground
-        if (grounded == 0 && Mathf.Abs(horizontalInput) > 0.01f && !walkAudioSource.isPlaying)
+        // We’ll let “isJumping” animate in Jump logic. 
+        // If on floor, we can safely say not jumping
+        if (isOnFloor)
         {
-            walkAudioSource.Play();        
+            animator.SetBool("isJumping", false);
+        }
+
+        jumpInput = false; // Reset after processing
+    }
+
+    private void FixedUpdate()
+    {
+        if (isDashAttacking) return; // Skip physics while dashing
+
+        // Horizontal movement
+        HandleHorizontalMovement();
+
+        // If dash-attacking, the dash coroutine sets velocity
+        // so we let that override. If not dashing, we do normal movement.
+
+        // Cap vertical speed
+        if (body.linearVelocity.y < -speedLimit)
+        {
+            body.linearVelocity = new Vector2(body.linearVelocity.x, -speedLimit);
+        }
+
+        // Apply variable gravity scale
+        ApplyGravityScaling();
+    }
+
+    // ---------------------------------------------------
+    // 8) Jump Logic
+    // ---------------------------------------------------
+    private void TryPerformJump(bool isGrounded, bool isOnLeftWall, bool isOnRightWall)
+    {
+        if (desiredJump && lastPressedJumpTime > 0f)
+        {
+            if (isGrounded) // Jump from ground
+            {
+                DoJump();
+            }
+            else if (coyoteCounter > 0f) // Coyote time jump
+            {
+                DoJump();
+            }
+            else if (!isGrounded && (isOnLeftWall || isOnRightWall)) // Wall jump
+            {
+                if (isOnRightWall) lastWallJumpDir = -1; // Push left from right wall
+                else if (isOnLeftWall) lastWallJumpDir = 1; // Push right from left wall
+                DoWallJump(lastWallJumpDir);
+            }
+            else if (!isGrounded && canJumpAgain && canDoubleJump) // Double jump
+            {
+                canJumpAgain = false;
+                DoJump();
+            }
         }
     }
 
-    //makes the player jump
-    private void Jump(Vector2 jumpForce, bool isWallJump = false)
+    private void DoJump()
     {
-        body.linearVelocity = jumpForce;
+        desiredJump = false;
+        jumpBufferCounter = 0f;
+        lastPressedJumpTime = 0f;
+        coyoteCounter = 0f;
+
+        isJumping = true;
         animator.SetBool("isJumping", true);
 
+        // Play your jump sound
         jumpAudioSource.PlayOneShot(jumpAudioSource.clip);
 
-        if (isWallJump)
+        // Calculate jump velocity: v = sqrt(2*g*jumpHeight)
+        float g = Physics2D.gravity.y * body.gravityScale;
+        jumpSpeed = Mathf.Sqrt(2f * jumpHeight * -g);
+
+        // “Reset” vertical velocity if needed
+        float vy = body.linearVelocity.y;
+        if (vy < 0) jumpSpeed -= vy;
+        else if (vy > 0) jumpSpeed = Mathf.Max(jumpSpeed - vy, 0f);
+
+        body.linearVelocity = new Vector2(body.linearVelocity.x, body.linearVelocity.y + jumpSpeed);
+    }
+
+    private void DoWallJump(int dir)
+    {
+        desiredJump = false;
+        jumpBufferCounter = 0f;
+        lastPressedJumpTime = 0f;
+        coyoteCounter = 0f;
+
+        isWallJumping = true;
+        isJumping = true;
+        wallJumpStartTime = Time.time;
+
+        animator.SetBool("isJumping", true);
+        jumpAudioSource.PlayOneShot(jumpAudioSource.clip);
+
+        // Force for wall jump
+        Vector2 currentVel = body.linearVelocity;
+        Vector2 force = wallJumpForce;
+        force.x *= dir;
+
+        // Adjust if existing velocity is in the opposite direction
+        if (Mathf.Sign(currentVel.x) != Mathf.Sign(force.x))
         {
-            wallJumping = true;
-            wallJumpCounter = wallJumpTime;
+            force.x -= currentVel.x;
+        }
+        if (currentVel.y < 0)
+        {
+            force.y -= currentVel.y;
+        }
+        body.AddForce(force, ForceMode2D.Impulse);
+    }
+
+    // ---------------------------------------------------
+    // 9) Dash Logic
+    // ---------------------------------------------------
+    private void TryPerformDash(bool isGrounded, bool isOnLeftWall, bool isOnRightWall)
+    {
+        // Refill dashes if on ground and out of dashes
+        if (!isDashing && dashesLeft < dashAmount && isGrounded && !dashRefilling)
+        {
+            StartCoroutine(RefillDash(1));
+        }
+
+        // Actually dash if conditions allow
+        if (CanDash() && lastPressedDashTime > 0f && !hasDashed)
+        {
+            StartCoroutine(DoTimeFreeze(dashSleepTime));
+
+            Vector2 dashDir;
+            // If on a wall, dash away from it
+            if (isOnLeftWall)
+            {
+                dashDir = Vector2.right; // Dash right (away from left wall)
+                transform.localScale = Vector3.one; // Face right
+                isWallDashing = true;
+            }
+            else if (isOnRightWall)
+            {
+                dashDir = Vector2.left; // Dash left (away from right wall)
+                transform.localScale = new Vector3(-1, 1, 1); // Face left
+                isWallDashing = true;
+            }
+            // Otherwise, use input or facing direction
+            else if (moveInput != Vector2.zero)
+            {
+                dashDir = moveInput.normalized;
+            }
+            else
+            {
+                dashDir = (transform.localScale.x > 0) ? Vector2.right : Vector2.left;
+            }
+
+            isDashing = true;
+            isJumping = false;
+            isWallJumping = false;
+
+            StartCoroutine(PerformDash(dashDir));
         }
     }
 
-    //checks for contact with floor or walls
-    //returns 0 for floor, 1 for left wall, 2 for right wall, and -1 if in the air
-    private int onGround()
+    private bool CanDash()
     {
-        float rayDistance = 0.02f;
-
-        RaycastHit2D hitDown = Physics2D.BoxCast(
-            boxCollider.bounds.center,
-            boxCollider.bounds.size, 0,
-            Vector2.down, rayDistance, groundLayer
-        );
-
-        RaycastHit2D hitLeft = Physics2D.BoxCast(
-            boxCollider.bounds.center,
-            boxCollider.bounds.size, 0,
-            Vector2.left, rayDistance, groundLayer
-        );
-
-        RaycastHit2D hitRight = Physics2D.BoxCast(
-            boxCollider.bounds.center,
-            boxCollider.bounds.size, 0,
-            Vector2.right, rayDistance, groundLayer
-        );
-
-        if (hitDown.collider != null)
-        {
-            return 0; // On floor
-        }
-        if (hitLeft.collider != null)
-        {
-            return 1; // On left wall
-        }
-        if (hitRight.collider != null)
-        {
-            return 2; // On right wall
-        }
-
-        return -1; // not grounded
+        return (dashesLeft > 0 && !isDashing && canDash);
     }
 
-    //public getter function for if the player is grounded or not
-    public bool getGrounded()
+    private IEnumerator PerformDash(Vector2 dir)
     {
-        if(onGround() == 0){
-            return true;
+        lastPressedDashTime = 0f;
+        dashesLeft--;
+        isDashAttacking = true;
+        hasDashed = true;
+
+        float startTime = Time.time;
+        SetGravityScale(0f);
+        while (Time.time - startTime <= dashAttackTime)
+        {
+            body.linearVelocity = dir * dashSpeed;
+            yield return null;
         }
 
-        return false;
+        isDashAttacking = false;
+        SetGravityScale(defaultGravityScale);
+
+        startTime = Time.time;
+        body.linearVelocity = dir * dashEndSpeed;
+        while (Time.time - startTime <= dashEndTime)
+        {
+            yield return null;
+        }
+        isDashing = false;
+        isWallDashing = false; // Reset when dash ends
+    }
+
+    private IEnumerator RefillDash(int amount)
+    {
+        dashRefilling = true;
+        yield return new WaitForSeconds(dashRefillTime);
+        dashRefilling = false;
+        dashesLeft = Mathf.Min(dashAmount, dashesLeft + amount);
+    }
+
+    private IEnumerator DoTimeFreeze(float duration)
+    {
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(duration);
+        Time.timeScale = 1f;
+    }
+
+    // ---------------------------------------------------
+    // 10) Horizontal Movement (acceleration/friction from second script)
+    // ---------------------------------------------------
+    private void HandleHorizontalMovement()
+    {
+        velocity = body.linearVelocity;
+
+        float targetSpeed = moveInput.x * Mathf.Max(maxSpeed - friction, 0f);
+        pressingHorizontal = (Mathf.Abs(moveInput.x) > 0.01f);
+
+        if (!useAcceleration)
+        {
+            // Instantly set speed if on ground, else accelerate in air
+            if (groundedState == 0)
+            {
+                velocity.x = targetSpeed;
+            }
+            else
+            {
+                RunWithAcceleration(targetSpeed);
+            }
+        }
+        else
+        {
+            RunWithAcceleration(targetSpeed);
+        }
+
+        // Assign new velocity
+        body.linearVelocity = velocity;
+    }
+
+    private void RunWithAcceleration(float targetSpeed)
+    {
+        // If on the floor (0), else air
+        bool isOnFloor = (groundedState == 0);
+
+        float accel = isOnFloor ? maxAcceleration : maxAirAcceleration;
+        float decel = isOnFloor ? maxDecceleration : maxAirDeceleration;
+        float turn = isOnFloor ? maxTurnSpeed : maxAirTurnSpeed;
+
+        float speedDiff = targetSpeed - velocity.x;
+        float maxSpeedChange = 0f;
+
+        if (pressingHorizontal)
+        {
+            // If trying to reverse direction
+            if (Mathf.Sign(targetSpeed) != Mathf.Sign(velocity.x) && Mathf.Abs(velocity.x) > 0.1f)
+                maxSpeedChange = turn * Time.deltaTime;
+            else
+                maxSpeedChange = accel * Time.deltaTime;
+        }
+        else
+        {
+            maxSpeedChange = decel * Time.deltaTime;
+        }
+
+        velocity.x = Mathf.MoveTowards(velocity.x, targetSpeed, maxSpeedChange);
+    }
+
+    // ---------------------------------------------------
+    // 11) Gravity Scaling (for variable jump/fall)
+    // ---------------------------------------------------
+    private void ApplyGravityScaling()
+    {
+        if (isDashAttacking) return;
+
+        Vector2 v = body.linearVelocity;
+
+        // Going up
+        if (v.y > 0.01f && groundedState != 0)
+        {
+            // Pressing jump => normal upward multiplier
+            if (variableJumpHeight && pressingJump && isJumping)
+                gravMultiplier = upwardMovementMultiplier;
+            // Released jump => cut jump short
+            else if (variableJumpHeight && !pressingJump && isJumping)
+                gravMultiplier = jumpCutOff;
+            else
+                gravMultiplier = upwardMovementMultiplier;
+        }
+        // Going down
+        else if (v.y < -0.01f && groundedState != 0)
+        {
+            gravMultiplier = downwardMovementMultiplier;
+        }
+        else
+        {
+            // On ground or nearly idle vertical
+            if (groundedState == 0)
+            {
+                isJumping = false; 
+            }
+            gravMultiplier = defaultGravityScale;
+        }
+
+        SetGravityScale(gravMultiplier);
+    }
+
+    private void SetGravityScale(float scale)
+    {
+        body.gravityScale = scale;
     }
 }
-
