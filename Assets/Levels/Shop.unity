@@ -1232,6 +1232,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZeroParticle
       objectReference: {fileID: 0}
+    - target: {fileID: 2973410537411958886, guid: 02469ae30096edf4b9b237f93e560943, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1694,7 +1698,7 @@ GameObject:
   - component: {fileID: 1146051849}
   - component: {fileID: 1146051848}
   - component: {fileID: 1146051852}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: coin (3)
   m_TagString: Money
   m_Icon: {fileID: 0}
@@ -2036,6 +2040,10 @@ PrefabInstance:
     - target: {fileID: 1589087861924367524, guid: dbf4eae147740439f88675acd4e7c48f, type: 3}
       propertyPath: m_Name
       value: OneParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589087861924367524, guid: dbf4eae147740439f88675acd4e7c48f, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
