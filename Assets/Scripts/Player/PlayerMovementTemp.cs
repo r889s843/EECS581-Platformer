@@ -33,50 +33,27 @@ public class MergedPlayerMovement : MonoBehaviour
     // We'll treat “isGrounded” as “(groundedState == 0)”.
     // We'll treat “onWall” as “(groundedState == 1 or 2)”.
     
-    // The original onGround() method:
-    private int onGround()
+    private struct GroundState
+    {
+        public bool onFloor;
+        public bool onLeftWall;
+        public bool onRightWall;
+    }
+
+    private GroundState CheckGround()
     {
         float rayDistance = 0.02f;
+        GroundState state = new GroundState();
 
-        RaycastHit2D hitDown = Physics2D.BoxCast(
-            boxCollider.bounds.center,
-            boxCollider.bounds.size, 0,
-            Vector2.down, rayDistance, groundLayer
-        );
+        RaycastHit2D hitDown = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, rayDistance, groundLayer);
+        RaycastHit2D hitLeft = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.left, rayDistance, groundLayer);
+        RaycastHit2D hitRight = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.right, rayDistance, groundLayer);
 
-        RaycastHit2D hitLeft = Physics2D.BoxCast(
-            boxCollider.bounds.center,
-            boxCollider.bounds.size, 0,
-            Vector2.left, rayDistance, groundLayer
-        );
+        state.onFloor = hitDown.collider != null;
+        state.onLeftWall = hitLeft.collider != null;
+        state.onRightWall = hitRight.collider != null;
 
-        RaycastHit2D hitRight = Physics2D.BoxCast(
-            boxCollider.bounds.center,
-            boxCollider.bounds.size, 0,
-            Vector2.right, rayDistance, groundLayer
-        );
-
-        if (hitDown.collider != null)
-        {
-            Debug.Log("On Ground");
-            return 0; // On floor
-        }
-        if (hitLeft.collider != null)
-        {
-            Debug.Log("On Left Wall");
-            return 1; // On left wall
-        }
-        if (hitRight.collider != null)
-        {
-            Debug.Log("On Right Wall");
-            return 2; // On right wall
-        }
-
-        // if (hitDown.collider != null) return 0; // on floor
-        // if (hitLeft.collider != null) return 1; // on left wall
-        // if (hitRight.collider != null) return 2; // on right wall
-        Debug.Log("In Air");
-        return -1; // not grounded
+        return state;
     }
 
     // ---------------------------------------------------
@@ -84,7 +61,7 @@ public class MergedPlayerMovement : MonoBehaviour
     //    We’ll unify it with the “isGrounded” check above.
     // ---------------------------------------------------
     [Header("=== Horizontal Movement ===")]
-    [Range(0f, 20f)] public float maxSpeed = 10f;
+    [Range(0f, 30f)] public float maxSpeed = 10f;
     [Range(0f, 100f)] public float maxAcceleration = 52f;
     [Range(0f, 100f)] public float maxDecceleration = 52f;
     [Range(0f, 100f)] public float maxTurnSpeed = 80f;
@@ -106,15 +83,15 @@ public class MergedPlayerMovement : MonoBehaviour
     //    We unify coyote time by bridging with onGround().
     // ---------------------------------------------------
     [Header("=== Jumping ===")]
-    [Range(2f, 10f)] public float jumpHeight = 7.3f;
+    [Range(0f, 10f)] public float jumpHeight = 3f;
     [Range(0.2f, 1.25f)] public float timeToJumpApex = 0.5f;
-    [Range(0f, 5f)] public float upwardMovementMultiplier = 1f;
+    [Range(0f, 10f)] public float upwardMovementMultiplier = 1f;
     [Range(1f, 10f)] public float downwardMovementMultiplier = 6f;
     [Range(1f, 10f)] public float jumpCutOff = 3f;
-    [Tooltip("Max downward speed.")] public float speedLimit = 15f;
-    [Range(0f, 0.3f)] public float coyoteTime = 0.15f;
-    [Range(0f, 0.3f)] public float jumpBuffer = 0.15f;
-    [Range(0, 2)] public int maxAirJumps = 1; 
+    [Tooltip("Max downward speed.")] public float speedLimit = 20f;
+    public float coyoteTime = 0.1f;
+    public float jumpBuffer = 0.2f;
+    public bool canDoubleJump = true;
     public bool variableJumpHeight = true;
 
     // Internal jump state
@@ -135,6 +112,7 @@ public class MergedPlayerMovement : MonoBehaviour
     //    We can integrate your “on wall = 1 or 2” checks.
     // ---------------------------------------------------
     [Header("=== Dash Settings ===")]
+    public bool canDash = true;
     public int dashAmount = 1;
     public float dashSpeed = 15f;
     public float dashAttackTime = 0.15f;
@@ -151,17 +129,10 @@ public class MergedPlayerMovement : MonoBehaviour
     private float lastPressedDashTime;
 
     [Header("=== Wall Jump Settings ===")]
-    public Vector2 wallJumpForce = new Vector2(8f, 12f);
-    public float wallJumpTime = 0.2f;
-
+    public Vector2 wallJumpForce = new Vector2(1f, 12f);
     private bool isWallJumping;
     private float wallJumpStartTime;
     private int lastWallJumpDir; // +1 or -1
-
-    // For the advanced script’s “wall check” placeholders:
-    private float lastOnWallTime;
-    private float lastOnWallLeftTime;
-    private float lastOnWallRightTime;
     
     // We’ll flip the sprite using the first script’s approach 
     // (checking horizontalInput > 0 or < 0).
@@ -185,6 +156,7 @@ public class MergedPlayerMovement : MonoBehaviour
         jumpAudioSource = audioSources[1];
 
         defaultGravityScale = body.gravityScale;
+        UpdateJumpPhysics(); // Add this
         dashesLeft = dashAmount;
 
         // If there's a PlatformerAgent attached, assume AI control
@@ -192,6 +164,12 @@ public class MergedPlayerMovement : MonoBehaviour
         {
             agentActive = true;
         }
+    }
+
+    private void UpdateJumpPhysics()
+    {
+        float g = Physics2D.gravity.y * defaultGravityScale;
+        jumpSpeed = Mathf.Sqrt(2f * jumpHeight * -g);
     }
 
     // If AI is controlling the player, we set these externally:
@@ -221,7 +199,7 @@ public class MergedPlayerMovement : MonoBehaviour
                 jumpInput = false;
             }
             // Dashing input
-            if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.X))
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 lastPressedDashTime = dashInputBufferTime;
             }
@@ -232,11 +210,11 @@ public class MergedPlayerMovement : MonoBehaviour
         }
 
         // (2) Ground & Wall Checking: use your boxcast method
-        groundedState = onGround();
-        bool isOnFloor = (groundedState == 0);
-        bool isOnLeftWall = (groundedState == 1);
-        bool isOnRightWall = (groundedState == 2);
-        bool isGrounded = isOnFloor;  // For the advanced coyote-time logic
+        GroundState groundState = CheckGround();
+        bool isOnFloor = groundState.onFloor;
+        bool isOnLeftWall = groundState.onLeftWall;
+        bool isOnRightWall = groundState.onRightWall;
+        bool isGrounded = isOnFloor;
 
         // (3) Movement Input in vector form for dash logic
         moveInput.x = horizontalInput;
@@ -282,20 +260,11 @@ public class MergedPlayerMovement : MonoBehaviour
             }
         }
 
-        // (5) Check if we are on walls for potential wall jump
-        // We'll keep a simple “on wall” time. 
-        if (isOnLeftWall)  lastOnWallLeftTime = 0.2f;
-        else               lastOnWallLeftTime -= Time.deltaTime;
-        if (isOnRightWall) lastOnWallRightTime = 0.2f;
-        else               lastOnWallRightTime -= Time.deltaTime;
-        
-        lastOnWallTime = Mathf.Max(lastOnWallLeftTime, lastOnWallRightTime);
-
         // (6) Attempt Jump
-        TryPerformJump(isGrounded);
+        TryPerformJump(isGrounded, isOnLeftWall, isOnRightWall);
 
         // (7) Attempt Dash
-        TryPerformDash(isGrounded);
+        TryPerformDash(isGrounded, isOnLeftWall, isOnRightWall);
 
         // (8) Flip sprite & handle walking animations from first script
         if (horizontalInput > 0.01f)
@@ -318,14 +287,18 @@ public class MergedPlayerMovement : MonoBehaviour
 
         // We’ll let “isJumping” animate in Jump logic. 
         // If on floor, we can safely say not jumping
-        if (isOnFloor && body.linearVelocity.y <= 0.01f)
+        if (isOnFloor)
         {
             animator.SetBool("isJumping", false);
         }
+
+        jumpInput = false; // Reset after processing
     }
 
     private void FixedUpdate()
     {
+        if (isDashAttacking) return; // Skip physics while dashing
+
         // Horizontal movement
         HandleHorizontalMovement();
 
@@ -345,31 +318,31 @@ public class MergedPlayerMovement : MonoBehaviour
     // ---------------------------------------------------
     // 8) Jump Logic
     // ---------------------------------------------------
-    private void TryPerformJump(bool isGrounded)
+    private void TryPerformJump(bool isGrounded, bool isOnLeftWall, bool isOnRightWall)
     {
         if (desiredJump && lastPressedJumpTime > 0f)
         {
-            if (isGrounded)       // always allow jump if physically on ground
+            if (isGrounded) // Jump from ground
             {
                 DoJump();
             }
-            else if (coyoteCounter > 0f)
+            else if (coyoteCounter > 0f) // Coyote time jump
             {
                 DoJump();
             }
-            else if (!isGrounded && canJumpAgain)
+            else if (!isGrounded && (isOnLeftWall || isOnRightWall)) // Wall jump
             {
-                // double jump
-                DoJump();
-            }
-            else if (lastOnWallTime > 0 && !isGrounded)
-            {
-                if (lastOnWallRightTime > 0) lastWallJumpDir = -1;
-                else if (lastOnWallLeftTime > 0) lastWallJumpDir = 1;
+                if (isOnRightWall) lastWallJumpDir = -1; // Push left from right wall
+                else if (isOnLeftWall) lastWallJumpDir = 1; // Push right from left wall
                 DoWallJump(lastWallJumpDir);
+                canJumpAgain = true; // Allow double jump after wall jump
+            }
+            else if (!isGrounded && canJumpAgain && canDoubleJump) // Double jump
+            {
+                canJumpAgain = false;
+                DoJump();
             }
         }
-
     }
 
     private void DoJump()
@@ -431,9 +404,9 @@ public class MergedPlayerMovement : MonoBehaviour
     // ---------------------------------------------------
     // 9) Dash Logic
     // ---------------------------------------------------
-    private void TryPerformDash(bool isGrounded)
+    private void TryPerformDash(bool isGrounded, bool isOnLeftWall, bool isOnRightWall)
     {
-        // If we’re on the ground and out of dashes, refill eventually
+        // Refill dashes if on ground and out of dashes
         if (!isDashing && dashesLeft < dashAmount && isGrounded && !dashRefilling)
         {
             StartCoroutine(RefillDash(1));
@@ -445,11 +418,24 @@ public class MergedPlayerMovement : MonoBehaviour
             StartCoroutine(DoTimeFreeze(dashSleepTime));
 
             Vector2 dashDir;
-            // If we have input, use it; otherwise dash in facing direction
-            if (moveInput != Vector2.zero)
+            // If on a wall, dash away from it
+            if (isOnLeftWall)
+            {
+                dashDir = Vector2.right; // Dash right (away from left wall)
+            }
+            else if (isOnRightWall)
+            {
+                dashDir = Vector2.left; // Dash left (away from right wall)
+            }
+            // Otherwise, use input or facing direction
+            else if (moveInput != Vector2.zero)
+            {
                 dashDir = moveInput.normalized;
+            }
             else
+            {
                 dashDir = (transform.localScale.x > 0) ? Vector2.right : Vector2.left;
+            }
 
             isDashing = true;
             isJumping = false;
@@ -461,7 +447,7 @@ public class MergedPlayerMovement : MonoBehaviour
 
     private bool CanDash()
     {
-        return (dashesLeft > 0 && !isDashing);
+        return (dashesLeft > 0 && !isDashing && canDash);
     }
 
     private IEnumerator PerformDash(Vector2 dir)
@@ -488,6 +474,7 @@ public class MergedPlayerMovement : MonoBehaviour
             yield return null;
         }
         isDashing = false;
+        canJumpAgain = true; // Allow double jump after wall jump
     }
 
     private IEnumerator RefillDash(int amount)
