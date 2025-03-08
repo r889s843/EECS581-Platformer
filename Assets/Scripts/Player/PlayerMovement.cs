@@ -7,6 +7,8 @@
 using UnityEngine;
 using System.Collections;
 
+// ABANDON ALL HOPE YE WHO ENTER HERE
+
 // ---------------------------------------------------
 // MERGED SCRIPT EXAMPLE
 // ---------------------------------------------------
@@ -29,26 +31,17 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool agentActive = false;
     private float horizontalInput;
     private bool jumpInput;
-
-    // ---------------------------------------------------
-    // 2) “isGrounded/onWall” from First Script
-    //    (Returning 0=Floor, 1=LeftWall, 2=RightWall, -1=None)
-    // ---------------------------------------------------
-    private int groundedState; // 0=floor,1=left wall,2=right wall,-1=none
-
-    // We'll treat “isGrounded” as “(groundedState == 0)”.
-    // We'll treat “onWall” as “(groundedState == 1 or 2)”.
     
-    private struct GroundState
+    public struct GroundState
     {
         public bool onFloor;
         public bool onLeftWall;
         public bool onRightWall;
     }
 
-    private GroundState CheckGround()
+    public GroundState CheckGround()
     {
-        float rayDistance = 0.02f;
+        float rayDistance = 0.05f;
         GroundState state = new GroundState();
 
         RaycastHit2D hitDown = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, rayDistance, groundLayer);
@@ -62,11 +55,7 @@ public class PlayerMovement : MonoBehaviour
         return state;
     }
 
-    public bool IsGrounded()
-    {
-        return CheckGround().onFloor;
-    }
-
+    public bool isOnFloor; // New field to pass state to FixedUpdate
 
     // ---------------------------------------------------
     // 3) Horizontal Movement (from Advanced Script)
@@ -101,10 +90,11 @@ public class PlayerMovement : MonoBehaviour
     [Range(1f, 10f)] public float downwardMovementMultiplier = 6f;
     [Range(1f, 10f)] public float jumpCutOff = 3f;
     [Tooltip("Max downward speed.")] public float speedLimit = 20f;
-    public float coyoteTime = 0.1f;
-    public float jumpBuffer = 0.2f;
+    public float coyoteTime = 0.15f;
+    public float jumpBuffer = 0.25f;
     public bool canDoubleJump = true;
     public bool variableJumpHeight = true;
+    [Range(1f, 3f)] public float apexControlMultiplier = 1.5f;
 
     // Internal jump state
     public bool isJumping; 
@@ -125,8 +115,8 @@ public class PlayerMovement : MonoBehaviour
     // ---------------------------------------------------
     [Header("=== Dash Settings ===")]
     public bool canDash = true;
-    public int dashAmount = 1;
-    public float dashSpeed = 15f;
+    public int dashAmount = 20;
+    public float dashSpeed = 30;
     public float dashAttackTime = 0.15f;
     public float dashEndTime = 0.1f;
     public float dashEndSpeed = 8f;
@@ -143,10 +133,11 @@ public class PlayerMovement : MonoBehaviour
     private bool hasDashed;
 
     [Header("=== Wall Jump Settings ===")]
-    public Vector2 wallJumpForce = new Vector2(1f, 12f);
+    public Vector2 wallJumpForce = new Vector2(8f, 12f);
     private bool isWallJumping;
-    private float wallJumpStartTime;
-    private int lastWallJumpDir; // +1 or -1
+
+    public float wallCoyoteTime = 0.1f; // New: buffer after leaving wall
+    private float wallCoyoteCounter;   
     
     // We’ll flip the sprite using the first script’s approach 
     // (checking horizontalInput > 0 or < 0).
@@ -232,6 +223,8 @@ public class PlayerMovement : MonoBehaviour
         bool isOnRightWall = groundState.onRightWall;
         bool isGrounded = isOnFloor;
 
+        this.isOnFloor = isOnFloor; // Add this as a private field
+
         // (3) Movement Input in vector form for dash logic
         moveInput.x = horizontalInput;
         moveInput.y = 0; // Not really needed except for vertical inputs if you want them
@@ -260,10 +253,12 @@ public class PlayerMovement : MonoBehaviour
             coyoteCounter = coyoteTime;
             canJumpAgain = true; // Reset double jump
             hasDashed = false;   // Reset dash
+            wallCoyoteCounter = wallCoyoteTime;
         }
         else
         {
             coyoteCounter -= Time.deltaTime;
+            wallCoyoteCounter -= Time.deltaTime;
         }
 
         // Keep a jump buffer if jump was pressed slightly before landing
@@ -350,11 +345,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 DoJump();
             }
-            else if (!isGrounded && (isOnLeftWall || isOnRightWall)) // Wall jump
+            else if (!isGrounded && (isOnLeftWall || isOnRightWall || wallCoyoteCounter > 0f)) // Wall jump
             {
-                if (isOnRightWall) lastWallJumpDir = -1; // Push left from right wall
-                else if (isOnLeftWall) lastWallJumpDir = 1; // Push right from left wall
-                DoWallJump(lastWallJumpDir);
+                if (isOnRightWall || (wallCoyoteCounter > 0f)) 
+                    DoWallJump(-1, isOnLeftWall, isOnRightWall); // Push left from right wall
+                else 
+                    DoWallJump(1, isOnLeftWall, isOnRightWall); // Push right from left wall
             }
             else if (!isGrounded && canJumpAgain && canDoubleJump) // Double jump
             {
@@ -380,16 +376,10 @@ public class PlayerMovement : MonoBehaviour
         // Calculate jump velocity: v = sqrt(2*g*jumpHeight)
         float g = Physics2D.gravity.y * body.gravityScale;
         jumpSpeed = Mathf.Sqrt(2f * jumpHeight * -g);
-
-        // “Reset” vertical velocity if needed
-        float vy = body.linearVelocity.y;
-        if (vy < 0) jumpSpeed -= vy;
-        else if (vy > 0) jumpSpeed = Mathf.Max(jumpSpeed - vy, 0f);
-
-        body.linearVelocity = new Vector2(body.linearVelocity.x, body.linearVelocity.y + jumpSpeed);
+        body.linearVelocity = new Vector2(body.linearVelocity.x, jumpSpeed);
     }
 
-    private void DoWallJump(int dir)
+    private void DoWallJump(int dir, bool isOnLeftWall, bool isOnRightWall)
     {
         desiredJump = false;
         jumpBufferCounter = 0f;
@@ -398,26 +388,16 @@ public class PlayerMovement : MonoBehaviour
 
         isWallJumping = true;
         isJumping = true;
-        wallJumpStartTime = Time.time;
 
         animator.SetBool("isJumping", true);
         jumpAudioSource.PlayOneShot(jumpAudioSource.clip);
 
-        // Force for wall jump
-        Vector2 currentVel = body.linearVelocity;
-        Vector2 force = wallJumpForce;
-        force.x *= dir;
-
-        // Adjust if existing velocity is in the opposite direction
-        if (Mathf.Sign(currentVel.x) != Mathf.Sign(force.x))
-        {
-            force.x -= currentVel.x;
-        }
-        if (currentVel.y < 0)
-        {
-            force.y -= currentVel.y;
-        }
-        body.AddForce(force, ForceMode2D.Impulse);
+        Vector2 jumpVelocity = new Vector2(wallJumpForce.x * dir, wallJumpForce.y);
+        body.linearVelocity = jumpVelocity; // Set velocity directly
+        if (isOnLeftWall)
+            transform.localScale = Vector3.one; // Face right
+        else if (isOnRightWall)
+            transform.localScale = new Vector3(-1, 1, 1); // Face left
     }
 
     // ---------------------------------------------------
@@ -482,6 +462,7 @@ public class PlayerMovement : MonoBehaviour
 
         float startTime = Time.time;
         SetGravityScale(0f);
+        float initialXVelocity = body.linearVelocity.x;
         while (Time.time - startTime <= dashAttackTime)
         {
             body.linearVelocity = dir * dashSpeed;
@@ -492,13 +473,16 @@ public class PlayerMovement : MonoBehaviour
         SetGravityScale(defaultGravityScale);
 
         startTime = Time.time;
-        body.linearVelocity = dir * dashEndSpeed;
+        Vector2 endVelocity = dir * dashEndSpeed;
+        endVelocity.x = Mathf.Lerp(initialXVelocity, endVelocity.x, 0.5f); // Blend momentum
+        body.linearVelocity = endVelocity;
         while (Time.time - startTime <= dashEndTime)
         {
+            body.linearVelocity = Vector2.Lerp(body.linearVelocity, Vector2.zero, Time.deltaTime / dashEndTime); // Gradual decay
             yield return null;
         }
         isDashing = false;
-        isWallDashing = false; // Reset when dash ends
+        isWallDashing = false;
     }
 
     private IEnumerator RefillDash(int amount)
@@ -523,25 +507,24 @@ public class PlayerMovement : MonoBehaviour
     {
         velocity = body.linearVelocity;
 
-        float targetSpeed = moveInput.x * Mathf.Max(maxSpeed - friction, 0f);
+        float targetSpeed = moveInput.x * maxSpeed;
         pressingHorizontal = (Mathf.Abs(moveInput.x) > 0.01f);
 
         if (!useAcceleration)
         {
             // Instantly set speed if on ground, else accelerate in air
-            if (groundedState == 0)
-            {
+            if (isOnFloor)
                 velocity.x = targetSpeed;
-            }
             else
-            {
                 RunWithAcceleration(targetSpeed);
-            }
         }
         else
         {
             RunWithAcceleration(targetSpeed);
         }
+
+        if (!pressingHorizontal && isOnFloor)
+            velocity.x = Mathf.MoveTowards(velocity.x, 0, friction * Time.fixedDeltaTime);
 
         // Assign new velocity
         body.linearVelocity = velocity;
@@ -549,12 +532,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void RunWithAcceleration(float targetSpeed)
     {
-        // If on the floor (0), else air
-        bool isOnFloor = (groundedState == 0);
-
-        float accel = isOnFloor ? maxAcceleration : maxAirAcceleration;
+        float accel = isOnFloor ? maxAcceleration : maxAirAcceleration * 1.2f;
         float decel = isOnFloor ? maxDecceleration : maxAirDeceleration;
-        float turn = isOnFloor ? maxTurnSpeed : maxAirTurnSpeed;
+        float turn = isOnFloor ? maxTurnSpeed * 1.5f : maxAirTurnSpeed * 1.5f;
+
+        // Check if near apex
+        float vY = body.linearVelocity.y;
+        bool atApex = Mathf.Abs(vY) < 1f && !isOnFloor && isJumping; // Apex when vY is near 0
+        if (atApex)
+        {
+            accel *= apexControlMultiplier; // Boost acceleration at apex
+            turn *= apexControlMultiplier;  // Boost turning at apex
+        }
 
         float speedDiff = targetSpeed - velocity.x;
         float maxSpeedChange = 0f;
@@ -585,28 +574,28 @@ public class PlayerMovement : MonoBehaviour
         Vector2 v = body.linearVelocity;
 
         // Going up
-        if (v.y > 0.01f && groundedState != 0)
+        if (v.y > 0.01f && !isOnFloor)
         {
             // Pressing jump => normal upward multiplier
             if (variableJumpHeight && pressingJump && isJumping)
                 gravMultiplier = upwardMovementMultiplier;
             // Released jump => cut jump short
             else if (variableJumpHeight && !pressingJump && isJumping)
-                gravMultiplier = jumpCutOff;
+                gravMultiplier = Mathf.Lerp(gravMultiplier, jumpCutOff, Time.fixedDeltaTime * 5f); // Smooth transition
             else
                 gravMultiplier = upwardMovementMultiplier;
         }
         // Going down
-        else if (v.y < -0.01f && groundedState != 0)
+        else if (v.y < -0.01f && !isOnFloor)
         {
             gravMultiplier = downwardMovementMultiplier;
         }
         else
         {
             // On ground or nearly idle vertical
-            if (groundedState == 0)
+            if (isOnFloor)
             {
-                isJumping = false; 
+                isJumping = false;
             }
             gravMultiplier = defaultGravityScale;
         }

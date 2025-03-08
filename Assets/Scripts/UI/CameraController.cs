@@ -126,7 +126,7 @@ public class CameraController : MonoBehaviour
         //if player is too far up -> move gl up to them
         if(zoom > maxZoom) {
             //set new groundLevel based on player's position only when they are on ground
-            if (playerMovement != null && playerMovement.IsGrounded()) {
+            if(playerMovement.isOnFloor) {
                 newGroundLevel = player.transform.position.y - 0.5f;
             }
         }
