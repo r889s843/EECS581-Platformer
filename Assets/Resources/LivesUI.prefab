@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4932087405242863195}
   - component: {fileID: 7943493813120465573}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: LivesUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}

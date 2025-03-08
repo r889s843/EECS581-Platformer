@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 128997411297667334}
   - component: {fileID: 6863099006183901435}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: MoneyManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4326873493693996885}
   - component: {fileID: 3510136035710230222}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: AIStop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1755724628775038879}
   - component: {fileID: 1772790829562179376}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: UpgradesManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4250356899896888946}
   - component: {fileID: 3633657109090036163}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Dash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5918237010615582161}
   - component: {fileID: 4446807642748851392}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: PowerUpManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2632786037414318544}
   - component: {fileID: 2249510840854575851}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Hookshot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +301,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9069839491339337241}
   - component: {fileID: 51776379038202088}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Invincible
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +355,8 @@ GameObject:
   - component: {fileID: 4146731470915871877}
   - component: {fileID: 360386666909058061}
   - component: {fileID: 8687940500486215924}
-  m_Layer: 8
+  - component: {fileID: 4937341843900331387}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -523,7 +524,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8795842049470078105}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 396f66f0da171e64aa56666b16a749f8, type: 3}
   m_Name: 
@@ -826,6 +827,53 @@ MonoBehaviour:
   ZeroParticlesInverse: {fileID: 8066500209741513699}
   isDissolving: 0
   dissolveSpeed: 1
+--- !u!114 &4937341843900331387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8795842049470078105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63d75ba7922525949b7b8fdd2885d67a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  animator: {fileID: -8611442375277616293}
+  agentActive: 0
+  maxSpeed: 10
+  maxAcceleration: 52
+  maxDecceleration: 52
+  maxTurnSpeed: 80
+  maxAirAcceleration: 25
+  maxAirDeceleration: 25
+  maxAirTurnSpeed: 60
+  useAcceleration: 1
+  friction: 0
+  jumpHeight: 7.3
+  timeToJumpApex: 0.5
+  upwardMovementMultiplier: 1
+  downwardMovementMultiplier: 6
+  jumpCutOff: 3
+  speedLimit: 15
+  coyoteTime: 0.15
+  jumpBuffer: 0.15
+  maxAirJumps: 0
+  variableJumpHeight: 1
+  isJumping: 0
+  dashAmount: 1
+  dashSpeed: 15
+  dashAttackTime: 0.15
+  dashEndTime: 0.1
+  dashEndSpeed: 8
+  dashRefillTime: 0.5
+  dashSleepTime: 0.05
+  dashInputBufferTime: 0.2
+  wallJumpForce: {x: 8, y: 12}
+  wallJumpTime: 0.2
 --- !u!1001 &5414357499120815085
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -889,6 +937,10 @@ PrefabInstance:
     - target: {fileID: 1589087861924367524, guid: dbf4eae147740439f88675acd4e7c48f, type: 3}
       propertyPath: m_Name
       value: OneParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589087861924367524, guid: dbf4eae147740439f88675acd4e7c48f, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6758451188306874367, guid: dbf4eae147740439f88675acd4e7c48f, type: 3}
       propertyPath: lengthInSec
@@ -960,6 +1012,10 @@ PrefabInstance:
     - target: {fileID: 6769891700017330101, guid: 2d68a1b7ade81874fa156cf1737a5630, type: 3}
       propertyPath: m_Name
       value: ZeroParticleInverse
+      objectReference: {fileID: 0}
+    - target: {fileID: 6769891700017330101, guid: 2d68a1b7ade81874fa156cf1737a5630, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8512114060043256518, guid: 2d68a1b7ade81874fa156cf1737a5630, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1084,6 +1140,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZeroParticle
       objectReference: {fileID: 0}
+    - target: {fileID: 2973410537411958886, guid: 02469ae30096edf4b9b237f93e560943, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1110,6 +1170,10 @@ PrefabInstance:
     - target: {fileID: 4206805123718005155, guid: 20e6788fb5a8b0f43b664229c92fe861, type: 3}
       propertyPath: m_Name
       value: OneParticleInverse
+      objectReference: {fileID: 0}
+    - target: {fileID: 4206805123718005155, guid: 20e6788fb5a8b0f43b664229c92fe861, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5992161029987808485, guid: 20e6788fb5a8b0f43b664229c92fe861, type: 3}
       propertyPath: m_LocalPosition.x
