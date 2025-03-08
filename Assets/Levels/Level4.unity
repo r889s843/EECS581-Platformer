@@ -188,6 +188,14 @@ PrefabInstance:
       propertyPath: levelCompletionThreshold
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: jumpHeight
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7179274755119001291, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_Model
       value: 
@@ -835,12 +843,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b10067da59932b48a54afc68c662b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1903868474}
-  aheadDistance: 3
-  player2Active: 0
+  heightChangeSpeed: 0
+  zoomSpeed: 0.2
   minZoom: 5
   maxZoom: 20
-  zoomSpeed: 0.2
+  aheadDistance: 3
+  rayDistanceAhead: 0
+  player2Active: 0
 --- !u!114 &836526716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1878,11 +1887,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1903868474 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-  m_PrefabInstance: {fileID: 296181863}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1924496206 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6062583078717770621, guid: d6608245b8e89044382e3caab2e85793, type: 3}

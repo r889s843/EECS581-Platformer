@@ -186,17 +186,37 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   animator: {fileID: 1158230859995459512}
-  maxSpeed: 15
-  acceleration: 40
-  deceleration: 80
-  airAcceleration: 15
-  airDeceleration: 10
-  jumpHeight: 20
-  jumpHeightBonus: 0
-  wallJumpX: 10
-  wallJumpY: 20
-  coyoteTime: 0
   agentActive: 0
+  maxSpeed: 15
+  maxAcceleration: 52
+  maxDecceleration: 52
+  maxTurnSpeed: 80
+  maxAirAcceleration: 25
+  maxAirDeceleration: 25
+  maxAirTurnSpeed: 60
+  useAcceleration: 1
+  friction: 0
+  jumpHeight: 10
+  timeToJumpApex: 0.5
+  upwardMovementMultiplier: 1
+  downwardMovementMultiplier: 6
+  jumpCutOff: 3
+  speedLimit: 20
+  coyoteTime: 0
+  jumpBuffer: 0.2
+  canDoubleJump: 1
+  variableJumpHeight: 1
+  isJumping: 0
+  canDash: 1
+  dashAmount: 1
+  dashSpeed: 15
+  dashAttackTime: 0.15
+  dashEndTime: 0.1
+  dashEndSpeed: 8
+  dashRefillTime: 0.5
+  dashSleepTime: 0.05
+  dashInputBufferTime: 0.2
+  wallJumpForce: {x: 1, y: 12}
 --- !u!114 &7398338557370521038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,6 +300,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c744cd70b595e43a55881fcf3d4ac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dissolveEffect: {fileID: 0}
+  livesUI: {fileID: 0}
+  playerMovement: {fileID: 0}
+  respawnPoint: {fileID: 0}
+  dissolveSpeed: 2
 --- !u!95 &1158230859995459512
 Animator:
   serializedVersion: 7

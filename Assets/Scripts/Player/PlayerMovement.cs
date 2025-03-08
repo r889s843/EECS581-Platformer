@@ -62,6 +62,12 @@ public class PlayerMovement : MonoBehaviour
         return state;
     }
 
+    public bool IsGrounded()
+    {
+        return CheckGround().onFloor;
+    }
+
+
     // ---------------------------------------------------
     // 3) Horizontal Movement (from Advanced Script)
     //    We’ll unify it with the “isGrounded” check above.

@@ -355,7 +355,6 @@ GameObject:
   - component: {fileID: 4146731470915871877}
   - component: {fileID: 360386666909058061}
   - component: {fileID: 8687940500486215924}
-  - component: {fileID: 4937341843900331387}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -524,7 +523,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8795842049470078105}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 396f66f0da171e64aa56666b16a749f8, type: 3}
   m_Name: 
@@ -533,18 +532,37 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   animator: {fileID: -8611442375277616293}
-  maxSpeed: 15
-  acceleration: 40
-  deceleration: 80
-  airAcceleration: 15
-  airDeceleration: 10
-  jumpHeight: 20
-  jumpHeightBonus: 0
-  wallJumpX: 10
-  wallJumpY: 20
-  coyoteTime: 0.1
-  grounded: 0
   agentActive: 0
+  maxSpeed: 15
+  maxAcceleration: 52
+  maxDecceleration: 52
+  maxTurnSpeed: 80
+  maxAirAcceleration: 25
+  maxAirDeceleration: 25
+  maxAirTurnSpeed: 60
+  useAcceleration: 1
+  friction: 0
+  jumpHeight: 10
+  timeToJumpApex: 0.5
+  upwardMovementMultiplier: 1
+  downwardMovementMultiplier: 6
+  jumpCutOff: 3
+  speedLimit: 20
+  coyoteTime: 0.1
+  jumpBuffer: 0.2
+  canDoubleJump: 1
+  variableJumpHeight: 1
+  isJumping: 0
+  canDash: 1
+  dashAmount: 1
+  dashSpeed: 15
+  dashAttackTime: 0.15
+  dashEndTime: 0.1
+  dashEndSpeed: 8
+  dashRefillTime: 0.5
+  dashSleepTime: 0.05
+  dashInputBufferTime: 0.2
+  wallJumpForce: {x: 1, y: 12}
 --- !u!114 &6720324758942419461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -827,53 +845,6 @@ MonoBehaviour:
   ZeroParticlesInverse: {fileID: 8066500209741513699}
   isDissolving: 0
   dissolveSpeed: 1
---- !u!114 &4937341843900331387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8795842049470078105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63d75ba7922525949b7b8fdd2885d67a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  animator: {fileID: -8611442375277616293}
-  agentActive: 0
-  maxSpeed: 10
-  maxAcceleration: 52
-  maxDecceleration: 52
-  maxTurnSpeed: 80
-  maxAirAcceleration: 25
-  maxAirDeceleration: 25
-  maxAirTurnSpeed: 60
-  useAcceleration: 1
-  friction: 0
-  jumpHeight: 7.3
-  timeToJumpApex: 0.5
-  upwardMovementMultiplier: 1
-  downwardMovementMultiplier: 6
-  jumpCutOff: 3
-  speedLimit: 15
-  coyoteTime: 0.15
-  jumpBuffer: 0.15
-  maxAirJumps: 0
-  variableJumpHeight: 1
-  isJumping: 0
-  dashAmount: 1
-  dashSpeed: 15
-  dashAttackTime: 0.15
-  dashEndTime: 0.1
-  dashEndSpeed: 8
-  dashRefillTime: 0.5
-  dashSleepTime: 0.05
-  dashInputBufferTime: 0.2
-  wallJumpForce: {x: 8, y: 12}
-  wallJumpTime: 0.2
 --- !u!1001 &5414357499120815085
 PrefabInstance:
   m_ObjectHideFlags: 0

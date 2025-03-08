@@ -2773,12 +2773,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b10067da59932b48a54afc68c662b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 713142699}
-  aheadDistance: 3
-  player2Active: 0
+  heightChangeSpeed: 0
+  zoomSpeed: 0.2
   minZoom: 5
   maxZoom: 20
-  zoomSpeed: 0.2
+  aheadDistance: 3
+  rayDistanceAhead: 0
+  player2Active: 0
 --- !u!114 &2027566521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2946,8 +2947,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'completions: '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a9363154354864e9fa84a0646f512fe0, type: 2}
+  m_sharedMaterial: {fileID: 4147686905547209007, guid: a9363154354864e9fa84a0646f512fe0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
