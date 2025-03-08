@@ -7138,6 +7138,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: dashIcon
       value: 
@@ -7181,8 +7185,68 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8795842049470078105, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1842696107}
   m_SourcePrefab: {fileID: 100100000, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+--- !u!1 &1842696106 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8795842049470078105, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+  m_PrefabInstance: {fileID: 1842696105}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1842696107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842696106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63d75ba7922525949b7b8fdd2885d67a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  animator: {fileID: 1842696114}
+  agentActive: 0
+  maxSpeed: 10
+  maxAcceleration: 52
+  maxDecceleration: 52
+  maxTurnSpeed: 80
+  maxAirAcceleration: 25
+  maxAirDeceleration: 25
+  maxAirTurnSpeed: 60
+  useAcceleration: 1
+  friction: 0
+  jumpHeight: 7.3
+  timeToJumpApex: 0.5
+  upwardMovementMultiplier: 1
+  downwardMovementMultiplier: 6
+  jumpCutOff: 3
+  speedLimit: 15
+  coyoteTime: 0.15
+  jumpBuffer: 0.15
+  maxAirJumps: 0
+  variableJumpHeight: 1
+  isJumping: 0
+  dashAmount: 1
+  dashSpeed: 15
+  dashAttackTime: 0.15
+  dashEndTime: 0.1
+  dashEndSpeed: 8
+  dashRefillTime: 0.5
+  dashSleepTime: 0.05
+  dashInputBufferTime: 0.2
+  wallJumpForce: {x: 8, y: 12}
+  wallJumpTime: 0.2
+--- !u!95 &1842696114 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -8611442375277616293, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+  m_PrefabInstance: {fileID: 1842696105}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2005842591
 GameObject:
   m_ObjectHideFlags: 0
