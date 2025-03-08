@@ -92,6 +92,9 @@ public class CameraController : MonoBehaviour
             zoomOffset = zoom - minZoom;
             camHeight = Mathf.SmoothDamp(camHeight, (groundLevel + 4.0f + zoomOffset), ref heightCurrentVelo, heightChangeSpeed);
             //lerp camHeight instead of smoothdamp
+
+            
+
             transform.position = new Vector3(player.position.x + aheadDistance, camHeight, transform.position.z); 
         }
     }
@@ -128,20 +131,27 @@ public class CameraController : MonoBehaviour
             }
         }
 
+        //tester box to visualize
+
+
         //if a platform ahead of the player is below current ground level -> lower it to there
+        Vector2 boxSize = new Vector2(rayDistanceAhead,1);
         Vector2 rayOrigin = Vector2.zero;
-        rayOrigin = new Vector2(player.position.x + rayDistanceAhead, player.position.y - 2.0f); //2.0 is just enough to start ray beneath existing floor
-        /*For facing left and right. super buggy
-        if(player.localScale.x < 0) { //facing left
-            rayOrigin = new Vector2(player.position.x - rayDistanceAhead, player.position.y - 2.0f); //2.0 is just enough to start ray beneath existing floor
+        rayOrigin = new Vector2(player.position.x + (boxSize.x / 2), player.position.y - 6f); //-6 is to keep cast below current ground when player jumps
+
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(rayOrigin, boxSize, 0f, Vector2.down);//raycast
+        for(int i = 0; i < hits.Length; i++) {
+            RaycastHit2D hit = hits[i];
+            if(hit && hit.collider.gameObject.name != "DeathZone"){
+                newGroundLevel = hit.point.y;
+            }
         }
-        else { //facing right
-            rayOrigin = new Vector2(player.position.x + rayDistanceAhead, player.position.y - 2.0f); //2.0 is just enough to start ray beneath existing floor
-        }*/
-        RaycastHit2D detector = Physics2D.Raycast(rayOrigin, Vector2.down);//raycast
+
+        /*
         if(detector && detector.collider.gameObject.name != "DeathZone") { //set new gl if ground detected
+            Debug.Log("detected " + detector.point);
             newGroundLevel = detector.point.y;
-        }
+        }*/
 
         return newGroundLevel;
     }
