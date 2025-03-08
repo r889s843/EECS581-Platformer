@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6880300375975874345}
   - component: {fileID: 2829458068230082656}
   - component: {fileID: 1018566675259256265}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: coin
   m_TagString: Money
   m_Icon: {fileID: 0}
@@ -160,6 +160,8 @@ MonoBehaviour:
   material: {fileID: -876546973899608171, guid: a97b1a59cd689c64d91db25ac1ee2e7f, type: 3}
   OneParticles: {fileID: 1896789101844052503}
   ZeroParticles: {fileID: 6649585031429155557}
+  OneParticlesInverse: {fileID: 0}
+  ZeroParticlesInverse: {fileID: 0}
   isDissolving: 0
   dissolveSpeed: 1
 --- !u!1001 &5158987925096379880
@@ -213,6 +215,10 @@ PrefabInstance:
     - target: {fileID: 1589087861924367524, guid: dbf4eae147740439f88675acd4e7c48f, type: 3}
       propertyPath: m_Name
       value: OneParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589087861924367524, guid: dbf4eae147740439f88675acd4e7c48f, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -280,6 +286,10 @@ PrefabInstance:
     - target: {fileID: 2973410537411958886, guid: 02469ae30096edf4b9b237f93e560943, type: 3}
       propertyPath: m_Name
       value: ZeroParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 2973410537411958886, guid: 02469ae30096edf4b9b237f93e560943, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

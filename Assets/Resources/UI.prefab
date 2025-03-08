@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1871875988032322968}
   - component: {fileID: 5140491308704466739}
   - component: {fileID: 5911099131799442867}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Ability3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 3208467209264905571}
   - component: {fileID: 1019047498148327568}
   - component: {fileID: 8278354824819439296}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Amount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 2229766030022444685}
   - component: {fileID: 2807936053792098197}
   - component: {fileID: 3308952339898213697}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: cooldown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 7215553109406380408}
   - component: {fileID: 8175752018688860913}
   - component: {fileID: 3435079162510333168}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: NPCImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 3238800635291336150}
   - component: {fileID: 4311458047516713923}
   - component: {fileID: 8228551682936099957}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Player2Lives1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -509,7 +509,7 @@ GameObject:
   - component: {fileID: 8680944530975915991}
   - component: {fileID: 1535946291901914405}
   - component: {fileID: 9073606384797186627}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: cooldown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -645,7 +645,7 @@ GameObject:
   - component: {fileID: 9028241427884024034}
   - component: {fileID: 4933043212595189182}
   - component: {fileID: 8615149407378112414}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: NPCName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -781,7 +781,7 @@ GameObject:
   - component: {fileID: 739937063742172346}
   - component: {fileID: 4564332488480186696}
   - component: {fileID: 580013766737733749}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: DialogueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -917,7 +917,7 @@ GameObject:
   - component: {fileID: 3473840893183987291}
   - component: {fileID: 2429128726744793574}
   - component: {fileID: 7711502284222828181}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Player2Lives3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -992,7 +992,7 @@ GameObject:
   - component: {fileID: 7889932903049183498}
   - component: {fileID: 8377687442328476132}
   - component: {fileID: 2286310062238919055}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Money
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1068,7 +1068,7 @@ GameObject:
   - component: {fileID: 5335160082152877147}
   - component: {fileID: 3703876607047594817}
   - component: {fileID: 8520803483948294455}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: DialogueBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1147,7 +1147,7 @@ GameObject:
   - component: {fileID: 1803493999046284664}
   - component: {fileID: 94282512583530322}
   - component: {fileID: 3807616604058830039}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Lives2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1222,7 +1222,7 @@ GameObject:
   - component: {fileID: 6152826012150146701}
   - component: {fileID: 8691277861610390107}
   - component: {fileID: 9078087764023595973}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Player2Lives2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1297,7 +1297,7 @@ GameObject:
   - component: {fileID: 5644730203515716055}
   - component: {fileID: 2637636703240966418}
   - component: {fileID: 2989475835243273007}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Lives3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1372,7 +1372,7 @@ GameObject:
   - component: {fileID: 6289014805430064102}
   - component: {fileID: 6383251902398787421}
   - component: {fileID: 7310782054478686496}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1451,7 +1451,7 @@ GameObject:
   - component: {fileID: 339356643472219814}
   - component: {fileID: 5362627606056692159}
   - component: {fileID: 1779741760022246829}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Ability2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1528,7 +1528,7 @@ GameObject:
   - component: {fileID: 3597912658782079912}
   - component: {fileID: 2290521004958847751}
   - component: {fileID: 2368312559960009473}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1660,7 +1660,7 @@ GameObject:
   - component: {fileID: 7642507205806039149}
   - component: {fileID: 1839812510592765396}
   - component: {fileID: 2032608488608686213}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Inventories
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1736,7 +1736,7 @@ GameObject:
   - component: {fileID: 151070859583774421}
   - component: {fileID: 753431269887213625}
   - component: {fileID: 4873641414609655900}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Lives1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1811,7 +1811,7 @@ GameObject:
   - component: {fileID: 7096319938933403153}
   - component: {fileID: 8731284185551607753}
   - component: {fileID: 7134226909135450820}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Ability1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1887,7 +1887,7 @@ GameObject:
   - component: {fileID: 7964846783736001536}
   - component: {fileID: 5093078976876832518}
   - component: {fileID: 8462160364233807773}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2022,7 +2022,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5207423663295647614}
   - component: {fileID: 7450652613044073335}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Abilities
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2087,7 +2087,7 @@ GameObject:
   - component: {fileID: 1392545031153386703}
   - component: {fileID: 2236216280154004552}
   - component: {fileID: 1347670214412229323}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2195,7 +2195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2902054940520298045}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2233,7 +2233,7 @@ GameObject:
   - component: {fileID: 8524929206711097733}
   - component: {fileID: 4612175641618453142}
   - component: {fileID: 5450177268545311129}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: cooldown
   m_TagString: Untagged
   m_Icon: {fileID: 0}

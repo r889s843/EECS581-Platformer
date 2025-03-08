@@ -45,57 +45,6 @@ public class PlayerMovement : MonoBehaviour
 
     private LivesUI livesUI;
 
-    // public override void Initialize()
-    // {
-    //     body = GetComponent<Rigidbody2D>(); // Get the Rigidbody2D component
-    //     startPosition = transform.position; // Store the starting position
-    //     previousPosition = startPosition; // Initialize previous position
-    //     playerMovement = GetComponent<PlayerMovement>(); // Get the PlayerMovement component
-
-    //     livesUI = FindObjectOfType<LivesUI>();
-    //     GameObject flag = GameObject.FindGameObjectWithTag("Flag");
-    //     if (flag != null) {
-    //         goalTransform = flag.transform;
-    //     }
-    // }
-
-    // private void OnTriggerEnter2D(Collider2D collision)
-    // {
-    //     if (collision.CompareTag("Flag"))
-    //     {
-    //         SetReward(5.0f);  // Reward for reaching the goal
-    //         // Debug.Log($"Agent Won. Final reward: {GetCumulativeReward()}");
-
-    //         currentLevelCompletions++;  // Increment completion count
-    //         if (currentLevelCompletions % 10 == 0) {
-    //             Debug.Log($"Current Count: {currentLevelCompletions}");
-    //         }
-
-    //         if (currentLevelCompletions >= levelCompletionThreshold)
-    //         {
-    //             levelCompleted = true;  // Mark level as completed
-    //             EndEpisode();  // End the episode
-    //         }
-    //         else
-    //         {
-    //             // Reset agent's position without ending the episode
-    //             transform.position = startPosition;
-    //             body.linearVelocity = Vector2.zero;
-    //         }
-    //     }
-    //     else if (collision.CompareTag("DeathZone") || collision.CompareTag("Enemy") || collision.CompareTag("Hazard") || collision.CompareTag("Projectile"))
-    //     {
-    //         SetReward(-1.0f);  // Negative reward for dying or hitting a hazard
-    //         // Debug.Log($"Agent Died. Final reward: {GetCumulativeReward()}");
-    //         if (CompareTag("Player")){
-    //             livesUI.LoseLifeP1();
-    //         } else if (CompareTag("Player2")){
-    //             livesUI.LoseLifeP2();
-    //         }
-    //         EndEpisode(); // End the episode
-    //     }
-    // }
-
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
