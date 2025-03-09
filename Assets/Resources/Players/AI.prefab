@@ -187,6 +187,7 @@ MonoBehaviour:
     m_Bits: 64
   animator: {fileID: 1158230859995459512}
   agentActive: 0
+  isOnFloor: 0
   maxSpeed: 15
   maxAcceleration: 52
   maxDecceleration: 52
@@ -206,6 +207,8 @@ MonoBehaviour:
   jumpBuffer: 0.2
   canDoubleJump: 1
   variableJumpHeight: 1
+  apexControlMultiplier: 2
+  doubleJumpMultiplier: 1
   isJumping: 0
   canDash: 1
   dashAmount: 1
@@ -217,6 +220,8 @@ MonoBehaviour:
   dashSleepTime: 0.05
   dashInputBufferTime: 0.2
   wallJumpForce: {x: 1, y: 12}
+  wallJumpControlDelay: 0.15
+  wallCoyoteTime: 0.15
 --- !u!114 &7398338557370521038
 MonoBehaviour:
   m_ObjectHideFlags: 0

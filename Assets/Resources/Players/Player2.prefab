@@ -206,6 +206,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c744cd70b595e43a55881fcf3d4ac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dissolveEffect: {fileID: 0}
+  livesUI: {fileID: 0}
+  playerMovement: {fileID: 0}
+  respawnPoint: {fileID: 0}
+  dissolveSpeed: 2
 --- !u!95 &3447700597411594962
 Animator:
   serializedVersion: 7
