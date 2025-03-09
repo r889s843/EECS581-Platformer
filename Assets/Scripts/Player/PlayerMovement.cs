@@ -452,9 +452,22 @@ public class PlayerMovement : MonoBehaviour
         float startTime = Time.time;
         SetGravityScale(0f); // Disable gravity during dash
         float initialXVelocity = body.linearVelocity.x;
+
+        // Timer for spawning after-images (adjust delay as needed)
+        float afterImageSpawnDelay = 0.05f;
+        float nextAfterImageTime = Time.time;
+        
         while (Time.time - startTime <= dashAttackTime)
         {
             body.linearVelocity = dir * dashSpeed;
+
+             // Spawn after-image if the delay has passed
+            if (Time.time >= nextAfterImageTime)
+            {
+                PlayerAfterPool.Instance.GetFromPool();
+                nextAfterImageTime = Time.time + afterImageSpawnDelay;
+            }
+
             yield return null;
         }
 
