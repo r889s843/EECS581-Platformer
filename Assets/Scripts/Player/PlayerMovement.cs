@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     
     // Animator & Audio
     public Animator animator;           // Controls player animations (e.g., jumping, walking)
+    public ParticleSystem smokeFX;
     private AudioSource walkAudioSource;// Plays walking sound when moving on ground
     private AudioSource jumpAudioSource;// Plays jump sound when jumping
 
@@ -195,11 +196,10 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space)) 
             {
                 jumpInput = true;
-                Debug.Log("Jump pressed, jumpInput = true");
             }
             pressingJump = Input.GetKey(KeyCode.Space);
-            if (Input.GetKeyUp(KeyCode.Space)) 
-                Debug.Log("Jump released, pressingJump = false");
+            // if (Input.GetKeyUp(KeyCode.Space)) 
+            //     Debug.Log("Jump released, pressingJump = false");
             if (Input.GetKeyDown(KeyCode.LeftShift)) lastPressedDashTime = dashInputBufferTime;
         }
 
@@ -227,7 +227,6 @@ public class PlayerMovement : MonoBehaviour
                 isJumping = true;
             }
             jumpInput = false;
-            Debug.Log("Jump processed, jumpInput reset to false");
         }
 
         // Decrease input buffer timers
@@ -358,6 +357,7 @@ public class PlayerMovement : MonoBehaviour
 
         animator.SetBool("isJumping", true);
         jumpAudioSource.PlayOneShot(jumpAudioSource.clip);
+        smokeFX.Play();
 
         gravMultiplier = upwardMovementMultiplier; // Initialize gravity at jump start
 
@@ -387,6 +387,7 @@ public class PlayerMovement : MonoBehaviour
 
         animator.SetBool("isJumping", true);
         jumpAudioSource.PlayOneShot(jumpAudioSource.clip);
+        smokeFX.Play();
 
         // Apply wall jump force in specified direction
         Vector2 jumpVelocity = new Vector2(wallJumpForce.x * dir, wallJumpForce.y);
@@ -568,7 +569,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (v.y > 0) // Only apply jump gravity logic while in air
         {
-            Debug.Log($"v.y: {v.y}, pressingJump: {pressingJump}, isJumping: {isJumping}, gravMultiplier: {gravMultiplier}");
             if (variableJumpHeight && pressingJump) // Check if the player is holding space and variable height
                 gravMultiplier = upwardMovementMultiplier;
             else if (variableJumpHeight && !pressingJump)
