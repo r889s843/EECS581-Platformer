@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 4146731470915871877}
   - component: {fileID: 360386666909058061}
   - component: {fileID: 8687940500486215924}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -533,36 +533,41 @@ MonoBehaviour:
     m_Bits: 64
   animator: {fileID: -8611442375277616293}
   agentActive: 0
-  maxSpeed: 15
-  maxAcceleration: 52
-  maxDecceleration: 52
-  maxTurnSpeed: 80
-  maxAirAcceleration: 25
-  maxAirDeceleration: 25
-  maxAirTurnSpeed: 60
+  isOnFloor: 0
+  maxSpeed: 12
+  maxAcceleration: 80
+  maxDecceleration: 80
+  maxTurnSpeed: 95
+  maxAirAcceleration: 40
+  maxAirDeceleration: 40
+  maxAirTurnSpeed: 80
   useAcceleration: 1
-  friction: 0
-  jumpHeight: 10
+  friction: 20
+  jumpHeight: 2
   timeToJumpApex: 0.5
-  upwardMovementMultiplier: 1
+  upwardMovementMultiplier: 1.5
   downwardMovementMultiplier: 6
   jumpCutOff: 3
-  speedLimit: 20
-  coyoteTime: 0.1
+  speedLimit: 15
+  coyoteTime: 0.15
   jumpBuffer: 0.2
   canDoubleJump: 1
   variableJumpHeight: 1
+  apexControlMultiplier: 2
+  doubleJumpMultiplier: 1
   isJumping: 0
   canDash: 1
   dashAmount: 1
-  dashSpeed: 15
-  dashAttackTime: 0.15
-  dashEndTime: 0.1
-  dashEndSpeed: 8
-  dashRefillTime: 0.5
-  dashSleepTime: 0.05
+  dashSpeed: 30
+  dashAttackTime: 0.1
+  dashEndTime: 0.05
+  dashEndSpeed: 10
+  dashRefillTime: 0.2
+  dashSleepTime: 0.02
   dashInputBufferTime: 0.2
-  wallJumpForce: {x: 1, y: 12}
+  wallJumpForce: {x: 12, y: 10}
+  wallJumpControlDelay: 0.15
+  wallCoyoteTime: 0.15
 --- !u!114 &6720324758942419461
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -62,17 +62,17 @@ public class PlayerMovement : MonoBehaviour
     // 3) Horizontal Movement
     // ---------------------------------------------------
     [Header("=== Horizontal Movement ===")]
-    [Range(0f, 30f)] public float maxSpeed = 10f;           // Max horizontal speed
-    [Range(0f, 100f)] public float maxAcceleration = 52f;   // Acceleration rate on ground
-    [Range(0f, 100f)] public float maxDecceleration = 52f;  // Deceleration rate on ground
-    [Range(0f, 100f)] public float maxTurnSpeed = 80f;      // Speed to change direction on ground
-    [Range(0f, 100f)] public float maxAirAcceleration = 25f;// Acceleration rate in air
-    [Range(0f, 100f)] public float maxAirDeceleration = 25f;// Deceleration rate in air
-    [Range(0f, 100f)] public float maxAirTurnSpeed = 60f;   // Speed to change direction in air
+    [Range(0f, 30f)] public float maxSpeed = 12f;           // Max horizontal speed
+    [Range(0f, 100f)] public float maxAcceleration = 80f;   // Acceleration rate on ground
+    [Range(0f, 100f)] public float maxDecceleration = 80f;  // Deceleration rate on ground
+    [Range(0f, 100f)] public float maxTurnSpeed = 95f;      // Speed to change direction on ground
+    [Range(0f, 100f)] public float maxAirAcceleration = 40f;// Acceleration rate in air
+    [Range(0f, 100f)] public float maxAirDeceleration = 40f;// Deceleration rate in air
+    [Range(0f, 100f)] public float maxAirTurnSpeed = 80f;   // Speed to change direction in air
     [Tooltip("When false, the character instantly moves to max speed with no acceleration.")]
     public bool useAcceleration = true;                     // Toggle for smooth vs instant movement
     [Tooltip("Friction to apply if you want to reduce effective max speed.")]
-    public float friction = 0f;                             // Slows player when not pressing input
+    public float friction = 20f;                             // Slows player when not pressing input
 
     private Vector2 velocity;         // Current velocity of the player
     private Vector2 moveInput;        // Input direction for movement
@@ -82,17 +82,17 @@ public class PlayerMovement : MonoBehaviour
     // 4) Jump & Gravity
     // ---------------------------------------------------
     [Header("=== Jumping ===")]
-    [Range(0f, 10f)] public float jumpHeight = 3f;          // Height of a standard jump
+    [Range(0f, 10f)] public float jumpHeight = 1.5f;          // Height of a standard jump
     [Range(0.2f, 1.25f)] public float timeToJumpApex = 0.5f;// Time to reach jump peak (unused in current physics)
-    [Range(0f, 10f)] public float upwardMovementMultiplier = 1f; // Gravity multiplier when rising
+    [Range(0f, 10f)] public float upwardMovementMultiplier = 1.5f; // Gravity multiplier when rising
     [Range(1f, 10f)] public float downwardMovementMultiplier = 6f; // Gravity multiplier when falling
-    [Range(1f, 10f)] public float jumpCutOff = 3f;          // Gravity multiplier when jump is released early
+    [Range(1f, 10f)] public float jumpCutOff = 2f;          // Gravity multiplier when jump is released early
     [Tooltip("Max downward speed.")] public float speedLimit = 20f; // Caps falling speed
     public float coyoteTime = 0.15f;                        // Grace period to jump after leaving ground
     public float jumpBuffer = 0.25f;                        // Time window to buffer a jump input
     public bool canDoubleJump = true;                       // Enables double jumping
     public bool variableJumpHeight = true;                  // Allows variable jump height based on button hold
-    [Range(1f, 3f)] public float apexControlMultiplier = 1.5f; // Boosts air control near jump apex
+    [Range(1f, 3f)] public float apexControlMultiplier = 2f; // Boosts air control near jump apex
     [Range(0.5f, 2f)] public float doubleJumpMultiplier = 1f;  // Adjusts double jump strength
 
     // Internal jump state
@@ -113,13 +113,13 @@ public class PlayerMovement : MonoBehaviour
     // ---------------------------------------------------
     [Header("=== Dash Settings ===")]
     public bool canDash = true;         // Enables dashing
-    public int dashAmount = 20;         // Max number of dashes
+    public int dashAmount = 1;         // Max number of dashes
     public float dashSpeed = 30;        // Speed during dash
-    public float dashAttackTime = 0.15f;// Duration of dash movement
-    public float dashEndTime = 0.1f;    // Duration of dash slowdown
-    public float dashEndSpeed = 8f;     // Speed at dash end
-    public float dashRefillTime = 0.5f; // Time to refill a dash
-    public float dashSleepTime = 0.05f; // Brief time freeze at dash start
+    public float dashAttackTime = 0.1f;// Duration of dash movement
+    public float dashEndTime = 0.05f;    // Duration of dash slowdown
+    public float dashEndSpeed = 10f;     // Speed at dash end
+    public float dashRefillTime = 0.2f; // Time to refill a dash
+    public float dashSleepTime = 0.02f; // Brief time freeze at dash start
     public float dashInputBufferTime = 0.2f; // Buffer time for dash input
 
     private bool isDashing;         // True during dash
@@ -131,11 +131,11 @@ public class PlayerMovement : MonoBehaviour
     private bool hasDashed;         // True if dash has been used since last reset
 
     [Header("=== Wall Jump Settings ===")]
-    public Vector2 wallJumpForce = new Vector2(8f, 12f); // Force applied for wall jump (x, y)
+    public Vector2 wallJumpForce = new Vector2(12f, 8f); // Force applied for wall jump (x, y)
     private bool isWallJumping;     // True during wall jump
-    public float wallJumpControlDelay = 0.2f; // Delay before regaining air control
+    public float wallJumpControlDelay = 0.15f; // Delay before regaining air control
     private float wallJumpTime;     // Timer for wall jump control delay
-    public float wallCoyoteTime = 0.1f; // Grace period to wall jump after leaving wall
+    public float wallCoyoteTime = 0.15f; // Grace period to wall jump after leaving wall
     private float wallCoyoteCounter;// Timer for wall coyote time
     
     // ---------------------------------------------------
@@ -191,9 +191,15 @@ public class PlayerMovement : MonoBehaviour
         // Handle player input if not AI-controlled
         if (!agentActive)
         {
-            horizontalInput = Input.GetAxisRaw("Horizontal"); // -1, 0, or 1
-            if (Input.GetKeyDown(KeyCode.Space)) jumpInput = true;
-            if (Input.GetKeyUp(KeyCode.Space)) jumpInput = false;
+            horizontalInput = Input.GetAxisRaw("Horizontal");
+            if (Input.GetKeyDown(KeyCode.Space)) 
+            {
+                jumpInput = true;
+                Debug.Log("Jump pressed, jumpInput = true");
+            }
+            pressingJump = Input.GetKey(KeyCode.Space);
+            if (Input.GetKeyUp(KeyCode.Space)) 
+                Debug.Log("Jump released, pressingJump = false");
             if (Input.GetKeyDown(KeyCode.LeftShift)) lastPressedDashTime = dashInputBufferTime;
         }
 
@@ -214,13 +220,14 @@ public class PlayerMovement : MonoBehaviour
         if (jumpInput)
         {
             desiredJump = true;
-            pressingJump = true;
             lastPressedJumpTime = jumpBuffer;
             jumpBufferCounter = 0f;
-        }
-        else
-        {
-            pressingJump = false; // Released jump key for variable height
+            if (isGrounded || coyoteCounter > 0f)
+            {
+                isJumping = true;
+            }
+            jumpInput = false;
+            Debug.Log("Jump processed, jumpInput reset to false");
         }
 
         // Decrease input buffer timers
@@ -278,7 +285,7 @@ public class PlayerMovement : MonoBehaviour
         // Update animation speed parameter
         animator.SetFloat("Speed", Mathf.Abs(body.linearVelocity.x));
 
-        jumpInput = false; // Reset jump input after processing
+        // jumpInput = false; // Reset jump input after processing
     }
 
     // Physics updates (runs at fixed time steps)
@@ -311,10 +318,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (desiredJump && lastPressedJumpTime > 0f)
         {
-            if (isGrounded) // Ground jump
+            isJumping = true;
+            if (isGrounded){ // Ground jump
+                isJumping = true;
                 DoJump(false);
-            else if (coyoteCounter > 0f) // Coyote time jump
+            }
+            else if (coyoteCounter > 0f){ // Coyote time jump
+                isJumping = true;
                 DoJump(false);
+            }
             else if (!isGrounded && (isOnLeftWall || isOnRightWall || wallCoyoteCounter > 0f)) // Wall jump
             {
                 int dir = 0;
@@ -327,8 +339,8 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (!isGrounded && canJumpAgain && canDoubleJump) // Double jump
             {
+                isJumping = true;
                 canJumpAgain = false;
-                Debug.Log("Find here 4"); // Debug to confirm double jump
                 DoJump(true);
             }
         }
@@ -338,23 +350,21 @@ public class PlayerMovement : MonoBehaviour
     private void DoJump(bool isDoubleJump)
     {
         // Reset jump-related flags and timers
+        isJumping = true;
         desiredJump = false;
         jumpBufferCounter = 0f;
         lastPressedJumpTime = 0f;
         coyoteCounter = 0f;
 
-        isJumping = true;
         animator.SetBool("isJumping", true);
-
         jumpAudioSource.PlayOneShot(jumpAudioSource.clip);
+
+        gravMultiplier = upwardMovementMultiplier; // Initialize gravity at jump start
 
         // Calculate jump speed
         float g = Physics2D.gravity.y * body.gravityScale;
         jumpSpeed = Mathf.Sqrt(2f * jumpHeight * -g);
         float effectiveJumpSpeed = isDoubleJump ? jumpSpeed * doubleJumpMultiplier : jumpSpeed;
-
-        // Reset gravity for consistent jump height
-        gravMultiplier = upwardMovementMultiplier;
 
         // Apply jump velocity (double jump adds to positive velocity only)
         if (isDoubleJump)
@@ -366,8 +376,6 @@ public class PlayerMovement : MonoBehaviour
     // Executes a wall jump
     private void DoWallJump(int dir)
     {
-        Debug.Log("wall jump");
-
         desiredJump = false;
         jumpBufferCounter = 0f;
         lastPressedJumpTime = 0f;
@@ -558,21 +566,21 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 v = body.linearVelocity;
 
-        if (v.y > 0.01f && !isOnFloor) // Going up
+        if (v.y > 0) // Only apply jump gravity logic while in air
         {
-            if (variableJumpHeight && pressingJump && isJumping)
+            Debug.Log($"v.y: {v.y}, pressingJump: {pressingJump}, isJumping: {isJumping}, gravMultiplier: {gravMultiplier}");
+            if (variableJumpHeight && pressingJump) // Check if the player is holding space and variable height
                 gravMultiplier = upwardMovementMultiplier;
-            else if (variableJumpHeight && !pressingJump && isJumping)
-                gravMultiplier = Mathf.Lerp(gravMultiplier, jumpCutOff, Time.fixedDeltaTime * 5f); // Shorten jump
+            else if (variableJumpHeight && !pressingJump)
+                gravMultiplier = Mathf.Lerp(gravMultiplier, jumpCutOff, Time.fixedDeltaTime * 20f); // Shorten jump when player lets go of space
+            else if (isJumping)
+                gravMultiplier = upwardMovementMultiplier;
             else
-                gravMultiplier = upwardMovementMultiplier;
+                gravMultiplier = downwardMovementMultiplier;
         }
-        else if (v.y < -0.01f && !isOnFloor) // Going down
-            gravMultiplier = downwardMovementMultiplier;
-        else // On ground or stationary
+        else
         {
-            if (isOnFloor)
-                isJumping = false;
+            isJumping = false; // Reset on ground, regardless of velocity
             gravMultiplier = defaultGravityScale;
         }
 

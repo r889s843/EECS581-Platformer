@@ -3174,46 +3174,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: dashSpeed
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: dashAmount
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: jumpHeight
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: maxTurnSpeed
-      value: 95
-      objectReference: {fileID: 0}
-    - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: maxAcceleration
-      value: 69
-      objectReference: {fileID: 0}
-    - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: useAcceleration
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: wallJumpForce.x
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: wallJumpForce.y
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: maxDecceleration
-      value: 80
-      objectReference: {fileID: 0}
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: dashIcon
       value: 
@@ -3238,26 +3198,6 @@ PrefabInstance:
       propertyPath: invincibilityCooldownText
       value: 
       objectReference: {fileID: 1098453651}
-    - target: {fileID: 4937341843900331387, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: maxSpeed
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4937341843900331387, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: dashSpeed
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 4937341843900331387, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: dashAmount
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4937341843900331387, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: wallJumpForce.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 4937341843900331387, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: wallJumpForce.y
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 6720324758942419461, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: livesUI
       value: 
@@ -3274,8 +3214,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4937341843900331387, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
