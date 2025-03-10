@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public ParticleSystem smokeFX;
     private AudioSource walkAudioSource;// Plays walking sound when moving on ground
     private AudioSource jumpAudioSource;// Plays jump sound when jumping
+    public SpriteRenderer spriteRenderer;
 
     // Variables for AI vs. player control
     [HideInInspector] public bool agentActive = false; // If true, AI controls the player instead of input
@@ -144,6 +145,21 @@ public class PlayerMovement : MonoBehaviour
     // ---------------------------------------------------
     private float lastPressedJumpTime; // Timer for jump input buffer
 
+    // New Squash/Stretch and Tilt Settings
+    [Header("=== Squash & Stretch Settings ===")]
+    public float jumpStretchFactor = 1.2f;    // How tall the sprite gets during jump ascent
+    public float landSquashFactor = 0.8f;     // How squashed the sprite gets on landing
+    public float squashSpeed = 10f;           // Speed of squash/stretch transitions
+    public float landSquashDuration = 0.1f;   // How long the landing squash lasts
+
+    [Header("=== Tilt Settings ===")]
+    public float maxTiltAngle = 15f;          // Max rotation angle at max speed
+    public float tiltSpeed = 5f;              // Speed of tilt transition
+
+    private Vector3 baseScale;             // Normal scale of the sprite
+    private bool wasOnFloorLastFrame;         // Track previous ground state for landing detection
+    private float landSquashTimer;            // Timer for landing squash duration
+
     // ---------------------------------------------------
     // Initialization
     // ---------------------------------------------------
@@ -157,6 +173,7 @@ public class PlayerMovement : MonoBehaviour
         AudioSource[] audioSources = GetComponents<AudioSource>();
         walkAudioSource = audioSources[0];
         jumpAudioSource = audioSources[1];
+        spriteRenderer = GetComponentInParent<SpriteRenderer>(); // Fetch from parent (player)
 
         // Initialize gravity and physics
         defaultGravityScale = body.gravityScale;
@@ -168,6 +185,9 @@ public class PlayerMovement : MonoBehaviour
         // Check for AI control
         if (GetComponent<PlatformerAgent>() != null)
             agentActive = true;
+
+        // Store default scale (assuming initial scale is 1,1,1 or -1,1,1 for flip)
+        baseScale = new Vector3(1f, 1f, 1f);
     }
 
     // Calculates initial jump speed based on jump height and gravity
@@ -272,9 +292,9 @@ public class PlayerMovement : MonoBehaviour
         if (!isWallDashing && (!isWallJumping || wallJumpTime > wallJumpControlDelay))
         {
             if (horizontalInput > 0.01f)
-                transform.localScale = Vector3.one; // Face right
+                baseScale.x = 1f; // Face right
             else if (horizontalInput < -0.01f)
-                transform.localScale = new Vector3(-1, 1, 1); // Face left
+                baseScale.x = -1f; // Face left
         }
 
         // Play walking sound when moving on ground
@@ -283,6 +303,10 @@ public class PlayerMovement : MonoBehaviour
 
         // Update animation speed parameter
         animator.SetFloat("Speed", Mathf.Abs(body.linearVelocity.x));
+
+        // Squash, Stretch, and Tilt Logic
+        UpdateSquashStretchAndTilt(isOnFloor);
+        wasOnFloorLastFrame = isOnFloor; // Track for landing detection
 
         // jumpInput = false; // Reset jump input after processing
     }
@@ -307,6 +331,49 @@ public class PlayerMovement : MonoBehaviour
             if (wallJumpTime >= wallJumpControlDelay)
                 isWallJumping = false; // Restore full air control
         }
+    }
+
+    // New Method for Squash, Stretch, and Tilt
+    private void UpdateSquashStretchAndTilt(bool isOnFloor)
+    {
+        Vector3 targetScale = baseScale; // Start with base scale (includes flip)
+        float targetTilt = 0f;
+
+        // Jump Squeeze
+        if (isJumping && body.linearVelocity.y > 0 && !isDashing)
+        {
+            targetScale.y = baseScale.y * jumpStretchFactor;
+            targetScale.x = baseScale.x / jumpStretchFactor;
+        }
+
+        // Landing Plop
+        if (isOnFloor && !wasOnFloorLastFrame)
+        {
+            landSquashTimer = landSquashDuration;
+        }
+        if (landSquashTimer > 0)
+        {
+            targetScale.y = baseScale.y * landSquashFactor;
+            targetScale.x = baseScale.x / landSquashFactor;
+            landSquashTimer -= Time.deltaTime;
+        }
+
+        // Tilt at Max Speed (disabled during dash or wall jump)
+        if (!isDashing && (!isWallJumping || wallJumpTime > wallJumpControlDelay))
+        {
+            float speedRatio = Mathf.Abs(body.linearVelocity.x) / maxSpeed;
+            targetTilt = Mathf.Lerp(0f, maxTiltAngle, speedRatio) * -Mathf.Sign(body.linearVelocity.x);
+        }
+
+        // Apply scale instantly for flipping, smoothly for squash/stretch
+        Vector3 currentScale = transform.localScale;
+        currentScale.x = baseScale.x; // Instant flip
+        currentScale.y = Mathf.Lerp(currentScale.y, targetScale.y, Time.deltaTime * squashSpeed);
+        transform.localScale = currentScale;
+
+        // Smooth tilt
+        Quaternion targetRotation = Quaternion.Euler(0, 0, targetTilt);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * tiltSpeed);
     }
 
     // ---------------------------------------------------
@@ -393,7 +460,8 @@ public class PlayerMovement : MonoBehaviour
         Vector2 jumpVelocity = new Vector2(wallJumpForce.x * dir, wallJumpForce.y);
         body.linearVelocity = jumpVelocity;
 
-        transform.localScale = dir > 0 ? Vector3.one : new Vector3(-1, 1, 1); // Flip sprite
+        // Flip sprite by setting baseScale.x (1 for right, -1 for left)
+        baseScale.x = dir; // dir is 1 (right) or -1 (left)
     }
 
     // ---------------------------------------------------
@@ -413,13 +481,13 @@ public class PlayerMovement : MonoBehaviour
             if (isOnLeftWall)
             {
                 dashDir = Vector2.right;
-                transform.localScale = Vector3.one;
+                baseScale.x = 1f; // Face right (away from left wall)
                 isWallDashing = true;
             }
             else if (isOnRightWall)
             {
                 dashDir = Vector2.left;
-                transform.localScale = new Vector3(-1, 1, 1);
+                baseScale.x = -1f; // Face left (away from right wall)
                 isWallDashing = true;
             }
             else if (moveInput != Vector2.zero)
