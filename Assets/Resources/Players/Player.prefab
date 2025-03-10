@@ -287,10 +287,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 548851e93e49ec44d8cf2c734d17bd72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teleportRange: 5
+  teleportRange: 10
   obstacleLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64
   spriteRenderer: {fileID: 2848366371450900770}
   teleportOutFX: {fileID: 7769096974863474663}
   teleportInFX: {fileID: 2652454154916635933}
@@ -5190,7 +5190,6 @@ GameObject:
   - component: {fileID: -2302500838848284690}
   - component: {fileID: 4624343617722134649}
   - component: {fileID: 4146731470915871877}
-  - component: {fileID: 360386666909058061}
   - component: {fileID: 8687940500486215924}
   - component: {fileID: 8545853009192033364}
   m_Layer: 8
@@ -5374,6 +5373,7 @@ MonoBehaviour:
     m_Bits: 64
   animator: {fileID: -8611442375277616293}
   smokeFX: {fileID: 6625944162410469844}
+  spriteRenderer: {fileID: 2848366371450900770}
   agentActive: 0
   isOnFloor: 0
   maxSpeed: 12
@@ -5410,6 +5410,12 @@ MonoBehaviour:
   wallJumpForce: {x: 12, y: 10}
   wallJumpControlDelay: 0.15
   wallCoyoteTime: 0.15
+  jumpStretchFactor: 1.2
+  landSquashFactor: 0.7
+  squashSpeed: 10
+  landSquashDuration: 0.2
+  maxTiltAngle: 3
+  tiltSpeed: 5
 --- !u!114 &6720324758942419461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5657,26 +5663,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dashSpeed: 30
   dashDuration: 0.2
---- !u!114 &360386666909058061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8795842049470078105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 548851e93e49ec44d8cf2c734d17bd72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teleportRange: 5
-  obstacleLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  spriteRenderer: {fileID: 0}
-  teleportOutFX: {fileID: 0}
-  teleportInFX: {fileID: 0}
-  teleportDelay: 0.2
 --- !u!114 &8687940500486215924
 MonoBehaviour:
   m_ObjectHideFlags: 0
