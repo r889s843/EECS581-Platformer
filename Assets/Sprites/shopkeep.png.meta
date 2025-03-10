@@ -1,28 +1,19 @@
 fileFormatVersion: 2
-guid: 7200d2b87b92b42f2a100be9f955e53e
+guid: 2d4d78a2f7e8047729484300a9b2e914
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7625314068756324511
-    second: ai_0
+      213: 5640754118254106532
+    second: shopkeep_0
   - first:
-      213: 130997897469207443
-    second: ai_1
+      213: -752792301465324329
+    second: shopkeep_1
   - first:
-      213: -6759663132405361247
-    second: ai_2
+      213: -5795279887641139669
+    second: shopkeep_2
   - first:
-      213: 4018571876751299052
-    second: ai_3
-  - first:
-      213: -8245825195148532364
-    second: ai_4
-  - first:
-      213: 7679427360996410304
-    second: ai_5
-  - first:
-      213: 5858877548418899175
-    second: ai_6
+      213: 8265150833338780559
+    second: shopkeep_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -118,7 +109,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ai_idle
+      name: shopkeep_0
       rect:
         serializedVersion: 2
         x: 0
@@ -126,21 +117,43 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 16f9dfe41417d2690800000000000000
-      internalID: -7625314068756324511
+      spriteID: 4a79bdb0cfbf74e40800000000000000
+      internalID: 5640754118254106532
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ai_running_0
+      name: shopkeep_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d4b289e36b8d85f0800000000000000
+      internalID: -752792301465324329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: shopkeep_2
       rect:
         serializedVersion: 2
         x: 64
@@ -148,21 +161,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 393a9f8c4e561d100800000000000000
-      internalID: 130997897469207443
+      spriteID: b262f2b95a7039fa0800000000000000
+      internalID: -5795279887641139669
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ai_running_1
+      name: shopkeep_3
       rect:
         serializedVersion: 2
         x: 96
@@ -170,103 +183,15 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1a59caff13ad032a0800000000000000
-      internalID: -6759663132405361247
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ai_running_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ce1d222a4d5d4c730800000000000000
-      internalID: 4018571876751299052
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ai_running_3
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 475a43b5ca1f09d80800000000000000
-      internalID: -8245825195148532364
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ai_jumping_0
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0c34b9a5f7ec29a60800000000000000
-      internalID: 7679427360996410304
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ai_wall_hang_0
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7ec1500b61aee4150800000000000000
-      internalID: 5858877548418899175
+      spriteID: f8b8e2c64e6b3b270800000000000000
+      internalID: 8265150833338780559
       vertices: []
       indices: 
       edges: []
@@ -275,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 23a374cf9d6834536b4b81b61f799664
+    spriteID: 899d6eea216a3433f8b56e1beb895b9d
     internalID: 0
     vertices: []
     indices: 
@@ -285,13 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ai_idle: -7625314068756324511
-      ai_jumping_0: 7679427360996410304
-      ai_running_0: 130997897469207443
-      ai_running_1: -6759663132405361247
-      ai_running_2: 4018571876751299052
-      ai_running_3: -8245825195148532364
-      ai_wall_hang_0: 5858877548418899175
+      shopkeep_0: 5640754118254106532
+      shopkeep_1: -752792301465324329
+      shopkeep_2: -5795279887641139669
+      shopkeep_3: 8265150833338780559
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

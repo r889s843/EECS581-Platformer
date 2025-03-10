@@ -1991,6 +1991,7 @@ GameObject:
   - component: {fileID: 4038390900546791330}
   - component: {fileID: 4272324230226516966}
   - component: {fileID: 784149183781814926}
+  - component: {fileID: 7842396226416224181}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -2058,7 +2059,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 6988608320279308316, guid: 87827ba937ea91e4d9ad3599496fc0de, type: 3}
+  m_Sprite: {fileID: 5640754118254106532, guid: 2d4d78a2f7e8047729484300a9b2e914, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2107,7 +2108,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.58, y: 1.28}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -2136,3 +2137,25 @@ MonoBehaviour:
   wordSpeed: 0.04
   playerIsClose: 0
   shopPanel: {fileID: 6889432015423816159}
+--- !u!95 &7842396226416224181
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8883868776469822734}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 82a473ad8d9b1497c9882533cf360597, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
