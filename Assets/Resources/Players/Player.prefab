@@ -5373,6 +5373,7 @@ MonoBehaviour:
     m_Bits: 64
   animator: {fileID: -8611442375277616293}
   smokeFX: {fileID: 6625944162410469844}
+  walkSoundDelay: 0.25
   spriteRenderer: {fileID: 2848366371450900770}
   agentActive: 0
   isOnFloor: 0
@@ -5465,10 +5466,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 80405790b7982aa408de00feb863744f, type: 3}
-  m_Resource: {fileID: 8300000, guid: 80405790b7982aa408de00feb863744f, type: 3}
+  m_audioClip: {fileID: 8300000, guid: afdb568d858b2074589b3611ad908ed3, type: 3}
+  m_Resource: {fileID: 8300000, guid: afdb568d858b2074589b3611ad908ed3, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.344
+  m_Volume: 1
   m_Pitch: 2.6
   Loop: 0
   Mute: 0
@@ -5478,7 +5479,7 @@ AudioSource:
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
-  Pan2D: 0.162
+  Pan2D: 0.67
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0

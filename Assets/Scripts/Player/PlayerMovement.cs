@@ -6,6 +6,7 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Audio;
 
 // ABANDON ALL HOPE YE WHO ENTER HERE
 
@@ -24,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     public Animator animator;           // Controls player animations (e.g., jumping, walking)
     public ParticleSystem smokeFX;
     private AudioSource walkAudioSource;// Plays walking sound when moving on ground
+    private float walkSoundCooldown = 0f;
+    public float walkSoundDelay = 0.25f; // control frequency of walk noise loop
     private AudioSource jumpAudioSource;// Plays jump sound when jumping
     public SpriteRenderer spriteRenderer;
 
@@ -297,9 +300,22 @@ public class PlayerMovement : MonoBehaviour
                 baseScale.x = -1f; // Face left
         }
 
+
         // Play walking sound when moving on ground
-        if (isOnFloor && Mathf.Abs(horizontalInput) > 0.01f && !walkAudioSource.isPlaying)
-            walkAudioSource.Play();
+        if(isOnFloor && Mathf.Abs(horizontalInput) > 0.01f)
+        {
+            if (!walkAudioSource.isPlaying && walkSoundCooldown <= 0f)
+            {
+                walkAudioSource.Play();
+                walkSoundCooldown = walkSoundDelay; // Reset cooldown
+            }
+        }
+
+        // Reduce cooldown over time
+        if (walkSoundCooldown > 0f)
+        {
+            walkSoundCooldown -= Time.deltaTime;
+        }
 
         // Update animation speed parameter
         animator.SetFloat("Speed", Mathf.Abs(body.linearVelocity.x));
@@ -423,6 +439,7 @@ public class PlayerMovement : MonoBehaviour
         coyoteCounter = 0f;
 
         animator.SetBool("isJumping", true);
+        jumpAudioSource.pitch = Random.Range(0.75f, 1.1f); // Randomize pitch slightly
         jumpAudioSource.PlayOneShot(jumpAudioSource.clip);
         smokeFX.Play();
 
@@ -453,6 +470,7 @@ public class PlayerMovement : MonoBehaviour
         wallJumpTime = 0f;
 
         animator.SetBool("isJumping", true);
+        jumpAudioSource.pitch = Random.Range(0.75f, 1.1f); // Randomize pitch slightly
         jumpAudioSource.PlayOneShot(jumpAudioSource.clip);
         smokeFX.Play();
 

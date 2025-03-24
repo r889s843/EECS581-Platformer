@@ -717,6 +717,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2302500838848284690, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: Pan2D
+      value: 0.66
+      objectReference: {fileID: 0}
+    - target: {fileID: -2302500838848284690, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2302500838848284690, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: afdb568d858b2074589b3611ad908ed3, type: 3}
+    - target: {fileID: -2302500838848284690, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: afdb568d858b2074589b3611ad908ed3, type: 3}
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3
@@ -768,6 +784,10 @@ PrefabInstance:
     - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: jumpHeight
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: walkSoundDelay
+      value: 0.27
       objectReference: {fileID: 0}
     - target: {fileID: 6863099006183901435, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: moneyText

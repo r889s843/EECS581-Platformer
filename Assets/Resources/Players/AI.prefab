@@ -187,6 +187,8 @@ MonoBehaviour:
     m_Bits: 64
   animator: {fileID: 1158230859995459512}
   smokeFX: {fileID: 0}
+  walkSoundDelay: 0.5
+  spriteRenderer: {fileID: 0}
   agentActive: 0
   isOnFloor: 0
   maxSpeed: 15
@@ -223,6 +225,12 @@ MonoBehaviour:
   wallJumpForce: {x: 1, y: 12}
   wallJumpControlDelay: 0.15
   wallCoyoteTime: 0.15
+  jumpStretchFactor: 1.2
+  landSquashFactor: 0.8
+  squashSpeed: 10
+  landSquashDuration: 0.1
+  maxTiltAngle: 15
+  tiltSpeed: 5
 --- !u!114 &7398338557370521038
 MonoBehaviour:
   m_ObjectHideFlags: 0

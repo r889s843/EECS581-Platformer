@@ -39,6 +39,7 @@ public class EnemyShooter : MonoBehaviour
 
     void shoot()
     {
+        audioSource.pitch = Random.Range(0.9f, 1.1f); // Randomize pitch slightly
         audioSource.Play(); // Play shooting sound
         Instantiate(bullet, bulletPos.position, Quaternion.identity); // Instantiate bullet at bulletPos with no rotation
     }
