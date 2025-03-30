@@ -310,6 +310,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7310457839467904643, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
+      propertyPath: smokeFX
+      value: 
+      objectReference: {fileID: 801073228}
+    - target: {fileID: 7310457839467904643, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
+      propertyPath: coyoteTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310457839467904643, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
+      propertyPath: jumpHeight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310457839467904643, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
+      propertyPath: speedLimit
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310457839467904643, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
+      propertyPath: upwardMovementMultiplier
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7398338557370521038, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
       propertyPath: m_Model
       value: 
@@ -3072,6 +3092,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6720324758942419461, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: livesUI
+      value: 
+      objectReference: {fileID: 1686786965}
     - target: {fileID: 6863099006183901435, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: moneyText
       value: 
@@ -3134,6 +3158,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac7b82c6516be8140b70b6cd0fa0342e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!198 &801073228 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6625944162410469844, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+  m_PrefabInstance: {fileID: 713142698}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &850638323
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
+using System;
 
 public class ProcGen : MonoBehaviour
 {
@@ -36,8 +37,8 @@ public class ProcGen : MonoBehaviour
     public int numberOfChunks = 4;       // Number of chunks to generate per level
     public float startX = 0f;            // Starting X position for level generation
     public float startY = 0f;            // Starting Y position for level generation
-    public float minY = -10f;            // Minimum Y position for platforms
-    public float maxY = 20f;             // Maximum Y position for platforms
+    public float minY = 10f;            // Minimum Y position for platforms
+    public float maxY = 30f;             // Maximum Y position for platforms
 
     // Difficulty levels enumeration
     public enum Difficulty
@@ -118,7 +119,51 @@ public class ProcGen : MonoBehaviour
 
             minYReached = Mathf.Min(minYReached, y); // Update the minimum Y reached
         }
+
+        float endX = x;
+        float endY = y;
+
+        maxY = -10f;
+        minY = -30f;
+
+        x = initialPlatformEnd.x;      // Current X position for generation
+        y = initialPlatformEnd.y;      // Current Y position for generation
+
+        for (int i = 0; i < numberOfChunks; i++)
+        {
+            Vector2 newCoords = CreateSafeChunk(x, y); // Create a safe (non-dangerous) chunk
+            x = newCoords.x; // Update X position
+            y = newCoords.y; // Update Y position
+            // Debug.Log($"SafeChunk ended at: x = {x}, y = {y}");
+
+            newCoords = CreateDangerChunk(x, y); // Create a dangerous chunk
+            x = newCoords.x; // Update X position
+            y = newCoords.y; // Update Y position
+            // Debug.Log($"DangerChunk ended at: x = {x}, y = {y}");
+
+            minYReached = Mathf.Min(minYReached, y); // Update the minimum Y reached
+        }
         // Debug.Log($"Gen ended at: x = {x}, y = {y}");
+
+        PaintGroundTile(x + 3, y + 3, centerTile);
+        PaintGroundTile(x + 4, y + 3, centerTile);
+        PaintGroundTile(x + 5, y + 3, centerTile);
+
+        Debug.Log($"{endY}, {y}, y = {(endY * 0.75f)}, {(y * 0.25f)}, {endY - (endY * 0.75f) - (y * 0.25f)}");
+
+        if (Math.Abs(y - endY - 3f) > 10f) {
+            for (int i=0; i < Math.Abs(endY - y) * 0.4f; i++) {
+                // Use the selected tile in the method call
+                PaintWallTile(x + 8f, y+i+(Math.Abs(endY - y) / 4), new TileBase[] { leftBottomWallTile, leftTopWallTile }[UnityEngine.Random.Range(0, 2)]);
+                PaintWallTile(x + 8f + 1f, y+i+(Math.Abs(endY - y) / 4), new TileBase[] { rightBottomWallTile, rightTopWallTile }[UnityEngine.Random.Range(0, 2)]);
+            }
+        }
+
+        y = (endY * 0.75f) + (y * 0.25f);
+
+
+
+        x = Mathf.Max(x, endX) + 5f;
 
         CreateEndChunk(x, y); // Create the ending chunk with the flag
         CreateDeathZone(x, minYReached); // Create the death zone based on the level's end
@@ -164,7 +209,7 @@ public class ProcGen : MonoBehaviour
         float currentY = y; // Current Y position
 
         int minPlatformLength = GetMinimumPlatformLength(); // Determine minimum platform length based on difficulty
-        int platformLength = Random.Range(minPlatformLength, minPlatformLength + 3); // Randomize platform length
+        int platformLength = UnityEngine.Random.Range(minPlatformLength, minPlatformLength + 3); // Randomize platform length
 
         // Paint the platform tiles
         for (int i = 0; i < platformLength; i++)
@@ -208,7 +253,7 @@ public class ProcGen : MonoBehaviour
                 // else
                 //     return CreateWallDownJumpSectionDown(x, y);
             }
-            int randomValue = Random.Range(0, 3); // Random value to decide chunk type
+            int randomValue = UnityEngine.Random.Range(0, 3); // Random value to decide chunk type
             switch (randomValue)
             {
                 case 0: return CreateGap(x, y); // Create a gap
@@ -226,7 +271,7 @@ public class ProcGen : MonoBehaviour
                 // else
                 //     return CreateWallDownJumpSectionDown(x, y);
             }
-            int randomValue = Random.Range(0, 4); // Random value to decide chunk type
+            int randomValue = UnityEngine.Random.Range(0, 4); // Random value to decide chunk type
             switch (randomValue)
             {
                 case 0: return CreateGap(x, y); // Create a gap
@@ -245,7 +290,7 @@ public class ProcGen : MonoBehaviour
                 // else
                 //     return CreateWallDownJumpSectionDown(x, y);
             }
-            int randomValue = Random.Range(0, 3); // Random value to decide chunk type
+            int randomValue = UnityEngine.Random.Range(0, 3); // Random value to decide chunk type
             switch (randomValue)
             {
                 case 0: return CreateJump(x, y); // Create a jump
@@ -261,7 +306,7 @@ public class ProcGen : MonoBehaviour
         float currentX = x; // Current X position
         float currentY = y; // Current Y position
 
-        float gapSize = Random.Range(5f, 8f); // Determine the size of the gap
+        float gapSize = UnityEngine.Random.Range(5f, 8f); // Determine the size of the gap
         while (!NoMomentumJumpTest(gapSize, 0f)) // Ensure the gap is jumpable
         {
             gapSize -= 0.5f; // Decrease gap size if not jumpable
@@ -276,7 +321,7 @@ public class ProcGen : MonoBehaviour
         float platformStartX = currentX; // Starting X position for the next platform
 
         int minPlatformLength = GetMinimumPlatformLength(); // Determine minimum platform length
-        int platformLength = Random.Range(minPlatformLength, minPlatformLength + 2); // Randomize platform length
+        int platformLength = UnityEngine.Random.Range(minPlatformLength, minPlatformLength + 2); // Randomize platform length
 
         // Paint the platform tiles after the gap
         for (int i = 0; i < platformLength; i++)
@@ -316,10 +361,10 @@ public class ProcGen : MonoBehaviour
     private Vector2 CreateJump(float x, float y)
     {
         float currentX = x; // Current X position
-        float deltaY = Random.Range(0, 2) == 0 ? 2f : -2f; // Randomly decide to jump up or down
+        float deltaY = UnityEngine.Random.Range(0, 2) == 0 ? 2f : -2f; // Randomly decide to jump up or down
         float currentY = Mathf.Clamp(y + deltaY, minY, maxY); // Clamp Y within bounds
 
-        float gapSize = Random.Range(4f, 6f); // Determine the size of the gap
+        float gapSize = UnityEngine.Random.Range(4f, 6f); // Determine the size of the gap
         while (!MomentumJumpTest(gapSize, currentY - y)) // Ensure the jump is feasible
         {
             gapSize -= 0.5f; // Decrease gap size if jump is not feasible
@@ -332,7 +377,7 @@ public class ProcGen : MonoBehaviour
 
         currentX += gapSize; // Move past the gap
         int minPlatformLength = GetMinimumPlatformLength(); // Determine minimum platform length
-        int platformLength = Random.Range(minPlatformLength, minPlatformLength + 2); // Randomize platform length
+        int platformLength = UnityEngine.Random.Range(minPlatformLength, minPlatformLength + 2); // Randomize platform length
 
         float platformStartX = currentX; // Starting X position for the next platform
 
@@ -370,12 +415,12 @@ public class ProcGen : MonoBehaviour
         float currentX = x; // Current X position
         float currentY = y; // Current Y position
 
-        int numPlatforms = Random.Range(2, 4); // Number of small platforms to create
+        int numPlatforms = UnityEngine.Random.Range(2, 4); // Number of small platforms to create
 
         for (int i = 0; i < numPlatforms; i++) // Create multiple small platforms
         {
             float gapSize = 2f; // Fixed small gap size
-            float deltaY = Random.Range(-1, 2) * GetMinimumVerticalSpacing(); // Random Y delta for jump
+            float deltaY = UnityEngine.Random.Range(-1, 2) * GetMinimumVerticalSpacing(); // Random Y delta for jump
             float nextY = Mathf.Clamp(currentY + deltaY, minY, maxY); // Clamp Y within bounds
 
             if (Mathf.Abs(nextY - currentY) < GetMinimumVerticalSpacing()) // Ensure sufficient vertical change
@@ -398,7 +443,7 @@ public class ProcGen : MonoBehaviour
             currentY = nextY; // Update Y position
 
             int minPlatformLength = GetMinimumPlatformLength(); // Determine minimum platform length
-            int platformLength = Random.Range(minPlatformLength, minPlatformLength + 1); // Randomize platform length
+            int platformLength = UnityEngine.Random.Range(minPlatformLength, minPlatformLength + 1); // Randomize platform length
 
             float platformStartX = currentX; // Starting X position for the next platform
 
@@ -455,8 +500,8 @@ public class ProcGen : MonoBehaviour
 
         for (int i=0; i < 10; i++) {
             // Use the selected tile in the method call
-            PaintWallTile(currentX - 3f, currentY+i+3, new TileBase[] { leftBottomWallTile, leftTopWallTile }[Random.Range(0, 2)]);
-            PaintWallTile(currentX - 3f + 1f, currentY+i+3, new TileBase[] { rightBottomWallTile, rightTopWallTile }[Random.Range(0, 2)]);
+            PaintWallTile(currentX - 3f, currentY+i+3, new TileBase[] { leftBottomWallTile, leftTopWallTile }[UnityEngine.Random.Range(0, 2)]);
+            PaintWallTile(currentX - 3f + 1f, currentY+i+3, new TileBase[] { rightBottomWallTile, rightTopWallTile }[UnityEngine.Random.Range(0, 2)]);
         }
 
         currentX += 1f; // Move to next position
@@ -466,8 +511,8 @@ public class ProcGen : MonoBehaviour
 
         for (int i=0; i < 10; i++) {
             // Use the selected tile in the method call
-            PaintWallTile(currentX - 4f + wallGap, currentY+i, new TileBase[] { leftBottomWallTile, leftTopWallTile }[Random.Range(0, 2)]); // Paint right end tile
-            PaintWallTile(currentX - 4f + 1 + wallGap, currentY+i, new TileBase[] { rightBottomWallTile, rightTopWallTile }[Random.Range(0, 2)]); // Paint right end tile
+            PaintWallTile(currentX - 4f + wallGap, currentY+i, new TileBase[] { leftBottomWallTile, leftTopWallTile }[UnityEngine.Random.Range(0, 2)]); // Paint right end tile
+            PaintWallTile(currentX - 4f + 1 + wallGap, currentY+i, new TileBase[] { rightBottomWallTile, rightTopWallTile }[UnityEngine.Random.Range(0, 2)]); // Paint right end tile
         }
 
         float wallHeight = 9; // Get the height of the wall prefab
@@ -512,10 +557,10 @@ public class ProcGen : MonoBehaviour
     {
         float currentX = x; // Current X position
         // Force a larger downward drop
-        float deltaY = Random.Range(-4, -2) * 2f; // Larger Y delta for downward jump
+        float deltaY = UnityEngine.Random.Range(-4, -2) * 2f; // Larger Y delta for downward jump
         float currentY = Mathf.Clamp(y + deltaY, minY, maxY); // Clamp Y within bounds
 
-        float gapSize = Random.Range(4f, 6f); // Determine the size of the gap
+        float gapSize = UnityEngine.Random.Range(4f, 6f); // Determine the size of the gap
         while (!MomentumJumpTest(gapSize, currentY - y)) // Ensure the jump is feasible
         {
             gapSize -= 0.5f; // Decrease gap size if jump is not feasible
@@ -524,7 +569,7 @@ public class ProcGen : MonoBehaviour
 
         currentX += gapSize; // Move past the gap
         int minPlatformLength = GetMinimumPlatformLength(); // Determine minimum platform length
-        int platformLength = Random.Range(minPlatformLength, minPlatformLength + 2); // Randomize platform length
+        int platformLength = UnityEngine.Random.Range(minPlatformLength, minPlatformLength + 2); // Randomize platform length
 
         float platformStartX = currentX; // Starting X position for the next platform
 
@@ -582,8 +627,8 @@ public class ProcGen : MonoBehaviour
 
         for (int i=0; i < 10; i++) {
             // Use the selected tile in the method call
-            PaintWallTile(currentX - 1f, currentY-i-2f, new TileBase[] { leftBottomWallTile, leftTopWallTile }[Random.Range(0, 2)]);
-            PaintWallTile(currentX - 1f + 1f, currentY-i-2f, new TileBase[] { rightBottomWallTile, rightTopWallTile }[Random.Range(0, 2)]);
+            PaintWallTile(currentX - 1f, currentY-i-2f, new TileBase[] { leftBottomWallTile, leftTopWallTile }[UnityEngine.Random.Range(0, 2)]);
+            PaintWallTile(currentX - 1f + 1f, currentY-i-2f, new TileBase[] { rightBottomWallTile, rightTopWallTile }[UnityEngine.Random.Range(0, 2)]);
         }
 
         float wallGap = 5f; // Gap size between walls
@@ -591,14 +636,14 @@ public class ProcGen : MonoBehaviour
 
         for (int i=0; i < 10; i++) {
             // Use the selected tile in the method call
-            PaintWallTile(currentX + wallGap, currentY-i+1f, new TileBase[] { leftBottomWallTile, leftTopWallTile }[Random.Range(0, 2)]); // Paint right end tile
-            PaintWallTile(currentX + 1 + wallGap, currentY-i+1f, new TileBase[] { rightBottomWallTile, rightTopWallTile }[Random.Range(0, 2)]); // Paint right end tile
+            PaintWallTile(currentX + wallGap, currentY-i+1f, new TileBase[] { leftBottomWallTile, leftTopWallTile }[UnityEngine.Random.Range(0, 2)]); // Paint right end tile
+            PaintWallTile(currentX + 1 + wallGap, currentY-i+1f, new TileBase[] { rightBottomWallTile, rightTopWallTile }[UnityEngine.Random.Range(0, 2)]); // Paint right end tile
         }
 
         // float wallHeight = 9; // Get the height of the wall prefab
 
         // Move downward more significantly
-        float deltaY = Random.Range(-4, -3) * 2f; // Larger Y delta for downward jump
+        float deltaY = UnityEngine.Random.Range(-4, -3) * 2f; // Larger Y delta for downward jump
         float nextY = Mathf.Clamp(currentY + deltaY, minY, maxY); // Clamp Y within bounds
 
         while (!MomentumJumpTest(wallGap, nextY - currentY)) // Ensure the jump is feasible
@@ -762,7 +807,7 @@ public class ProcGen : MonoBehaviour
         float xPos = startX; // Starting X position
         while (xPos < endX)
         {
-            if (Random.value < spikeSpawnChance) // Check if spikes should spawn
+            if (UnityEngine.Random.value < spikeSpawnChance) // Check if spikes should spawn
             {
                 for (int i = 0; i < 3; i++) // Spawn 3 spikes
                 {
@@ -812,9 +857,9 @@ public class ProcGen : MonoBehaviour
         {
             for (float sx = spawnStartX; sx < spawnEndX; sx += 1f) // Iterate through spawn range
             {
-                if (Random.value < EnemySpawnChance) // Check if an enemy should spawn
+                if (UnityEngine.Random.value < EnemySpawnChance) // Check if an enemy should spawn
                 {
-                    GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)]; // Select a random enemy prefab
+                    GameObject enemyPrefab = enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Count)]; // Select a random enemy prefab
                     GameObject enemy = Instantiate(enemyPrefab, new Vector3(sx, y + 1f, 0f), Quaternion.identity, transform); // Instantiate the enemy
                     generatedObjects.Add(enemy); // Add enemy to the list of generated objects
                 }
