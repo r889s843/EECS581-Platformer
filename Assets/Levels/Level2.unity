@@ -3515,10 +3515,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 845560676669504310, guid: 77b42c8b6d8d3564aa5d6b81002a3e20, type: 3}
+      propertyPath: playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1301070082152912168, guid: 77b42c8b6d8d3564aa5d6b81002a3e20, type: 3}
       propertyPath: Respawn
       value: 
       objectReference: {fileID: 697093561}
+    - target: {fileID: 3122423170488232344, guid: 77b42c8b6d8d3564aa5d6b81002a3e20, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3122423170488232344, guid: 77b42c8b6d8d3564aa5d6b81002a3e20, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3122423170488232344, guid: 77b42c8b6d8d3564aa5d6b81002a3e20, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3126741529515337406, guid: 77b42c8b6d8d3564aa5d6b81002a3e20, type: 3}
       propertyPath: m_LocalScale.x
       value: 159.20387
@@ -3566,6 +3582,10 @@ PrefabInstance:
     - target: {fileID: 4488341427712273626, guid: 77b42c8b6d8d3564aa5d6b81002a3e20, type: 3}
       propertyPath: m_Name
       value: DeathZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 5403565336494706442, guid: 77b42c8b6d8d3564aa5d6b81002a3e20, type: 3}
+      propertyPath: playOnAwake
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
