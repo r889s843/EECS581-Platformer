@@ -2,11 +2,7 @@
 // Name: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
 // Date: 10/17/2024
 // Course: EECS 581
-// Purpose: This creates a camera to track the player while the game is going.
-
-//TODO
-//camera lookahead and raycast in player direction - super buggy idk why
-//multiplayer cam
+// Purpose: This creates a camera to track player 1 
 
 using UnityEngine;
 
@@ -38,9 +34,8 @@ public class CameraController : MonoBehaviour
     private float heightCurrentVelo;
     private float lookAheadCurrentVelo;
 
-    //2 player variables
-    private Transform player2; //player2's transform
-    public bool player2Active; //tracks whether game is single or 2 player at the moment
+    [Header("P2 Objects")]
+    [SerializeField] private GameObject p2cam;
 
 
     private void Awake() {
@@ -59,65 +54,28 @@ public class CameraController : MonoBehaviour
     }
 
     private void Update() {
-        //get player 2 transform right as its activated
-        if(player2 == null && player2Active) { //executes only once
-            player2 = GameObject.Find("Player2(Clone)").transform; //assign player2's transform
-        }
-
-        /**
-        //calculate look ahead
-        float lookAhead = 0.0f;
-        if(player.localScale.x > 0) { //player facing forward
-            //lookAhead = Mathf.SmoothDamp(lookAhead, aheadDistance, ref smoothTimeLookAhead, zoomSpeed);
-            lookAhead = aheadDistance;
-        }
-        else { //player facing backward
-            lookAhead = Mathf.SmoothDamp(lookAhead, -1*aheadDistance, ref smoothTimeLookAhead, zoomSpeed);
-        }dont forget to change aheadDistance to lookAhead in actual transform.pos change
-        **/
-
         //update ground level
         groundLevel = calcGroundLevel();
-
-        // if(player.transform.position.y > groundLevel) {
-        //     groundLevel = player.transform.position.y - 1.5f;
-        // }
 
         //update zoom
         zoom = calcZoom();
         mainCamera.orthographicSize = Mathf.SmoothDamp(mainCamera.orthographicSize, zoom, ref zoomCurrentVelo, zoomSpeed); //set new zoom
 
         //update camera position
-        if(player2Active) { //multiplayer
-            Vector3 avgPos = getNewPosition(); //get average position
-            transform.position = new Vector3(avgPos.x, avgPos.y, transform.position.z); //set new position
-        }
-        else { //single player
-            zoomOffset = zoom - minZoom;
-            camHeight = Mathf.SmoothDamp(camHeight, (groundLevel + 4.0f + zoomOffset), ref heightCurrentVelo, heightChangeSpeed);
-            //lerp camHeight instead of smoothdamp
+        zoomOffset = zoom - minZoom;
+        camHeight = Mathf.SmoothDamp(camHeight, (groundLevel + 4.0f + zoomOffset), ref heightCurrentVelo, heightChangeSpeed);
+        //lerp camHeight instead of smoothdamp
 
-            
-
-            transform.position = new Vector3(player.position.x + aheadDistance, camHeight, transform.position.z); 
-        }
+        transform.position = new Vector3(player.position.x + aheadDistance, camHeight, transform.position.z); 
     }
 
-    //returns new camera zoom 
-    //single player -> calculates based on distance from ground level
-    //2player -> calculates based on distance between players
+    //returns new camera zoom based on distance from ground level
     private float calcZoom()
     {
         float newZoom = 0.0f;
-        //2 player
-        if(player2Active){
-            newZoom = Vector3.Distance(player.position, player2.position);//zoom is proportional to distance between players
-            newZoom = Mathf.Clamp(newZoom, minZoom, maxZoom); //restrict zoom to min and max
-        }
-        else { //single player
-            newZoom = (player.position.y - 0.5f) - groundLevel; //zoom is proportional to player's distance from the ground
-            newZoom = Mathf.Clamp(newZoom, minZoom, newZoom); //restrict zoom to min
-        }
+
+        newZoom = (player.position.y - 0.5f) - groundLevel; //zoom is proportional to player's distance from the ground
+        newZoom = Mathf.Clamp(newZoom, minZoom, newZoom); //restrict zoom to min
 
         return newZoom;
     }
@@ -135,55 +93,53 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        //if a platform ahead of the player is below current ground level -> lower it to there
-        Vector2 boxSize = new Vector2(rayDistanceAhead,1);
-        Vector2 rayOrigin = Vector2.zero;
-        rayOrigin = new Vector2(player.position.x + (boxSize.x / 2), player.position.y - 6); //-6 is to keep cast below current ground when player jumps
+        // //if player is too low, lower ground level
+        // if(player.transform.position.y - groundLevel < 0.5f){
+        //     newGroundLevel = player.transform.position.y - 0.5f;
+        // }
 
-        /*
-        RaycastHit2D hit = Physics2D.BoxCast(rayOrigin, boxSize, 0f, Vector2.down);
-        if(hit && hit.collider.gameObject.name != "DeathZone"){
-            newGroundLevel = hit.point.y;
-        }
-        */
 
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(rayOrigin, boxSize, 0f, Vector2.down);//raycast
-        for(int i = 0; i < hits.Length; i++) {
-            RaycastHit2D hit = hits[i];
-            if(hit && hit.collider.gameObject.name != "DeathZone"){
-                newGroundLevel = hit.point.y;
-            }
-        }
+        // //if a platform ahead of the player is below current ground level -> lower it to there
+        // Vector2 boxSize = new Vector2(rayDistanceAhead,1);
+        // Vector2 rayOrigin = Vector2.zero;
+        // rayOrigin = new Vector2(player.position.x + (boxSize.x / 2), player.position.y - 6); //-6 is to keep cast below current ground when player jumps
 
-        /*
-        if(detector && detector.collider.gameObject.name != "DeathZone") { //set new gl if ground detected
-            Debug.Log("detected " + detector.point);
-            newGroundLevel = detector.point.y;
-        }*/
+        // /*
+        // RaycastHit2D hit = Physics2D.BoxCast(rayOrigin, boxSize, 0f, Vector2.down);
+        // if(hit && hit.collider.gameObject.name != "DeathZone"){
+        //     newGroundLevel = hit.point.y;
+        // }
+        // */
+
+        // RaycastHit2D[] hits = Physics2D.BoxCastAll(rayOrigin, boxSize, 0f, Vector2.down);//raycast
+        // for(int i = 0; i < hits.Length; i++) {
+        //     RaycastHit2D hit = hits[i];
+        //     if(hit && hit.collider.gameObject.name != "DeathZone"){
+        //         newGroundLevel = hit.point.y;
+        //     }
+        // }
+
+        // /*
+        // if(detector && detector.collider.gameObject.name != "DeathZone") { //set new gl if ground detected
+        //     Debug.Log("detected " + detector.point);
+        //     newGroundLevel = detector.point.y;
+        // }*/
 
         return newGroundLevel;
     }
 
-    //returns average position of both players
-    private Vector3 getNewPosition()
-    {
-        Vector3 averagePosition = new Vector3();
-
-        //add both player's positions together
-        averagePosition += player.position;
-        averagePosition += player2.position;
-
-        //calculate average
-        averagePosition /= 2;
-
-        return averagePosition;
-    }
-
     public void UpdateCameraTarget(Transform newPlayer, Transform newPlayer2 = null)
     {
-        player = newPlayer;
-        player2 = newPlayer2;
-        player2Active = newPlayer2 != null;
+        // player = newPlayer;
+        // player2 = newPlayer2;
+        // player2Active = newPlayer2 != null;
+    }
+
+    public void startCoop()
+    {
+        Instantiate(p2cam, new Vector3(player.position.x, player.position.y, mainCamera.transform.position.z), Quaternion.identity); //instantiate p2 camera
+
+        mainCamera.rect = new Rect(0.0f, 0.5f, 1.0f, 0.5f); //change main cam to split sceen view
     }
 
 }

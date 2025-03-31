@@ -12,11 +12,12 @@ public class Parallax : MonoBehaviour
 {
     private float length;          // Length of the sprite for looping
     private float startpos;        // Starting X position of the sprite
-    public GameObject cam;         // Reference to the main camera
+    private GameObject cam;        //camera
     public float parallexEffect;   // Effect multiplier for parallax movement
 
     void Start()
     {
+        cam = transform.parent.parent.gameObject;
         startpos = transform.position.x; // Initialize the starting position
         length = GetComponent<SpriteRenderer>().bounds.size.x; // Get the width of the sprite
     }

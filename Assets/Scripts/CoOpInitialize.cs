@@ -27,6 +27,11 @@ public class CoOpInitialize : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //activate coop for testing
+        if(Input.GetKeyDown("c")){
+            coopTrigger = 1;
+        }
+
         if(coopTrigger == 1  && !activated) {
             GameObject aiObject = GameObject.FindGameObjectWithTag("AI");
             Destroy(aiObject);
@@ -35,7 +40,7 @@ public class CoOpInitialize : MonoBehaviour
             activated = true;
 
             //tell camera controller that player 2 is active
-            cameraControllerScript.player2Active = true;
+            cameraControllerScript.startCoop();
 
             livesUIScript.P2 = true;
             livesUIScript.UpdateLivesDisplayP2(); // Update P2 lives display
