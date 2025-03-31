@@ -1993,7 +1993,7 @@ GameObject:
   - component: {fileID: 784149183781814926}
   - component: {fileID: 7842396226416224181}
   m_Layer: 0
-  m_Name: NPC
+  m_Name: Asimov
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
