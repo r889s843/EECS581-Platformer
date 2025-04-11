@@ -2,7 +2,7 @@
 // Name: Chris Harvey, Ian Collins, Ryan Strong, Henry Chaffin, Kenny Meade
 // Date: 10/17/2024
 // Course: EECS 581
-// Purpose: Physics engine. Decides how the player interacts with movement and collidable objects.
+// Purpose: Physics engine. Decides how the player interacts with movement and collidable objects. Pain and suffering
 
 using UnityEngine;
 using System.Collections;

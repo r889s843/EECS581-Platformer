@@ -5373,7 +5373,7 @@ MonoBehaviour:
     m_Bits: 64
   animator: {fileID: -8611442375277616293}
   smokeFX: {fileID: 6625944162410469844}
-  walkSoundDelay: 0.25
+  walkSoundDelay: 0.27
   spriteRenderer: {fileID: 2848366371450900770}
   agentActive: 0
   isOnFloor: 0
@@ -5479,7 +5479,7 @@ AudioSource:
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
-  Pan2D: 0.67
+  Pan2D: 0.66
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0

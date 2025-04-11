@@ -70,7 +70,7 @@ public class PowerUpManager : MonoBehaviour
         // }
 
         // Key 2: Invincibility Power-Up
-        if (Input.GetKeyDown(KeyCode.Alpha3) && invincibilityUnlocked && !invincibilityOnCooldown)
+        if (Input.GetKeyDown(KeyCode.E) && invincibilityUnlocked && !invincibilityOnCooldown)
         {
             invinciblePowerupScript.ActivatePowerup();
             StartCoroutine(CooldownRoutine(invincibilityIcon, invincibilityCooldownText, invincibilityCooldownDuration, () => invincibilityOnCooldown = false));
@@ -88,16 +88,16 @@ public class PowerUpManager : MonoBehaviour
         // }
 
         // Key 4 to Dash
-        if (Input.GetKeyDown(KeyCode.Alpha1)  && !dashOnCooldown)
-        {
-            dashPowerupScript.ActivatePowerup();
-            StartCoroutine(CooldownRoutine(dashIcon, dashCooldownText, dashCooldownDuration, () => dashOnCooldown = false));
-            dashOnCooldown = true;
-            dashCooldownTimer = dashCooldownDuration;
-        }
+        // if (Input.GetKeyDown(KeyCode.Alpha1)  && !dashOnCooldown)
+        // {
+        //     dashPowerupScript.ActivatePowerup();
+        //     StartCoroutine(CooldownRoutine(dashIcon, dashCooldownText, dashCooldownDuration, () => dashOnCooldown = false));
+        //     dashOnCooldown = true;
+        //     dashCooldownTimer = dashCooldownDuration;
+        // }
 
         // Key 5 to Teleport
-        if (Input.GetKeyDown(KeyCode.Alpha2) && !teleportOnCooldown)
+        if (Input.GetKeyDown(KeyCode.Q) && !teleportOnCooldown)
         {
             teleportPowerupScript.ActivatePowerup();
             StartCoroutine(CooldownRoutine(teleportIcon, teleportCooldownText, teleportCooldownDuration, () => teleportOnCooldown = false));
