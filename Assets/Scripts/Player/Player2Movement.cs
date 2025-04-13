@@ -215,15 +215,17 @@ public class Player2Movement : MonoBehaviour
         // Handle player input if not AI-controlled
         if (!agentActive)
         {
-            horizontalInput = Input.GetAxisRaw("HorizontalArrows");
-            if (Input.GetKeyDown(KeyCode.UpArrow)) 
+            float keyboardInput = Input.GetAxisRaw("HorizontalArrows");
+            float joystickInput = Input.GetAxisRaw("HorizontalJoystick");
+            horizontalInput = Mathf.Abs(keyboardInput) > 0.1f ? keyboardInput : joystickInput;
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.JoystickButton0)) 
             {
                 jumpInput = true;
             }
-            pressingJump = Input.GetKey(KeyCode.UpArrow);
+            pressingJump = Input.GetKey(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.JoystickButton0);
             // if (Input.GetKeyUp(KeyCode.Space)) 
             //     Debug.Log("Jump released, pressingJump = false");
-            if (Input.GetKeyDown(KeyCode.RightControl)) lastPressedDashTime = dashInputBufferTime;
+            if (Input.GetKeyDown(KeyCode.RightControl) || Input.GetKeyDown(KeyCode.JoystickButton2)) lastPressedDashTime = dashInputBufferTime;
         }
 
         // Check collision states

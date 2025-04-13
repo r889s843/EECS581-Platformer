@@ -28,7 +28,8 @@ public class CoOpInitialize : MonoBehaviour
     void Update()
     {
         //activate coop for testing
-        if(Input.GetKeyDown("c")){
+        if(Input.GetKeyDown("c") || Input.GetKeyDown(KeyCode.JoystickButton3))
+        {
             coopTrigger = 1;
         }
 
