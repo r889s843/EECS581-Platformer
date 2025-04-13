@@ -28,14 +28,14 @@ public class CoOpInitialize : MonoBehaviour
     void Update()
     {
         //activate coop for testing
-        if(Input.GetKeyDown("c") || Input.GetKeyDown(KeyCode.JoystickButton3))
+        if(Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.JoystickButton3))
         {
             coopTrigger = 1;
         }
 
         if(coopTrigger == 1  && !activated) {
-            GameObject aiObject = GameObject.FindGameObjectWithTag("AI");
-            Destroy(aiObject);
+            // GameObject aiObject = GameObject.FindGameObjectWithTag("AI");
+            // Destroy(aiObject);
 
             player2 = Instantiate(player2Prefab, new Vector3(3,2,0), Quaternion.identity) as GameObject;
             activated = true;

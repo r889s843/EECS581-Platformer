@@ -70,7 +70,7 @@ public class PowerUpManager : MonoBehaviour
         // }
 
         // Key 2: Invincibility Power-Up
-        if (Input.GetKeyDown(KeyCode.E) && invincibilityUnlocked && !invincibilityOnCooldown)
+        if (Input.GetKeyDown(KeyCode.R) && invincibilityUnlocked && !invincibilityOnCooldown)
         {
             invinciblePowerupScript.ActivatePowerup();
             StartCoroutine(CooldownRoutine(invincibilityIcon, invincibilityCooldownText, invincibilityCooldownDuration, () => invincibilityOnCooldown = false));
