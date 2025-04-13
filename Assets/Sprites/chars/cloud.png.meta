@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 2d4d78a2f7e8047729484300a9b2e914
+guid: 652286cc43e614fcebd5fcd19a3c1df1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5640754118254106532
-    second: shopkeep_0
+      213: -6981827254641702772
+    second: cloud_0
   - first:
-      213: -752792301465324329
-    second: shopkeep_1
+      213: -2459163954622720782
+    second: cloud_1
   - first:
-      213: -5795279887641139669
-    second: shopkeep_2
+      213: -7977753516566349660
+    second: cloud_2
   - first:
-      213: 8265150833338780559
-    second: shopkeep_3
+      213: -1962646913366674424
+    second: cloud_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -105,24 +105,11 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: shopkeep_0
+      name: cloud_idle_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4a79bdb0cfbf74e40800000000000000
-      internalID: 5640754118254106532
+      spriteID: c88c0fb6a119b1f90800000000000000
+      internalID: -6981827254641702772
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shopkeep_1
+      name: cloud_idle_1
       rect:
         serializedVersion: 2
         x: 32
@@ -159,14 +146,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7d4b289e36b8d85f0800000000000000
-      internalID: -752792301465324329
+      spriteID: 2f49448996b4fddd0800000000000000
+      internalID: -2459163954622720782
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shopkeep_2
+      name: cloud_idle_2
       rect:
         serializedVersion: 2
         x: 64
@@ -181,14 +168,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b262f2b95a7039fa0800000000000000
-      internalID: -5795279887641139669
+      spriteID: 4a87073d173594190800000000000000
+      internalID: -7977753516566349660
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shopkeep_3
+      name: cloud_idle_3
       rect:
         serializedVersion: 2
         x: 96
@@ -203,8 +190,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f8b8e2c64e6b3b270800000000000000
-      internalID: 8265150833338780559
+      spriteID: 8043345e70743c4e0800000000000000
+      internalID: -1962646913366674424
       vertices: []
       indices: 
       edges: []
@@ -213,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 899d6eea216a3433f8b56e1beb895b9d
+    spriteID: 75e654e1a1447424f95296e0ffec44fc
     internalID: 0
     vertices: []
     indices: 
@@ -223,10 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      shopkeep_0: 5640754118254106532
-      shopkeep_1: -752792301465324329
-      shopkeep_2: -5795279887641139669
-      shopkeep_3: 8265150833338780559
+      cloud_idle_0: -6981827254641702772
+      cloud_idle_1: -2459163954622720782
+      cloud_idle_2: -7977753516566349660
+      cloud_idle_3: -1962646913366674424
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
