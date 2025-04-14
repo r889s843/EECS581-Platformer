@@ -5,6 +5,7 @@ public class Start : MonoBehaviour
 {
     public GameObject startButtonsPanel;
     public GameObject optionsButtonsPanel;
+    public GameObject leaderboardsPanel;
 
     public void StartStoryMode()
     {
@@ -20,6 +21,12 @@ public class Start : MonoBehaviour
         SceneManager.LoadScene(9);
     }
 
+    public void OpenLeaderboards()
+    {
+        startButtonsPanel.SetActive(false);
+        leaderboardsPanel.SetActive(true);
+    }
+    
     public void OpenOptions()
     {
         startButtonsPanel.SetActive(false);
@@ -29,6 +36,7 @@ public class Start : MonoBehaviour
     public void BackToStart()
     {
         optionsButtonsPanel.SetActive(false);
+        leaderboardsPanel.SetActive(false);
         startButtonsPanel.SetActive(true);
     }
 
