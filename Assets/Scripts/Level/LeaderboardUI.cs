@@ -4,6 +4,7 @@
 // Course: EECS 581
 // Purpose: Updates leaderboard on game completion
 
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI; // or using TMPro if using TextMeshPro
 
@@ -20,7 +21,22 @@ public class LeaderboardUI : MonoBehaviour
     // TextMeshProUGUI fields for Story mode leaderboard
     public TMPro.TextMeshProUGUI Story_Name; // Displays the player's name for Story mode
     public TMPro.TextMeshProUGUI Story_Time; // Displays the player's best time for Story mode
+    public TMP_Dropdown modeDropdown;
+    public GameObject[] leaderboardTabs;
 
+    void Start()
+    {
+        modeDropdown.onValueChanged.AddListener(OnModeChanged);
+
+    }
+    void OnModeChanged(int index)
+    {
+        foreach (GameObject leaderboard in leaderboardTabs)
+        {
+            leaderboard.SetActive(false);
+        }
+        leaderboardTabs[index].SetActive(true);
+    }
     public void UpdateFreerunLeaderboard(float bestDistance)
     {
         string[] namePool = { "Monkey", "Tiger", "Ninja", "Blues", "Spark", "Shadow" }; // Pool of random names
