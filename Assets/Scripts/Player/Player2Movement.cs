@@ -7,6 +7,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Audio;
+using UnityEngine.UI; // Added for Image
 
 // ABANDON ALL HOPE YE WHO ENTER HERE 2
 
@@ -126,6 +127,7 @@ public class Player2Movement : MonoBehaviour
     public float dashRefillTime = 0.2f; // Time to refill a dash
     public float dashSleepTime = 0.02f; // Brief time freeze at dash start
     public float dashInputBufferTime = 0.2f; // Buffer time for dash input
+    [SerializeField] private Image dashIcon; // Added for dash icon
 
     private bool isDashing;         // True during dash
     private bool isDashAttacking;   // True during dash's active phase
@@ -191,6 +193,10 @@ public class Player2Movement : MonoBehaviour
 
         // Store default scale (assuming initial scale is 1,1,1 or -1,1,1 for flip)
         baseScale = new Vector3(1f, 1f, 1f);
+
+        // Initialize dash icon color
+        if (dashIcon != null)
+            dashIcon.color = Color.white; // Start enabled
     }
 
     // Calculates initial jump speed based on jump height and gravity
@@ -519,6 +525,10 @@ public class Player2Movement : MonoBehaviour
             isJumping = false;
             isWallJumping = false;
 
+            // Grey out the dash icon when dashing starts
+            if (dashIcon != null)
+                dashIcon.color = new Color(0.5f, 0.5f, 0.5f); // Grey color
+
             StartCoroutine(PerformDash(dashDir));
         }
     }
@@ -578,6 +588,9 @@ public class Player2Movement : MonoBehaviour
         }
         isDashing = false;
         isWallDashing = false;
+
+        // if (dashIcon != null && CanDash() && !hasDashed)
+        //     dashIcon.color = Color.white;
     }
 
     // Refills dashes after a delay
@@ -587,6 +600,8 @@ public class Player2Movement : MonoBehaviour
         yield return new WaitForSeconds(dashRefillTime);
         dashRefilling = false;
         dashesLeft = Mathf.Min(dashAmount, dashesLeft + amount);
+        if (dashIcon != null && CanDash() && !hasDashed)
+            dashIcon.color = Color.white;
     }
 
     // Brief time freeze effect for dash
