@@ -30,7 +30,7 @@ public class CoOpInitialize : MonoBehaviour
     void Update()
     {
         //activate coop for testing
-        if(Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.JoystickButton3))
+        if(Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.JoystickButton9))
         {
             coopTrigger = 1;
         }

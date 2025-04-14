@@ -33,9 +33,9 @@ public class UpgradesManager : MonoBehaviour
                 powerUpManager.invincibilityUnlocked = true;
                 break;
 
-            case AbilityType.Dash:
-                powerUpManager.dashUnlocked = true;
-                break;
+            // case AbilityType.Dash:
+            //     powerUpManager.dashUnlocked = true;
+            //     break;
 
             case AbilityType.Hookshot:
                 powerUpManager.teleportUnlocked = true;

@@ -4967,6 +4967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2e976d710e58854580dab16fccd1995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerObject: {fileID: 6061905224598523987}
 --- !u!1 &5359067721918508536
 GameObject:
   m_ObjectHideFlags: 0
@@ -5674,20 +5675,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac7b82c6516be8140b70b6cd0fa0342e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashIcon: {fileID: 0}
+  isPlayer2: 1
   teleportIcon: {fileID: 0}
   invincibilityIcon: {fileID: 0}
-  dashCooldownText: {fileID: 0}
   teleportCooldownText: {fileID: 0}
   invincibilityCooldownText: {fileID: 0}
-  dashCooldownDuration: 3
   teleportCooldownDuration: 5
   invincibilityCooldownDuration: 5
-  dashPowerupScript: {fileID: 0}
   teleportPowerupScript: {fileID: 3683513132579554587}
   invinciblePowerupScript: {fileID: 3965739033723692970}
   invincibilityUnlocked: 1
-  dashUnlocked: 1
   teleportUnlocked: 1
 --- !u!1 &7546513658729190806
 GameObject:

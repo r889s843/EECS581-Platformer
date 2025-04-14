@@ -12,7 +12,7 @@ public class Invincible_Powerup : MonoBehaviour
     // private BoxCollider2D powerupCollider; // This object's box collider
     // private Renderer powerupRenderer; // This object's renderer
 
-    private GameObject playerObject; // Reference to the player object
+    [SerializeField] private GameObject playerObject; // Reference to the player object
     private SpriteRenderer playerSpriteRenderer; // The player's sprite renderer
     private int playerLayer; // Layer for the player
 
@@ -24,7 +24,7 @@ public class Invincible_Powerup : MonoBehaviour
         // powerupCollider = GetComponent<BoxCollider2D>();
         // powerupRenderer = GetComponent<Renderer>();
 
-        playerObject = GameObject.Find("Player"); // Find the player object
+        // playerObject = GameObject.Find("Player"); // Find the player object
         playerSpriteRenderer = playerObject.GetComponent<SpriteRenderer>(); // Get the player's sprite renderer
 
         // Get the layers for enemies and the player

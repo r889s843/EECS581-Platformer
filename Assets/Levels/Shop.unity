@@ -284,17 +284,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &501767583 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7066009611638677251, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
-  m_PrefabInstance: {fileID: 899486417}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &512530121 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6061905224598523987, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
@@ -394,17 +383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce0d7746120c1da419d5b35b4ee69df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &708546570 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9073606384797186627, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
-  m_PrefabInstance: {fileID: 899486417}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &710177951 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2989475835243273007, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
@@ -494,17 +472,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7106086210321418320, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
   m_PrefabInstance: {fileID: 899486417}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &718336924 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7134226909135450820, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
-  m_PrefabInstance: {fileID: 899486417}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 718336922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &772611768
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -567,17 +534,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 936288830547839266, guid: 015078de0b2ed444984cc12b26b16ad9, type: 3}
   m_PrefabInstance: {fileID: 772611768}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &839040555 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2489878617527169498, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
-  m_PrefabInstance: {fileID: 899486417}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &899486417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1077,17 +1033,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2595605372316082713, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
-      propertyPath: dashIcon
-      value: 
-      objectReference: {fileID: 501767583}
-    - target: {fileID: 2595605372316082713, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
       propertyPath: teleportIcon
       value: 
       objectReference: {fileID: 1418420526}
-    - target: {fileID: 2595605372316082713, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
-      propertyPath: dashCooldownText
-      value: 
-      objectReference: {fileID: 839040555}
     - target: {fileID: 2595605372316082713, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
       propertyPath: invincibilityIcon
       value: 
@@ -4448,17 +4396,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: dashIcon
-      value: 
-      objectReference: {fileID: 718336924}
-    - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: teleportIcon
       value: 
       objectReference: {fileID: 593486698}
-    - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: dashCooldownText
-      value: 
-      objectReference: {fileID: 708546570}
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: invincibilityIcon
       value: 
