@@ -32,7 +32,7 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !triggered) // Make sure Player has "Player" tag
+        if ((collision.CompareTag("Player") && !triggered) || (collision.CompareTag("Player2") && !triggered)) // Make sure Player has "Player" tag
         {
             triggered = true;
             PlayerMoneyManager.Instance.AddMoney(coinValue);
