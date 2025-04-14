@@ -177,6 +177,18 @@ public class Player2Movement : MonoBehaviour
         walkAudioSource = audioSources[0];
         jumpAudioSource = audioSources[1];
         spriteRenderer = GetComponentInParent<SpriteRenderer>(); // Fetch from parent (player)
+        if (spriteRenderer == null)
+        {
+            Debug.LogError("Player 2 has no SpriteRenderer!");
+        }
+        else if (spriteRenderer.sprite == null)
+        {
+            Debug.LogWarning("Player 2 SpriteRenderer has no sprite assigned.");
+        }
+        else
+        {
+            Debug.Log("Player 2 sprite: " + spriteRenderer.sprite.name);
+        }
 
         // Initialize gravity and physics
         defaultGravityScale = body.gravityScale;
@@ -551,10 +563,15 @@ public class Player2Movement : MonoBehaviour
 
              // Spawn after-image if the delay has passed
             if (Time.time >= nextAfterImageTime)
-            {
-                PlayerAfterPool.Instance.GetFromPool();
-                nextAfterImageTime = Time.time + afterImageSpawnDelay;
-            }
+                if (PlayerAfterPool_P2.Instance != null)
+                {
+                    PlayerAfterPool_P2.Instance.GetFromPool();
+                    nextAfterImageTime = Time.time + afterImageSpawnDelay;
+                }
+                else
+                {
+                    nextAfterImageTime = Time.time + afterImageSpawnDelay; // Still update the timer to avoid spamming warnings
+                }
 
             yield return null;
         }

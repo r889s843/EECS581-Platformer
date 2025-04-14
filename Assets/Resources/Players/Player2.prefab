@@ -4879,52 +4879,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentMoney: 0
   moneyText: {fileID: 0}
---- !u!1 &4138869803307575801
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2163552995331324024}
-  - component: {fileID: 4899210812648547617}
-  m_Layer: 7
-  m_Name: Dash
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2163552995331324024
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4138869803307575801}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.9727063, y: -0.008067727, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8699063827881332454}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4899210812648547617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4138869803307575801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 716c362a1586ef14cbd00c790639c635, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dashSpeed: 30
-  dashDuration: 0.2
 --- !u!1 &4207541864335809544
 GameObject:
   m_ObjectHideFlags: 0
@@ -5083,7 +5037,6 @@ GameObject:
   - component: {fileID: 717614621336302790}
   - component: {fileID: 3989689401576552297}
   - component: {fileID: 358054858423428461}
-  - component: {fileID: 2552200340656045971}
   - component: {fileID: 5211976525385361507}
   m_Layer: 7
   m_Name: Player2
@@ -5108,7 +5061,6 @@ Transform:
   - {fileID: 9198354469851166400}
   - {fileID: 6617204410890962707}
   - {fileID: 517973037875150784}
-  - {fileID: 2163552995331324024}
   - {fileID: 4364461335739586216}
   - {fileID: 1960284301526845071}
   - {fileID: 6995748102324588743}
@@ -5308,7 +5260,7 @@ MonoBehaviour:
   landSquashFactor: 0.7
   squashSpeed: 10
   landSquashDuration: 0.2
-  maxTiltAngle: 15
+  maxTiltAngle: 3
   tiltSpeed: 5
 --- !u!114 &-6943250655177102551
 MonoBehaviour:
@@ -5562,20 +5514,6 @@ MonoBehaviour:
   ZeroParticlesInverse: {fileID: 3932052981484825701}
   isDissolving: 0
   dissolveSpeed: 1
---- !u!114 &2552200340656045971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6061905224598523987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 716c362a1586ef14cbd00c790639c635, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dashSpeed: 30
-  dashDuration: 0.2
 --- !u!96 &5211976525385361507
 TrailRenderer:
   serializedVersion: 3

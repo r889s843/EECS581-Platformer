@@ -237,7 +237,7 @@ MonoBehaviour:
   dashCooldownDuration: 3
   teleportCooldownDuration: 5
   invincibilityCooldownDuration: 5
-  dashPowerupScript: {fileID: 4146731470915871877}
+  dashPowerupScript: {fileID: 0}
   teleportPowerupScript: {fileID: 2249510840854575851}
   invinciblePowerupScript: {fileID: 51776379038202088}
   invincibilityUnlocked: 1
@@ -5189,7 +5189,6 @@ GameObject:
   - component: {fileID: -8611442375277616293}
   - component: {fileID: -2302500838848284690}
   - component: {fileID: 4624343617722134649}
-  - component: {fileID: 4146731470915871877}
   - component: {fileID: 8687940500486215924}
   - component: {fileID: 8545853009192033364}
   m_Layer: 7
@@ -5650,20 +5649,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4146731470915871877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8795842049470078105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 716c362a1586ef14cbd00c790639c635, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dashSpeed: 30
-  dashDuration: 0.2
 --- !u!114 &8687940500486215924
 MonoBehaviour:
   m_ObjectHideFlags: 0
