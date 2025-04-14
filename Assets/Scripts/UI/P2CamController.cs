@@ -38,7 +38,7 @@ public class P2CamController : MonoBehaviour
     {
         //if player object is empty then find it
         if(player == null) {
-            player = GameObject.Find("Player2(Clone)").transform;
+            player = GameObject.Find("Player2").transform;
         }
 
         cam = GetComponent<Camera>();

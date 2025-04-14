@@ -8,20 +8,22 @@ using UnityEngine;
 
 public class CoOpInitialize : MonoBehaviour
 {
-    [SerializeField] private GameObject player2Prefab; //prefab of palayer 2 to create
-    private GameObject player2; //new player2's game object
+    // [SerializeField] private GameObject player2Prefab; //prefab of palayer 2 to create
+    [SerializeField] private GameObject player2;
     public static int coopTrigger = 0;
     private bool activated; //tracks whether coop has been activated already or not
-    private LivesUI livesUIScript; // Reference to the LivesUI script
+    // Inspector-assigned references
+    [SerializeField] private LivesUI livesUIScript; // Assign in Inspector
+    [SerializeField] private PowerUpManager powerUpManager; // Assign in Inspector
+    private CameraController cameraControllerScript; // Assign in Inspector
 
-    private CameraController cameraControllerScript; //camera controller script to tell that player 2 has been activated
+    [SerializeField] private GameObject inventories; // Player 1 inventory
+    [SerializeField] private GameObject inventoriesP2; // Player 2 inventory
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        cameraControllerScript = Camera.main.GetComponent<CameraController>(); //get camera controller script
-
-        livesUIScript = FindObjectOfType<LivesUI>();
+        cameraControllerScript = Camera.main.GetComponent<CameraController>(); // Get camera controller script
     }
 
     // Update is called once per frame
@@ -37,7 +39,10 @@ public class CoOpInitialize : MonoBehaviour
             // GameObject aiObject = GameObject.FindGameObjectWithTag("AI");
             // Destroy(aiObject);
 
-            player2 = Instantiate(player2Prefab, new Vector3(3,2,0), Quaternion.identity) as GameObject;
+            // if (player2 != null)
+            player2.SetActive(true);
+
+            // player2 = Instantiate(player2Prefab, new Vector3(3,2,0), Quaternion.identity) as GameObject;
             activated = true;
 
             //tell camera controller that player 2 is active
@@ -45,6 +50,26 @@ public class CoOpInitialize : MonoBehaviour
 
             livesUIScript.P2 = true;
             livesUIScript.UpdateLivesDisplayP2(); // Update P2 lives display
+
+            // Relocate UI elements
+            HandleInventoryUI();
+        }
+    }
+
+    private void HandleInventoryUI()
+    {
+        if (inventories != null)
+        {
+            // Move Player 1 inventory to the left side (e.g., top-left corner)
+            inventories.GetComponent<RectTransform>().anchoredPosition = new Vector2(-800, 60);
+        }
+
+        if (inventoriesP2 != null)
+        {
+            // Enable Player 2 inventory
+            inventoriesP2.SetActive(true);
+            // Move Player 2 inventory to the right side (e.g., top-right corner)
+            inventoriesP2.GetComponent<RectTransform>().anchoredPosition = new Vector2(-800, -475);
         }
     }
 }

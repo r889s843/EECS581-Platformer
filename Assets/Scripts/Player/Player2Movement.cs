@@ -177,18 +177,6 @@ public class Player2Movement : MonoBehaviour
         walkAudioSource = audioSources[0];
         jumpAudioSource = audioSources[1];
         spriteRenderer = GetComponentInParent<SpriteRenderer>(); // Fetch from parent (player)
-        if (spriteRenderer == null)
-        {
-            Debug.LogError("Player 2 has no SpriteRenderer!");
-        }
-        else if (spriteRenderer.sprite == null)
-        {
-            Debug.LogWarning("Player 2 SpriteRenderer has no sprite assigned.");
-        }
-        else
-        {
-            Debug.Log("Player 2 sprite: " + spriteRenderer.sprite.name);
-        }
 
         // Initialize gravity and physics
         defaultGravityScale = body.gravityScale;
