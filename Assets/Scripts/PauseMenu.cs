@@ -36,10 +36,22 @@ public class PauseMenu : MonoBehaviour
         GameIsPaused = true;
     }
 
-    public void ReturnToMenu ()
+    public void ReturnToMenu()
     {
         Time.timeScale = 1f;
         GameIsPaused = false;
-        SceneManager.LoadScene(0); 
+        
+        // Save player data using the PlayerManager instance
+        if (PlayerManager.Instance != null)
+        {
+            PlayerManager.Instance.SavePlayerData();
+            Debug.Log("Player data saved successfully.");
+        }
+        else
+        {
+            Debug.LogError("PlayerManager instance is null. Cannot save player data.");
+        }
+        
+        SceneManager.LoadScene(0); // Load the main menu scene
     }
 }

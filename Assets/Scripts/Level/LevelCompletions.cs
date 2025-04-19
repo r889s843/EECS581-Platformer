@@ -13,7 +13,7 @@ public class ProcGenUI : MonoBehaviour
     void Start()
     {
         // Load totalCompletions from LevelManager
-        UpdateCompletionsText(LevelManager.Instance.totalCompletions);
+        UpdateCompletionsText(PlayerManager.Instance.playerData.procGenCompletionCount);
     }
 
     public void UpdateCompletionsText(int completions)

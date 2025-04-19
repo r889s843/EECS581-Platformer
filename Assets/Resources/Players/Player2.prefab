@@ -5254,6 +5254,7 @@ MonoBehaviour:
   dashRefillTime: 0.2
   dashSleepTime: 0.02
   dashInputBufferTime: 0.2
+  dashIcon: {fileID: 0}
   wallJumpForce: {x: 12, y: 10}
   wallJumpControlDelay: 0.15
   wallCoyoteTime: 0.15

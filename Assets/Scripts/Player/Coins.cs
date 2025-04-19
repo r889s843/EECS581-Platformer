@@ -36,6 +36,7 @@ public class Coin : MonoBehaviour
         {
             triggered = true;
             PlayerMoneyManager.Instance.AddMoney(coinValue);
+            PlayerManager.Instance.playerData.money += coinValue;
 
             Renderer renderer = GetComponent<Renderer>();
             Material newMat = new Material(dissolveEffect.material);

@@ -90,6 +90,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac94ac768424ee4dba187126196740d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &4422221718183992213
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6197756048045483957}
+  - component: {fileID: 3047485245867766272}
+  m_Layer: 7
+  m_Name: PlayerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6197756048045483957
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4422221718183992213}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1802557755064146918}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3047485245867766272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4422221718183992213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 312eb14b185bbeb4b94337bb317bad11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData:
+    money: 0
+    levelProgress: 
+    abilitiesUnlocked: 
+    bestFreerunDistance: 0
+    procGenCompletionCount: 0
+    bestStoryTime: 0
 --- !u!1 &4803064032494385025
 GameObject:
   m_ObjectHideFlags: 0
@@ -5175,6 +5226,7 @@ Transform:
   - {fileID: 7357230811075680990}
   - {fileID: 5649882806137612249}
   - {fileID: 105381537439505699}
+  - {fileID: 6197756048045483957}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2848366371450900770
@@ -5357,6 +5409,7 @@ MonoBehaviour:
   dashRefillTime: 0.2
   dashSleepTime: 0.02
   dashInputBufferTime: 0.2
+  dashIcon: {fileID: 0}
   wallJumpForce: {x: 12, y: 10}
   wallJumpControlDelay: 0.15
   wallCoyoteTime: 0.15

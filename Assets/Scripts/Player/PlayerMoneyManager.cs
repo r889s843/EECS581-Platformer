@@ -11,7 +11,7 @@ public class PlayerMoneyManager : MonoBehaviour
 {
     public static PlayerMoneyManager Instance { get; private set; } // Singleton for global access
 
-    public int currentMoney = 0;
+    public float currentMoney = 0f;
     public TextMeshProUGUI moneyText; // UI element to display money
 
     private void Awake()
@@ -24,15 +24,18 @@ public class PlayerMoneyManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        currentMoney = PlayerManager.Instance.playerData.money;
+        UpdateUI();
     }
 
-    public void AddMoney(int amount)
+    public void AddMoney(float amount)
     {
         currentMoney += amount;
         UpdateUI();
     }
 
-    public bool SpendMoney(int cost)
+    public bool SpendMoney(float cost)
     {
         if (currentMoney >= cost)
         {
