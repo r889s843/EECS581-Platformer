@@ -130,7 +130,6 @@ GameObject:
   - component: {fileID: 26500699}
   - component: {fileID: 26500698}
   - component: {fileID: 26500697}
-  - component: {fileID: 26500700}
   m_Layer: 5
   m_Name: LeaderboardsPanel
   m_TagString: Untagged
@@ -198,29 +197,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &26500700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 26500696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00460a886917fdf4c87ddffe6e875f10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Freerun_Name: {fileID: 1097275494}
-  Freerun_Time: {fileID: 1392224661}
-  ProcGen_Name: {fileID: 1127577344}
-  ProcGen_Time: {fileID: 262786384}
-  Story_Name: {fileID: 2064894780}
-  Story_Time: {fileID: 1823470605}
-  modeDropdown: {fileID: 1580742936}
-  leaderboardTabs:
-  - {fileID: 335246181}
-  - {fileID: 617109877}
-  - {fileID: 834886906}
 --- !u!1 &28515592
 GameObject:
   m_ObjectHideFlags: 0
@@ -4499,6 +4475,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2016543114}
   m_CullTransparentMesh: 1
+--- !u!1 &2018787247
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2018787249}
+  - component: {fileID: 2018787248}
+  m_Layer: 0
+  m_Name: LeaderboardUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2018787248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018787247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00460a886917fdf4c87ddffe6e875f10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Freerun_Name: {fileID: 1097275494}
+  Freerun_Time: {fileID: 1392224661}
+  ProcGen_Name: {fileID: 1127577344}
+  ProcGen_Time: {fileID: 262786384}
+  Story_Name: {fileID: 2064894780}
+  Story_Time: {fileID: 1823470605}
+  modeDropdown: {fileID: 1580742936}
+  leaderboardTabs:
+  - {fileID: 335246181}
+  - {fileID: 617109877}
+  - {fileID: 834886906}
+--- !u!4 &2018787249
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018787247}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 901.6021, y: 537.2046, z: -6.076601}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2064894777
 GameObject:
   m_ObjectHideFlags: 0
@@ -4836,3 +4867,4 @@ SceneRoots:
   - {fileID: 1642512727}
   - {fileID: 960901967}
   - {fileID: 1071976103}
+  - {fileID: 2018787249}
