@@ -65,7 +65,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: -876546973899608171, guid: 1a36f3a7b37279d47b51f810ed4bcd2d, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -222,6 +222,7 @@ MonoBehaviour:
   dashRefillTime: 0.5
   dashSleepTime: 0.05
   dashInputBufferTime: 0.2
+  dashIcon: {fileID: 0}
   wallJumpForce: {x: 1, y: 12}
   wallJumpControlDelay: 0.15
   wallCoyoteTime: 0.15
