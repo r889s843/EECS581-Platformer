@@ -56,6 +56,15 @@ public class PlayerDeath : MonoBehaviour
             if (playerMovement != null)
                 playerMovement.enabled = false;
 
+            // Freeze the player in place by making Rigidbody2D kinematic and zeroing velocity
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero; // Stop all movement
+                rb.angularVelocity = 0f;         // Stop rotation
+                rb.isKinematic = true;           // Ignore physics forces
+            }
+
             // Reset dissolveAmount in a fresh material instance
             Renderer renderer = GetComponent<Renderer>();
             Material newMat = new Material(dissolveEffect.material);
@@ -83,10 +92,14 @@ public class PlayerDeath : MonoBehaviour
         else
             transform.position = startPosition;
 
-        // Optionally reset velocity if using Rigidbody2D
+        // Re-enable physics and reset velocity
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
+        {
             rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.isKinematic = false; // Restore physics
+        }
 
         // Now that we’re “alive” again, re-enable movement
         if (playerMovement != null)
