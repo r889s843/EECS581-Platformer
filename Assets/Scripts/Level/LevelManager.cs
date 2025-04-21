@@ -160,7 +160,8 @@ public class LevelManager : MonoBehaviour
             GameObject player1 = GameObject.FindGameObjectWithTag("Player");
             if (player1 != null)
             {
-                Destroy(player1); // Remove Player1 from the scene
+                // Destroy(player1); // Remove Player1 from the scene
+                player1.SetActive(false);
 
                 // Update camera to focus only on Player2
                 Camera mainCamera = Camera.main;
@@ -181,7 +182,7 @@ public class LevelManager : MonoBehaviour
             GameObject player2 = GameObject.FindGameObjectWithTag("Player2");
             if (player2 != null)
             {
-                Destroy(player2); // Remove Player2 from the scene
+                player2.SetActive(false);
 
                 // Update camera to focus only on Player1
                 Camera mainCamera = Camera.main;

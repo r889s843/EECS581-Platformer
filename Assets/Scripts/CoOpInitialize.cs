@@ -4,6 +4,7 @@
 // Course: EECS 581
 // Purpose: Intializes the game state to render, spawn, and update the 2nd player
 
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CoOpInitialize : MonoBehaviour
@@ -36,8 +37,15 @@ public class CoOpInitialize : MonoBehaviour
         }
 
         if(coopTrigger == 1  && !activated) {
+
+            GameObject player1 = GameObject.FindGameObjectWithTag("Player");
+
             // GameObject aiObject = GameObject.FindGameObjectWithTag("AI");
             // Destroy(aiObject);
+
+            Vector3 newPos = player1.transform.position;
+            newPos.y += 2f;
+            player2.transform.position = newPos;
 
             // if (player2 != null)
             player2.SetActive(true);

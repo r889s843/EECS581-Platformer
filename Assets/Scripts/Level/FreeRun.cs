@@ -7,11 +7,13 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
+using System;
 
 public class FreerunProcGen : MonoBehaviour
 {
     [Header("Player Reference")]
     public Transform playerTransform; // The player's transform
+    public Transform player2Transform; // The player's transform
 
     [Header("Ground/Chunk Settings")]
     public GameObject wallPrefab;        // Prefab for walls
@@ -147,7 +149,7 @@ public class FreerunProcGen : MonoBehaviour
         float xPos = startX; // Starting X position
         while (xPos < endX)
         {
-            if (Random.value < .9f) // 90% chance to spawn spikes
+            if (UnityEngine.Random.value < .9f) // 90% chance to spawn spikes
             {
                 for (int i = 0; i < 3; i++) // Spawn 3 spikes
                 {
@@ -178,8 +180,17 @@ public class FreerunProcGen : MonoBehaviour
     }
 
     private void CleanupBehindPlayer() {
-        float playerX = playerTransform.position.x; // Get player's X position
-        
+
+        float playerX;
+
+        GameObject player2 = GameObject.FindGameObjectWithTag("Player2");
+
+        if (player2 != null && player2.activeInHierarchy == true){
+            playerX = Mathf.Min(playerTransform.position.x, player2Transform.position.x); // Get player's X position
+        } else {
+            playerX = playerTransform.position.x;
+        }
+
         for (int i = generatedChunks.Count - 1; i >= 0; i--) { // Iterate through chunks backwards
             GeneratedChunk chunk = generatedChunks[i];
             if (chunk.endX < playerX - cleanupDistance) { // Check if chunk is behind cleanup distance
@@ -206,9 +217,10 @@ public class FreerunProcGen : MonoBehaviour
 
     private void Update()
     {
-        if (!playerAlive) return; // Exit if player is not alive
+        // if (!playerAlive) return; // Exit if player is not alive
 
-        float playerX = playerTransform.position.x; // Get player's current X position
+        float playerX = Mathf.Max(playerTransform.position.x, player2Transform.position.x);
+
         if (playerX > playerDistance)
         {
             playerDistance = playerX; // Update player distance
@@ -226,10 +238,10 @@ public class FreerunProcGen : MonoBehaviour
             Vector2 endPos;
             bool nearMaxHeight = lastPlatformEndY >= maxY - 1f; // Check if near maximum height
 
-            float r = Random.value; // Random value for decision
+            float r = UnityEngine.Random.value; // Random value for decision
             if (nearMaxHeight)
             {
-                if (Random.value < 0.5f)
+                if (UnityEngine.Random.value < 0.5f)
                     endPos = CreateWallDownJumpSection(lastPlatformEndX, lastPlatformEndY); // Create wall down jump section
                 else
                     endPos = CreateDownJumpSection(lastPlatformEndX, lastPlatformEndY); // Create down jump section
@@ -277,7 +289,7 @@ public class FreerunProcGen : MonoBehaviour
         float currentX = x; // Current X position
         float currentY = y; // Current Y position
 
-        float gapSize = Random.Range(5f, 8f); // Random gap size
+        float gapSize = UnityEngine.Random.Range(5f, 8f); // Random gap size
 
         while (!NoMomentumJumpTest(gapSize, 0f)) // Ensure the gap is jumpable
         {
@@ -293,7 +305,7 @@ public class FreerunProcGen : MonoBehaviour
         float platformStartX = currentX; // Start X for the next platform
 
         int minPlatformLength = 3; // Minimum platform length
-        int platformLength = Random.Range(minPlatformLength, minPlatformLength + 5); // Random platform length
+        int platformLength = UnityEngine.Random.Range(minPlatformLength, minPlatformLength + 5); // Random platform length
 
         for (int i = 0; i < platformLength; i++) // Create platform tiles
         {
@@ -311,7 +323,7 @@ public class FreerunProcGen : MonoBehaviour
         float finalY = currentY; // Final Y position
         chunk.endX = finalX; // Set end X of chunk
 
-        if (Random.value < spikeSpawnChance) // Chance to spawn spikes
+        if (UnityEngine.Random.value < spikeSpawnChance) // Chance to spawn spikes
         {
             SpawnSpikes(chunk, finalX - 2f, finalX, finalY); // Spawn spikes near end
         }
@@ -328,10 +340,10 @@ public class FreerunProcGen : MonoBehaviour
         chunk.startX = x;
 
         float currentX = x; // Current X position
-        float deltaY = Random.Range(-1, 2) * 2f; // Random Y delta
+        float deltaY = UnityEngine.Random.Range(-1, 2) * 2f; // Random Y delta
         float currentY = Mathf.Clamp(y + deltaY, minY, maxY); // Clamp Y within bounds
 
-        float gapSize = Random.Range(4f, 6f); // Random gap size
+        float gapSize = UnityEngine.Random.Range(4f, 6f); // Random gap size
 
         while (!MomentumJumpTest(gapSize, currentY - y)) // Ensure the jump is feasible
         {
@@ -346,7 +358,7 @@ public class FreerunProcGen : MonoBehaviour
         currentX += gapSize; // Move past the gap
 
         int minPlatformLength = 3; // Minimum platform length
-        int platformLength = Random.Range(minPlatformLength, minPlatformLength + 3); // Random platform length
+        int platformLength = UnityEngine.Random.Range(minPlatformLength, minPlatformLength + 3); // Random platform length
 
         float platformStartX = currentX; // Start X for the next platform
 
@@ -378,12 +390,12 @@ public class FreerunProcGen : MonoBehaviour
         float currentX = x; // Current X position
         float currentY = y; // Current Y position
 
-        int numPlatforms = Random.Range(2, 4); // Number of small platforms
+        int numPlatforms = UnityEngine.Random.Range(2, 4); // Number of small platforms
 
         for (int i = 0; i < numPlatforms; i++) // Create multiple small platforms
         {
             float gapSize = 2f; // Fixed small gap size
-            float deltaY = Random.Range(-1, 1) * 2f; // Random Y delta
+            float deltaY = UnityEngine.Random.Range(-1, 1) * 2f; // Random Y delta
             float nextY = Mathf.Clamp(currentY + deltaY, minY, maxY); // Clamp Y within bounds
 
             if (Mathf.Abs(nextY - currentY) < 2f) // Ensure sufficient vertical change
@@ -406,7 +418,7 @@ public class FreerunProcGen : MonoBehaviour
             currentY = nextY; // Update Y position
 
             int minPlatformLength = 2; // Minimum platform length
-            int platformLength = Random.Range(minPlatformLength, minPlatformLength + 2); // Random platform length
+            int platformLength = UnityEngine.Random.Range(minPlatformLength, minPlatformLength + 2); // Random platform length
 
             for (int j = 0; j < platformLength; j++) // Create platform tiles
             {
@@ -451,16 +463,16 @@ public class FreerunProcGen : MonoBehaviour
 
         for (int i=0; i < 10; i++) {
             // Create walls as obstacles
-            AddWallTile(chunk, currentX - 2f, currentY + i + 3f, new TileBase[] { leftBottomWallTile, leftTopWallTile }[Random.Range(0, 2)]); // Create first wall
-            AddWallTile(chunk, currentX - 1f, currentY + i + 3f, new TileBase[] { rightBottomWallTile, rightTopWallTile }[Random.Range(0, 2)]);
+            AddWallTile(chunk, currentX - 2f, currentY + i + 3f, new TileBase[] { leftBottomWallTile, leftTopWallTile }[UnityEngine.Random.Range(0, 2)]); // Create first wall
+            AddWallTile(chunk, currentX - 1f, currentY + i + 3f, new TileBase[] { rightBottomWallTile, rightTopWallTile }[UnityEngine.Random.Range(0, 2)]);
         }
 
         float wallGap = 4f; // Gap between walls
         
         for (int i=0; i < 10; i++) {
             // Create walls as obstacles
-            AddWallTile(chunk, currentX + wallGap, currentY + i, new TileBase[] { leftBottomWallTile, leftTopWallTile }[Random.Range(0, 2)]); // Create first wall
-            AddWallTile(chunk, currentX + wallGap+ 1f, currentY + i, new TileBase[] { rightBottomWallTile, rightTopWallTile }[Random.Range(0, 2)]);
+            AddWallTile(chunk, currentX + wallGap, currentY + i, new TileBase[] { leftBottomWallTile, leftTopWallTile }[UnityEngine.Random.Range(0, 2)]); // Create first wall
+            AddWallTile(chunk, currentX + wallGap+ 1f, currentY + i, new TileBase[] { rightBottomWallTile, rightTopWallTile }[UnityEngine.Random.Range(0, 2)]);
         }
 
         // Exit platform
@@ -499,11 +511,11 @@ public class FreerunProcGen : MonoBehaviour
         float currentX = x; // Current X position
         float currentY = y; // Current Y position
 
-        int numDownJumps = Random.Range(2, 4); // Number of down jumps
+        int numDownJumps = UnityEngine.Random.Range(2, 4); // Number of down jumps
         for (int i = 0; i < numDownJumps; i++) // Create down jump platforms
         {
-            float gapSize = Random.Range(3f, 6f); // Random gap size
-            float deltaY = Random.Range(-3, -1) * 2f; // Random Y delta for descending
+            float gapSize = UnityEngine.Random.Range(3f, 6f); // Random gap size
+            float deltaY = UnityEngine.Random.Range(-3, -1) * 2f; // Random Y delta for descending
             float nextY = Mathf.Clamp(currentY + deltaY, minY, maxY); // Clamp Y within bounds
 
             while (!MomentumJumpTest(gapSize, nextY - currentY)) // Ensure the jump is feasible
@@ -515,7 +527,7 @@ public class FreerunProcGen : MonoBehaviour
             currentX += gapSize; // Move past the gap
             currentY = nextY; // Update Y position
 
-            int platformLength = Random.Range(2, 4); // Random platform length
+            int platformLength = UnityEngine.Random.Range(2, 4); // Random platform length
             for (int j = 0; j < platformLength; j++) // Create platform tiles
             {
                 if (j == 0)
@@ -554,8 +566,8 @@ public class FreerunProcGen : MonoBehaviour
 
         for (int i=0; i < 10; i++) {
             // Create walls as obstacles
-            AddWallTile(chunk, currentX, currentY - i, new TileBase[] { leftBottomWallTile, leftTopWallTile }[Random.Range(0, 2)]); // Create first wall
-            AddWallTile(chunk, currentX+1f, currentY - i, new TileBase[] { rightBottomWallTile, rightTopWallTile }[Random.Range(0, 2)]);
+            AddWallTile(chunk, currentX, currentY - i, new TileBase[] { leftBottomWallTile, leftTopWallTile }[UnityEngine.Random.Range(0, 2)]); // Create first wall
+            AddWallTile(chunk, currentX+1f, currentY - i, new TileBase[] { rightBottomWallTile, rightTopWallTile }[UnityEngine.Random.Range(0, 2)]);
         }
 
         float wallGap = 6f; // Gap between walls
@@ -563,11 +575,11 @@ public class FreerunProcGen : MonoBehaviour
         
         for (int i=0; i < 10; i++) {
             // Create walls as obstacles
-            AddWallTile(chunk, currentX, currentY - i+2f, new TileBase[] { leftBottomWallTile, leftTopWallTile }[Random.Range(0, 2)]); // Create first wall
-            AddWallTile(chunk, currentX + 1f, currentY - i+2f, new TileBase[] { rightBottomWallTile, rightTopWallTile }[Random.Range(0, 2)]);
+            AddWallTile(chunk, currentX, currentY - i+2f, new TileBase[] { leftBottomWallTile, leftTopWallTile }[UnityEngine.Random.Range(0, 2)]); // Create first wall
+            AddWallTile(chunk, currentX + 1f, currentY - i+2f, new TileBase[] { rightBottomWallTile, rightTopWallTile }[UnityEngine.Random.Range(0, 2)]);
         }
 
-        float deltaY = Random.Range(-4, -3) * 2f; // Random Y delta for descending
+        float deltaY = UnityEngine.Random.Range(-4, -3) * 2f; // Random Y delta for descending
         float nextY = Mathf.Clamp(currentY + deltaY, minY, maxY); // Clamp Y within bounds
 
         while (!MomentumJumpTest(wallGap, nextY - currentY)) // Ensure the jump is feasible
@@ -627,9 +639,9 @@ public class FreerunProcGen : MonoBehaviour
         {
             for (float sx = spawnStartX; sx < spawnEndX; sx += 1f) // Iterate through spawn range
             {
-                if (Random.value < currentEnemySpawnChance) // Check spawn chance
+                if (UnityEngine.Random.value < currentEnemySpawnChance) // Check spawn chance
                 {
-                    GameObject enemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)]; // Select random enemy prefab
+                    GameObject enemyPrefab = enemyPrefabs[UnityEngine.Random.Range(0, enemyPrefabs.Count)]; // Select random enemy prefab
                     GameObject enemy = Instantiate(enemyPrefab, new Vector3(sx, y + 1f, 0f), Quaternion.identity, transform); // Instantiate enemy
                     chunk.spawnedObjects.Add(enemy); // Add enemy to chunk
                 }
