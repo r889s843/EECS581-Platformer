@@ -39,6 +39,7 @@ public class P2CamController : MonoBehaviour
         //if player object is empty then find it
         if(player == null) {
             player = GameObject.Find("Player2").transform;
+            Debug.Log("found");
         }
 
         cam = GetComponent<Camera>();
@@ -68,18 +69,19 @@ public class P2CamController : MonoBehaviour
     {
         float newGroundLevel = groundLevel;
 
-        //will implement when p2 movement mechanics are redone
-        // //if player is too far up -> move gl up to them
-        // if(zoom > maxZoom) {
-        //     //set new groundLevel based on player's position only when they are on ground
-        //     if(playerMovement.isOnFloor) {
-        //         newGroundLevel = player.transform.position.y - 0.5f;
-        //     }
-        // }
+        //if a platform ahead of the player is below current ground level -> lower it to there
+        Vector2 boxSize = new Vector2(rayDistanceAhead,1);
+        Vector2 rayOrigin = Vector2.zero;
+        rayOrigin = new Vector2(player.position.x + (boxSize.x / 2), player.position.y - 6); //-6 is to keep cast below current ground when player jumps
 
-        //if player is too low, lower ground level
-        if(player.transform.position.y - groundLevel < 0.5f){
-            newGroundLevel = player.transform.position.y - 0.5f;
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(rayOrigin, boxSize, 0f, Vector2.down);//raycast
+        for(int i = 0; i < hits.Length; i++) {
+            RaycastHit2D hit = hits[i];
+            if(hit && hit.collider.gameObject.name != "DeathZone"){
+                if(hit.point.y < newGroundLevel){
+                    newGroundLevel = hit.point.y;
+                }
+            }
         }
 
         return newGroundLevel;

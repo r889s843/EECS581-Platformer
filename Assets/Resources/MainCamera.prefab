@@ -839,10 +839,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b10067da59932b48a54afc68c662b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heightChangeSpeed: 0.5
+  heightChangeSpeed: 1
   zoomSpeed: 0.7
   minZoom: 5
-  maxZoom: 8
+  maxZoom: 25
   aheadDistance: 3
   rayDistanceAhead: 13
   p2cam: {fileID: 8893357557382604470, guid: dc039bbc4dbbad840a7e4e2e98685ebd, type: 3}
