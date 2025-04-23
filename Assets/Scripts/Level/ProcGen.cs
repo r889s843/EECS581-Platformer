@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 using System;
+using Unity.VisualScripting;
 
 public class ProcGen : MonoBehaviour
 {
@@ -93,16 +94,17 @@ public class ProcGen : MonoBehaviour
         float minYReached = y;               // Track the minimum Y reached
 
         // Retrieve current difficulty settings from LevelManager
-        Difficulty currentDifficulty = (Difficulty)LevelManager.Instance.currentDifficulty;
-        int numberOfChunks = LevelManager.Instance.numberOfChunks;
-        float spikeSpawnChance = LevelManager.Instance.spikeSpawnChance;
-        float EnemySpawnChance = LevelManager.Instance.EnemySpawnChance;
+        if (LevelManager.Instance != null){
+            Difficulty currentDifficulty = (Difficulty)LevelManager.Instance.currentDifficulty;
+            int numberOfChunks = LevelManager.Instance.numberOfChunks;
+            float spikeSpawnChance = LevelManager.Instance.spikeSpawnChance;
+            float EnemySpawnChance = LevelManager.Instance.EnemySpawnChance;
 
-        // Update ProcGen's settings based on LevelManager
-        this.currentDifficulty = currentDifficulty;
-        this.numberOfChunks = numberOfChunks;
-        this.spikeSpawnChance = spikeSpawnChance;
-        this.EnemySpawnChance = EnemySpawnChance;
+            this.currentDifficulty = currentDifficulty;
+            this.numberOfChunks = numberOfChunks;
+            this.spikeSpawnChance = spikeSpawnChance;
+            this.EnemySpawnChance = EnemySpawnChance;
+        }
 
         // Generate the specified number of chunks
         for (int i = 0; i < numberOfChunks; i++)
@@ -149,7 +151,7 @@ public class ProcGen : MonoBehaviour
         PaintGroundTile(x + 4, y + 3, centerTile);
         PaintGroundTile(x + 5, y + 3, centerTile);
 
-        Debug.Log($"{endY}, {y}, y = {(endY * 0.75f)}, {(y * 0.25f)}, {endY - (endY * 0.75f) - (y * 0.25f)}");
+        // Debug.Log($"{endY}, {y}, y = {(endY * 0.75f)}, {(y * 0.25f)}, {endY - (endY * 0.75f) - (y * 0.25f)}");
 
         if (Math.Abs(y - endY - 3f) > 10f) {
             for (int i=0; i < Math.Abs(endY - y) * 0.4f; i++) {
@@ -169,10 +171,11 @@ public class ProcGen : MonoBehaviour
         CreateDeathZone(x, minYReached); // Create the death zone based on the level's end
     }
 
-    private void ClearExistingLevel()
+    public void ClearExistingLevel()
     {
         groundTilemap.ClearAllTiles(); // Clear all ground tiles
         hazardTilemap.ClearAllTiles(); // Clear all hazard tiles
+        wallTilemap.ClearAllTiles(); // Clear all hazard tiles
 
         // Destroy all generated objects (enemies, walls, etc.)
         foreach (GameObject obj in generatedObjects)

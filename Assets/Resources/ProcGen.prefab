@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3911519611390247404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5323993408986331566}
+  - component: {fileID: 5408408312808260248}
+  m_Layer: 0
+  m_Name: ProcGen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5323993408986331566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3911519611390247404}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.29414445, y: 1.8373888, z: 0.03531804}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5408408312808260248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3911519611390247404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b942070dd8763e348a10c3ed08e0a967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flagPrefab: {fileID: 7127516521367446038, guid: d6608245b8e89044382e3caab2e85793, type: 3}
+  deathZonePrefab: {fileID: 4488341427712273626, guid: 77b42c8b6d8d3564aa5d6b81002a3e20, type: 3}
+  groundTilemap: {fileID: 0}
+  wallTilemap: {fileID: 0}
+  hazardTilemap: {fileID: 0}
+  leftTile: {fileID: 11400000, guid: b8c67196a4c01f3459b892d9f957bd55, type: 2}
+  centerTile: {fileID: 11400000, guid: 4238f7ad45c61fb4ca19b54a42348c0e, type: 2}
+  rightTile: {fileID: 11400000, guid: d0e21718499592d4e817573a091f68cf, type: 2}
+  leftBottomWallTile: {fileID: 11400000, guid: 0440f0f5f94a28b4da768e0fc0e0d288, type: 2}
+  rightBottomWallTile: {fileID: 11400000, guid: f1f1d5c81dd97e54fbfd826fba016aad, type: 2}
+  leftTopWallTile: {fileID: 11400000, guid: 265da3da940354f45ade8f06ff0f6857, type: 2}
+  rightTopWallTile: {fileID: 11400000, guid: 937178a7e57f059428065722ca99fce1, type: 2}
+  spikeTile: {fileID: 11400000, guid: db7c9bd1d0aedd04193f172375e0de99, type: 2}
+  numberOfChunks: 4
+  startX: 6
+  startY: -2
+  minY: -3
+  maxY: 3
+  currentDifficulty: 2
+  easyEnemyPrefabs:
+  - {fileID: 946920935056350428, guid: 4449136f732614845bbe838dbdb3920b, type: 3}
+  - {fileID: 7171921307498121515, guid: e28a98ae6c2d2b644ba81b55e00217e0, type: 3}
+  mediumEnemyPrefabs:
+  - {fileID: 4537751008494101753, guid: e07f5edb7d3afab4584f7e73a71a1e9e, type: 3}
+  - {fileID: 7171921307498121515, guid: e28a98ae6c2d2b644ba81b55e00217e0, type: 3}
+  - {fileID: 1946223034737200236, guid: a4f5f5055fd5d814a8a8c981a9278368, type: 3}
+  hardEnemyPrefabs:
+  - {fileID: 4537751008494101753, guid: e07f5edb7d3afab4584f7e73a71a1e9e, type: 3}
+  - {fileID: 568518211901533699, guid: 9dfa145ba4fa61247b2b69c1b89d75f2, type: 3}
+  - {fileID: 7171921307498121515, guid: e28a98ae6c2d2b644ba81b55e00217e0, type: 3}
+  spikeSpawnChance: 0
+  EnemySpawnChance: 0.2
