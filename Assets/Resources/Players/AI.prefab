@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 7398338557370521038}
   - component: {fileID: 3609930802211732502}
   - component: {fileID: 4491240504049909328}
-  - component: {fileID: 2790340315006090742}
   - component: {fileID: 1158230859995459512}
   - component: {fileID: 5585766054931146986}
   - component: {fileID: 6406858178985479771}
@@ -188,7 +187,7 @@ MonoBehaviour:
   animator: {fileID: 1158230859995459512}
   smokeFX: {fileID: 0}
   walkSoundDelay: 0.5
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 2285815812045305226}
   agentActive: 0
   isOnFloor: 0
   maxSpeed: 15
@@ -200,7 +199,7 @@ MonoBehaviour:
   maxAirTurnSpeed: 60
   useAcceleration: 1
   friction: 0
-  jumpHeight: 10
+  jumpHeight: 2
   timeToJumpApex: 0.5
   upwardMovementMultiplier: 1
   downwardMovementMultiplier: 6
@@ -223,15 +222,15 @@ MonoBehaviour:
   dashSleepTime: 0.05
   dashInputBufferTime: 0.2
   dashIcon: {fileID: 0}
-  wallJumpForce: {x: 1, y: 12}
+  wallJumpForce: {x: 12, y: 8}
   wallJumpControlDelay: 0.15
   wallCoyoteTime: 0.15
   jumpStretchFactor: 1.2
   landSquashFactor: 0.8
   squashSpeed: 10
   landSquashDuration: 0.1
-  maxTiltAngle: 15
-  tiltSpeed: 5
+  maxTiltAngle: 3
+  tiltSpeed: 2
 --- !u!114 &7398338557370521038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,23 +302,6 @@ MonoBehaviour:
     m_Bits: 4294967295
   raycastDistance: 15
   levelCompletionThreshold: 0
---- !u!114 &2790340315006090742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6422262314651042975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04c744cd70b595e43a55881fcf3d4ac3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dissolveEffect: {fileID: 0}
-  livesUI: {fileID: 0}
-  playerMovement: {fileID: 0}
-  respawnPoint: {fileID: 0}
-  dissolveSpeed: 2
 --- !u!95 &1158230859995459512
 Animator:
   serializedVersion: 7

@@ -17,6 +17,9 @@ public class ProcGen : MonoBehaviour
 
     // Prefabs for various game objects
     public GameObject flagPrefab;        // Prefab for the flag at the end of the level
+    public bool flagBool = true;
+
+    public bool splitLevel = true;
     public GameObject deathZonePrefab;   // Prefab for the death zone area
 
     // Tilemap references for ground and hazards
@@ -122,53 +125,58 @@ public class ProcGen : MonoBehaviour
             minYReached = Mathf.Min(minYReached, y); // Update the minimum Y reached
         }
 
-        float endX = x;
-        float endY = y;
-
-        maxY = -10f;
-        minY = -30f;
-
-        x = initialPlatformEnd.x;      // Current X position for generation
-        y = initialPlatformEnd.y;      // Current Y position for generation
-
-        for (int i = 0; i < numberOfChunks; i++)
+        if (splitLevel)
         {
-            Vector2 newCoords = CreateSafeChunk(x, y); // Create a safe (non-dangerous) chunk
-            x = newCoords.x; // Update X position
-            y = newCoords.y; // Update Y position
-            // Debug.Log($"SafeChunk ended at: x = {x}, y = {y}");
+            float endX = x;
+            float endY = y;
 
-            newCoords = CreateDangerChunk(x, y); // Create a dangerous chunk
-            x = newCoords.x; // Update X position
-            y = newCoords.y; // Update Y position
-            // Debug.Log($"DangerChunk ended at: x = {x}, y = {y}");
+            maxY = -10f;
+            minY = -30f;
 
-            minYReached = Mathf.Min(minYReached, y); // Update the minimum Y reached
-        }
-        // Debug.Log($"Gen ended at: x = {x}, y = {y}");
+            x = initialPlatformEnd.x;      // Current X position for generation
+            y = initialPlatformEnd.y;      // Current Y position for generation
 
-        PaintGroundTile(x + 3, y + 3, centerTile);
-        PaintGroundTile(x + 4, y + 3, centerTile);
-        PaintGroundTile(x + 5, y + 3, centerTile);
+            for (int i = 0; i < numberOfChunks; i++)
+            {
+                Vector2 newCoords = CreateSafeChunk(x, y); // Create a safe (non-dangerous) chunk
+                x = newCoords.x; // Update X position
+                y = newCoords.y; // Update Y position
+                // Debug.Log($"SafeChunk ended at: x = {x}, y = {y}");
 
-        // Debug.Log($"{endY}, {y}, y = {(endY * 0.75f)}, {(y * 0.25f)}, {endY - (endY * 0.75f) - (y * 0.25f)}");
+                newCoords = CreateDangerChunk(x, y); // Create a dangerous chunk
+                x = newCoords.x; // Update X position
+                y = newCoords.y; // Update Y position
+                // Debug.Log($"DangerChunk ended at: x = {x}, y = {y}");
 
-        if (Math.Abs(y - endY - 3f) > 10f) {
-            for (int i=0; i < Math.Abs(endY - y) * 0.4f; i++) {
-                // Use the selected tile in the method call
-                PaintWallTile(x + 8f, y+i+(Math.Abs(endY - y) / 4), new TileBase[] { leftBottomWallTile, leftTopWallTile }[UnityEngine.Random.Range(0, 2)]);
-                PaintWallTile(x + 8f + 1f, y+i+(Math.Abs(endY - y) / 4), new TileBase[] { rightBottomWallTile, rightTopWallTile }[UnityEngine.Random.Range(0, 2)]);
+                minYReached = Mathf.Min(minYReached, y); // Update the minimum Y reached
             }
+            // Debug.Log($"Gen ended at: x = {x}, y = {y}");
+
+            PaintGroundTile(x + 3, y + 3, centerTile);
+            PaintGroundTile(x + 4, y + 3, centerTile);
+            PaintGroundTile(x + 5, y + 3, centerTile);
+
+            // Debug.Log($"{endY}, {y}, y = {(endY * 0.75f)}, {(y * 0.25f)}, {endY - (endY * 0.75f) - (y * 0.25f)}");
+
+            if (Math.Abs(y - endY - 3f) > 10f) {
+                for (int i=0; i < Math.Abs(endY - y) * 0.4f; i++) {
+                    // Use the selected tile in the method call
+                    PaintWallTile(x + 8f, y+i+(Math.Abs(endY - y) / 4), new TileBase[] { leftBottomWallTile, leftTopWallTile }[UnityEngine.Random.Range(0, 2)]);
+                    PaintWallTile(x + 8f + 1f, y+i+(Math.Abs(endY - y) / 4), new TileBase[] { rightBottomWallTile, rightTopWallTile }[UnityEngine.Random.Range(0, 2)]);
+                }
+            }
+
+            y = (endY * 0.75f) + (y * 0.25f);
+
+            x = Mathf.Max(x, endX) + 5f;
+
+            CreateEndChunk(x, y); // Create the ending chunk with the flag
+            CreateDeathZone(x, minYReached); // Create the death zone based on the level's end
+
+        } else {
+            CreateEndChunk(x, y); // Create the ending chunk with the flag
+            CreateDeathZone(x, minYReached); // Create the death zone based on the level's end
         }
-
-        y = (endY * 0.75f) + (y * 0.25f);
-
-
-
-        x = Mathf.Max(x, endX) + 5f;
-
-        CreateEndChunk(x, y); // Create the ending chunk with the flag
-        CreateDeathZone(x, minYReached); // Create the death zone based on the level's end
     }
 
     public void ClearExistingLevel()
@@ -731,7 +739,7 @@ public class ProcGen : MonoBehaviour
             currentX += 1f; // Move to next position
         }
 
-        if (flagPrefab != null)
+        if (flagBool == true)
         {
             // Instantiate the flag at the end of the platform
             GameObject flag = Instantiate(

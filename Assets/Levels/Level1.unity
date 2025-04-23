@@ -606,34 +606,6 @@ PrefabInstance:
       propertyPath: smokeFX
       value: 
       objectReference: {fileID: 1255147594}
-    - target: {fileID: 7310457839467904643, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
-      propertyPath: cyoteTime
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310457839467904643, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
-      propertyPath: tiltSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310457839467904643, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
-      propertyPath: jumpHeight
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310457839467904643, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
-      propertyPath: maxTiltAngle
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310457839467904643, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
-      propertyPath: spriteRenderer
-      value: 
-      objectReference: {fileID: 1077009918}
-    - target: {fileID: 7310457839467904643, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
-      propertyPath: wallJumpForce.x
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 7310457839467904643, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
-      propertyPath: wallJumpForce.y
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 8265371546771409018, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4
@@ -674,17 +646,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2790340315006090742, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
---- !u!212 &1077009918 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 2285815812045305226, guid: e1c3a30615b28fc4aab8f9cbffa57117, type: 3}
-  m_PrefabInstance: {fileID: 1077009917}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1180751884
 PrefabInstance:
   m_ObjectHideFlags: 0
