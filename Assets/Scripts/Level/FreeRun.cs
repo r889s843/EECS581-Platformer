@@ -56,7 +56,6 @@ public class FreerunProcGen : MonoBehaviour
     private float nextDifficultyThreshold = 0f;
     private float lastPlatformEndX = 0f;
     private float lastPlatformEndY = 0f;
-    private bool playerAlive = true;
 
     public float startX = 0f;            
     public float startY = 0f;            
@@ -66,7 +65,6 @@ public class FreerunProcGen : MonoBehaviour
     float pGap = 0.3f;       
     float pJump = 0.3f;      
     float pShortJump = 0.2f; 
-    float pWallJump = 0.2f;  
 
     float spikeSpawnChance = 0.0f;
     float maxSpikeSpawnChance = 0.2f;

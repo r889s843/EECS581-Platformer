@@ -25501,6 +25501,50 @@ PrefabInstance:
       propertyPath: dashIcon
       value: 
       objectReference: {fileID: 777792525}
+    - target: {fileID: 3047485245867766272, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: playerData.levelProgress.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047485245867766272, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: 'playerData.levelProgress.Array.data[0]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047485245867766272, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: 'playerData.levelProgress.Array.data[1]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047485245867766272, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: 'playerData.levelProgress.Array.data[2]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047485245867766272, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: 'playerData.levelProgress.Array.data[3]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047485245867766272, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: 'playerData.levelProgress.Array.data[4]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047485245867766272, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: 'playerData.levelProgress.Array.data[5]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047485245867766272, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: playerData.abilitiesUnlocked.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047485245867766272, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: 'playerData.abilitiesUnlocked.Array.data[0]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047485245867766272, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: 'playerData.abilitiesUnlocked.Array.data[1]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3047485245867766272, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: 'playerData.abilitiesUnlocked.Array.data[2]'
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: teleportIcon
       value: 

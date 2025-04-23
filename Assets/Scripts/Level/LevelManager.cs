@@ -308,13 +308,9 @@ public class LevelManager : MonoBehaviour
             // Increment the level number based on the current scene name
             int lastNumber = int.Parse(sceneName[^1].ToString()); // Get the last character as number
 
-            // Increment the number for the next level
-            int nextNumber = lastNumber + 1; // Increment level number
-
             // Replace the last digit with the incremented number to get the next level name
-            string nextLevelName = sceneName.Substring(0, sceneName.Length - 1) + nextNumber; // Form next level name
             PlayerManager.Instance.playerData.levelProgress[lastNumber - 1] = true; // Mark level as completed
-            LoadScene(nextLevelName); // Load the next level
+            LoadScene("Shop"); // Load the next level
         }
     }
 }
