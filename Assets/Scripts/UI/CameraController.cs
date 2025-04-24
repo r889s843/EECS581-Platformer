@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
     [Header("Dynamic Settings")]
     [SerializeField] private float heightChangeSpeed; //speed that cam changes height
     [SerializeField] private float zoomSpeed; //zoom speed
+    [SerializeField] private float lookDirChangeSpeed; //speed that the camera changes looking direction
 
     [Header("Static Settings")]
     [SerializeField] private float minZoom; //min size of camera
@@ -23,8 +24,9 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float aheadDistance; //distance camera centers ahead of player
     [SerializeField] private float rayDistanceAhead; //distance that the raycast will look ahead to detect lower ledges
 
-    //height & zoom
+    //cam pos & zoom
     private float camHeight; //y value hight of camera
+    private float lookDir; //value between -1 and 1 to dictate looking direction
     private float groundLevel; //y value of ground in level
     private float zoom; //camera's zoom value
     private float zoomOffset; //vertical offset to move camera to account for zooming - keeps camera anchored on ground
@@ -33,6 +35,7 @@ public class CameraController : MonoBehaviour
     private float zoomCurrentVelo;
     private float heightCurrentVelo;
     private float lookAheadCurrentVelo;
+    private float lookDirDampVelo;
 
     [Header("P2 Objects")]
     [SerializeField] private GameObject p2cam;
@@ -54,6 +57,9 @@ public class CameraController : MonoBehaviour
     }
 
     private void Update() {
+        //camera direction
+        lookDir = Mathf.SmoothDamp(lookDir, player.localScale.x, ref lookDirDampVelo, lookDirChangeSpeed);
+
         //update ground level
         groundLevel = calcGroundLevel();
 
@@ -64,9 +70,7 @@ public class CameraController : MonoBehaviour
         //update camera position
         zoomOffset = zoom - minZoom;
         camHeight = Mathf.SmoothDamp(camHeight, (groundLevel + 4.0f + zoomOffset), ref heightCurrentVelo, heightChangeSpeed);
-        //lerp camHeight instead of smoothdamp
-
-        transform.position = new Vector3(player.position.x + aheadDistance, camHeight, transform.position.z); 
+        transform.position = new Vector3(player.position.x + (aheadDistance * lookDir), camHeight, transform.position.z); 
     }
 
     //returns new camera zoom based on distance from ground level
