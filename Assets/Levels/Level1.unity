@@ -691,6 +691,14 @@ PrefabInstance:
       propertyPath: invincibilityCooldownText
       value: 
       objectReference: {fileID: 1771791339}
+    - target: {fileID: 3266243092628714198, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 3266243092628714198, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.14
+      objectReference: {fileID: 0}
     - target: {fileID: 6061905224598523987, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
       propertyPath: m_Name
       value: Player2
@@ -942,6 +950,14 @@ PrefabInstance:
       propertyPath: moneyText
       value: 
       objectReference: {fileID: 644149481857594075}
+    - target: {fileID: 7651820968478498040, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7651820968478498040, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.09
+      objectReference: {fileID: 0}
     - target: {fileID: 8795842049470078105, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_Name
       value: Player
