@@ -457,6 +457,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6061905224598523987, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
   m_PrefabInstance: {fileID: 1440622297}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &512530132 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8699063827881332454, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
+  m_PrefabInstance: {fileID: 1440622297}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &521677285 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6352742763613719036, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
@@ -540,6 +545,94 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &633764176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 633764177}
+  - component: {fileID: 633764178}
+  m_Layer: 0
+  m_Name: Lights
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &633764177
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633764176}
+  serializedVersion: 2
+  m_LocalRotation: {x: 1, y: -0, z: -0, w: 0}
+  m_LocalPosition: {x: -0.73600006, y: 0.052999973, z: 0}
+  m_LocalScale: {x: 24.20234, y: 14.32307, z: 4.2836}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 512530132}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &633764178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633764176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 2
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 0.8254717, g: 1, b: 0.83042085, a: 1}
+  m_Intensity: 1
+  m_LightVolumeIntensity: 1
+  m_LightVolumeEnabled: 0
+  m_ApplyToSortingLayers: e1610d06000000008f9f9890699a8884
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowsEnabled: 1
+  m_ShadowIntensity: 0.75
+  m_ShadowSoftness: 0.3
+  m_ShadowSoftnessFalloffIntensity: 0.5
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: 0, y: -0.00000011920929, z: 0}
+    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 29.218365
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.4023795, y: -0.009599987, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: 0.19587934, y: 0.3978494, z: 0}
+  - {x: -0.16709922, y: 0.39351484, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+  - {x: -0.3017733, y: -0.020436384, z: 0}
 --- !u!114 &650951429 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 784149183781814926, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
@@ -713,6 +806,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 936288830547839266, guid: 015078de0b2ed444984cc12b26b16ad9, type: 3}
   m_PrefabInstance: {fileID: 772611768}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &845364814 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+  m_PrefabInstance: {fileID: 1842696105}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &850280906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -769,6 +867,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Portal - Level 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8152102383227359647, guid: 1059d3129dd2cfa4281d48b383feebca, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: b766bd8689caa404b88026ac796f4855, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -844,6 +946,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8152102383227359647, guid: 1059d3129dd2cfa4281d48b383feebca, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: b766bd8689caa404b88026ac796f4855, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1049,6 +1155,94 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3039516649230901719, guid: 577a415809bbd114f8717919b0dfd2ff, type: 3}
   m_PrefabInstance: {fileID: 1096545859}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1018807833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1018807834}
+  - component: {fileID: 1018807835}
+  m_Layer: 0
+  m_Name: Lights
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1018807834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018807833}
+  serializedVersion: 2
+  m_LocalRotation: {x: 1, y: -0, z: -0, w: 0}
+  m_LocalPosition: {x: -0.029, y: 0.059, z: 0}
+  m_LocalScale: {x: 24.20234, y: 14.323072, z: 4.2836}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 845364814}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1018807835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018807833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 2
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 0.8254717, g: 1, b: 0.83042085, a: 1}
+  m_Intensity: 1
+  m_LightVolumeIntensity: 1
+  m_LightVolumeEnabled: 0
+  m_ApplyToSortingLayers: e1610d06000000008f9f9890699a8884
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowsEnabled: 1
+  m_ShadowIntensity: 0.75
+  m_ShadowSoftness: 0.3
+  m_ShadowSoftnessFalloffIntensity: 0.5
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: 0, y: -0.00000011920929, z: 0}
+    m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 29.218365
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.4023795, y: -0.009599987, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: 0.19587934, y: 0.3978494, z: 0}
+  - {x: -0.16709922, y: 0.39351484, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+  - {x: -0.3017733, y: -0.020436384, z: 0}
 --- !u!114 &1021030215 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9078087764023595973, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
@@ -1268,6 +1462,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Portal - Level 4
       objectReference: {fileID: 0}
+    - target: {fileID: 8152102383227359647, guid: 1059d3129dd2cfa4281d48b383feebca, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: b766bd8689caa404b88026ac796f4855, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1498,7 +1696,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8699063827881332454, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 633764177}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
 --- !u!114 &1468742047 stripped
@@ -1579,6 +1780,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Portal - Level 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8152102383227359647, guid: 1059d3129dd2cfa4281d48b383feebca, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: b766bd8689caa404b88026ac796f4855, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4821,6 +5026,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Portal - Level 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8152102383227359647, guid: 1059d3129dd2cfa4281d48b383feebca, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: b766bd8689caa404b88026ac796f4855, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4922,7 +5131,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1018807834}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
 --- !u!114 &2103124944 stripped
@@ -5267,6 +5479,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Portal - Level 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8152102383227359647, guid: 1059d3129dd2cfa4281d48b383feebca, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: b766bd8689caa404b88026ac796f4855, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
