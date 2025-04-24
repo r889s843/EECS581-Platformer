@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PortalManager : MonoBehaviour
 {
+    public static PortalManager Instance { get; private set; }
+
     // Assign these in the Unity Inspector
     public GameObject[] portals = new GameObject[6]; // Array for the 6 portal GameObjects
 
@@ -9,6 +11,17 @@ public class PortalManager : MonoBehaviour
     public Color completedColor = Color.gray;  // Color for completed portals
     public Color activeColor = Color.green;    // Color for the next active portal
     public Color lockedColor = Color.red;      // Color for locked (future) portals
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject); // Persist across scenes
+    }
 
     private void Start()
     {
@@ -70,7 +83,7 @@ public class PortalManager : MonoBehaviour
             if (i < nextLevelIndex)
             {
                 // Completed portals (before the next uncompleted level)
-                SetPortalState(portals[i], false, completedColor);
+                SetPortalState(portals[i], true, completedColor);
             }
             else if (i == nextLevelIndex)
             {

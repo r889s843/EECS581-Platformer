@@ -299,7 +299,9 @@ public class LevelManager : MonoBehaviour
             if (currentTime < PlayerManager.Instance.playerData.bestStoryTime || PlayerManager.Instance.playerData.bestStoryTime == 0f)
             {
                 PlayerManager.Instance.playerData.bestStoryTime = currentTime;
+                PlayerManager.Instance.playerData.levelProgress[5] = true;
                 PlayerManager.Instance.SavePlayerData(); // Save the updated data using SaveSystem
+                PortalManager.Instance.UpdatePortals();
             }
             LoadScene("Start"); // Transition to Main Menu
         }
@@ -308,8 +310,12 @@ public class LevelManager : MonoBehaviour
             // Increment the level number based on the current scene name
             int lastNumber = int.Parse(sceneName[^1].ToString()); // Get the last character as number
 
+            Debug.Log(lastNumber);
+
             // Replace the last digit with the incremented number to get the next level name
             PlayerManager.Instance.playerData.levelProgress[lastNumber - 1] = true; // Mark level as completed
+            PlayerManager.Instance.SavePlayerData(); // Save the updated data using SaveSystem
+            PortalManager.Instance.UpdatePortals();
             LoadScene("Shop"); // Load the next level
         }
     }
