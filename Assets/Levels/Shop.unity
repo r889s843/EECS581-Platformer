@@ -1646,6 +1646,10 @@ PrefabInstance:
       propertyPath: invincibilityCooldownText
       value: 
       objectReference: {fileID: 348019264}
+    - target: {fileID: 2835386308296440332, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
+      propertyPath: m_NormalMapQuality
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6061905224598523987, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
       propertyPath: m_Name
       value: Player2
@@ -5055,11 +5059,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.63
+      value: 9.61
       objectReference: {fileID: 0}
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.21
+      value: -0.88
       objectReference: {fileID: 0}
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5113,6 +5117,10 @@ PrefabInstance:
       propertyPath: invincibilityCooldownText
       value: 
       objectReference: {fileID: 1098453651}
+    - target: {fileID: 5833051018263824084, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: m_NormalMapQuality
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6720324758942419461, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: livesUI
       value: 
@@ -5125,6 +5133,14 @@ PrefabInstance:
       propertyPath: moneyText
       value: 
       objectReference: {fileID: 2103124944}
+    - target: {fileID: 7651820968478498040, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 7651820968478498040, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 8795842049470078105, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_Name
       value: Player
