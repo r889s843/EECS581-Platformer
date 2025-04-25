@@ -841,9 +841,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heightChangeSpeed: 0.3
   zoomSpeed: 0.2
+  lookDirChangeSpeed: 0.75
   minZoom: 5
   maxZoom: 25
-  aheadDistance: 3
+  aheadDistance: 4
   rayDistanceAhead: 13
   p2cam: {fileID: 8893357557382604470, guid: dc039bbc4dbbad840a7e4e2e98685ebd, type: 3}
 --- !u!114 &1408538800213428618
