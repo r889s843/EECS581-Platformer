@@ -553,6 +553,15 @@ public class PlayerMovement : MonoBehaviour
         float afterImageSpawnDelay = 0.05f;
         float nextAfterImageTime = Time.time;
         
+        // Kill enemies the player dashes through
+        float dashDist = dashAttackTime * dashSpeed;    //calcualte dash distance
+        RaycastHit2D hit = Physics2D.Raycast(body.position, dir, (dashDist + 0.5f), LayerMask.GetMask("Enemy")); //raycast along dash path (0.5 dist added to account for player width)
+        if(hit) { //kill enemy the player dashes through
+            GameObject enemyTemp = hit.collider.gameObject;
+            EnemyMovement enemyMovement = enemyTemp.GetComponent<EnemyMovement>();
+            enemyMovement.kill();
+        }
+
         while (Time.time - startTime <= dashAttackTime)
         {
             body.linearVelocity = dir * dashSpeed;

@@ -136,5 +136,9 @@ public class EnemyMovement : MonoBehaviour
         return hit.collider == null;
     }
 
-
+    //method called by other scripts to kill the enemy
+    public void kill()
+    {
+        gameObject.SetActive(false);
+    }
 }

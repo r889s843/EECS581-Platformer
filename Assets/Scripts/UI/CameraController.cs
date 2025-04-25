@@ -104,6 +104,8 @@ public class CameraController : MonoBehaviour
             }
         }
 
+        //probably need to account for different player direction here
+
         return newGroundLevel;
     }
 
