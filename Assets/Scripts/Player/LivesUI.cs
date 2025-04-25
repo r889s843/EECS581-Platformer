@@ -24,6 +24,9 @@ public class LivesUI : MonoBehaviour
     public int currentLivesP1 = 3; // Current lives for Player 1
     public int currentLivesP2 = 3; // Current lives for Player 2
 
+    public bool isUnlimitedLivesScene = false; // Flag for unlimited lives in Level5
+    private Color greyedOutColor = new Color(0.5f, 0.5f, 0.5f, 0.5f); // Color for greyed-out icons
+
     void Start()
     {
         UpdateLivesDisplayP1(); // Initialize Player 1 lives display
@@ -36,17 +39,25 @@ public class LivesUI : MonoBehaviour
         } else {
             UpdateLivesDisplayP2(); // Initialize Player 2 lives display
         }
+        if (isUnlimitedLivesScene){
+            GreyOutLivesP1();
+            if (P2){
+                GreyOutLivesP2();
+            }
+        }
     }
 
     public void LoseLifeP1()
     {
-        currentLivesP1--; // Decrement Player 1's lives
-        if (currentLivesP1 <= 0) {
-            currentLivesP1 = 0; // Ensure lives don't go below zero
-            UpdateLivesDisplayP1(); // Update display
-            GoToMainScreen(); // Handle game over or main menu transition
-        } else {
-            UpdateLivesDisplayP1(); // Update display
+        if (!isUnlimitedLivesScene){
+            currentLivesP1--; // Decrement Player 1's lives
+            if (currentLivesP1 <= 0) {
+                currentLivesP1 = 0; // Ensure lives don't go below zero
+                UpdateLivesDisplayP1(); // Update display
+                GoToMainScreen(); // Handle game over or main menu transition
+            } else {
+                UpdateLivesDisplayP1(); // Update display
+            }
         }
     }
 
@@ -54,13 +65,15 @@ public class LivesUI : MonoBehaviour
     {
         if (!P2) return; // If not co-op, no need to update Player 2 lives
 
-        currentLivesP2--; // Decrement Player 2's lives
-        if (currentLivesP2 <= 0) {
-            currentLivesP2 = 0; // Ensure lives don't go below zero
-            UpdateLivesDisplayP2(); // Update display
-            GoToMainScreen(); // Handle game over or main menu transition
-        } else {
-            UpdateLivesDisplayP2(); // Update display
+        if (!isUnlimitedLivesScene){
+            currentLivesP2--; // Decrement Player 2's lives
+            if (currentLivesP2 <= 0) {
+                currentLivesP2 = 0; // Ensure lives don't go below zero
+                UpdateLivesDisplayP2(); // Update display
+                GoToMainScreen(); // Handle game over or main menu transition
+            } else {
+                UpdateLivesDisplayP2(); // Update display
+            }
         }
     }
 
@@ -79,6 +92,26 @@ public class LivesUI : MonoBehaviour
             P2Lives2.enabled = (currentLivesP2 >= 2); // Show second life icon for Player 2 if at least 2 lives
             P2Lives3.enabled = (currentLivesP2 >= 3); // Show third life icon for Player 2 if 3 lives
         }
+    }
+
+    private void GreyOutLivesP1()
+    {
+        Lives1.enabled = true; // Ensure icon is visible
+        Lives1.color = greyedOutColor; // Apply greyed-out color
+        Lives2.enabled = true;
+        Lives2.color = greyedOutColor;
+        Lives3.enabled = true;
+        Lives3.color = greyedOutColor;
+    }
+
+    private void GreyOutLivesP2()
+    {
+        Lives1.enabled = true; // Ensure icon is visible
+        Lives1.color = greyedOutColor; // Apply greyed-out color
+        Lives2.enabled = true;
+        Lives2.color = greyedOutColor;
+        Lives3.enabled = true;
+        Lives3.color = greyedOutColor;
     }
 
     private void GoToMainScreen()

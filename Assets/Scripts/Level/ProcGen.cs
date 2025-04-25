@@ -195,8 +195,8 @@ public class ProcGen : MonoBehaviour
 
     private Vector2 CreateInitialPlatform()
     {
-        float currentX = 0f; // Starting X position
-        float currentY = 0f; // Starting Y position
+        float currentX = startX; // Starting X position
+        float currentY = startY; // Starting Y position
 
         // Paint the initial platform tiles
         PaintGroundTile(currentX, currentY, leftTile); // Paint left end tile

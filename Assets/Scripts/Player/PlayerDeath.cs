@@ -21,6 +21,7 @@ public class PlayerDeath : MonoBehaviour
     public float dissolveSpeed = 2f;
 
     private Vector2 startPosition;
+    private bool isDead = false;
 
     private void Start()
     {
@@ -47,10 +48,12 @@ public class PlayerDeath : MonoBehaviour
             collision.CompareTag("Hazard")   || collision.CompareTag("Projectile"))
         {
             // Decrement the appropriate player's life
-            if (CompareTag("Player"))
+            if (CompareTag("Player") && !isDead)
                 livesUI.LoseLifeP1();
-            else if (CompareTag("Player2"))
+            else if (CompareTag("Player2") && !isDead)
                 livesUI.LoseLifeP2();
+
+            isDead = true;
 
             // Disable movement so player can’t move while dissolving
             if (playerMovement != null)
@@ -104,6 +107,7 @@ public class PlayerDeath : MonoBehaviour
         // Now that we’re “alive” again, re-enable movement
         if (playerMovement != null)
             playerMovement.enabled = true;
+            isDead = false;
 
         dissolveEffect.StopDissolve(dissolveSpeed);
 

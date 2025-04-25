@@ -15,6 +15,10 @@ public class ProcGenTool : MonoBehaviour
         public float spikeSpawnChance = 0f;
         [Range(0f, 1f)]
         public float enemySpawnChance = 0f;
+        public float startX;
+        public float startY;
+        public float minY;
+        public float maxY;
     }
 
     public LevelSettings settings;
@@ -52,6 +56,9 @@ public class ProcGenTool : MonoBehaviour
             // Clear existing level first
             ClearLevel();
 
+            // Update the respawn point position
+            UpdateRespawnPointPosition();
+
             ApplySettingsToProcGen();
             procGenInstance.GenerateNewLevel();
 
@@ -66,6 +73,30 @@ public class ProcGenTool : MonoBehaviour
         {
             Debug.LogWarning($"Cannot generate level. ProcGen instance: {(procGenInstance != null ? "found" : "missing")}. Settings: {(settings != null ? "set" : "missing")}.");
         }
+    }
+
+    private void UpdateRespawnPointPosition()
+    {
+        // Find the respawn point GameObject
+        GameObject respawnPoint = GameObject.Find("Respawn");
+        if (respawnPoint == null)
+        {
+            Debug.LogWarning("ProcGenTool: Respawn not found in the scene.");
+            return;
+        }
+
+        // Calculate the new position: 3 units behind ProcGenTool on the X-axis
+        Vector3 newPosition = transform.position;
+        newPosition.x -= 3f; // Move 3 units to the left (behind)
+
+        // Update the respawn point's position, preserving its Y and Z coordinates
+        respawnPoint.transform.position = new Vector3(
+            newPosition.x,
+            respawnPoint.transform.position.y,
+            respawnPoint.transform.position.z
+        );
+
+        Debug.Log($"ProcGenTool: RespawnPoint moved to {respawnPoint.transform.position}");
     }
 
     private void ClearLevel()
@@ -184,6 +215,10 @@ public class ProcGenTool : MonoBehaviour
         procGenInstance.numberOfChunks = settings.numberOfChunks;
         procGenInstance.spikeSpawnChance = settings.spikeSpawnChance;
         procGenInstance.EnemySpawnChance = settings.enemySpawnChance;
+        procGenInstance.startX = settings.startX;
+        procGenInstance.startY = settings.startY;
+        procGenInstance.minY = settings.minY;
+        procGenInstance.maxY = settings.maxY;
     }
 
 #if UNITY_EDITOR
