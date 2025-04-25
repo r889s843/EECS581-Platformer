@@ -11,7 +11,7 @@ using UnityEngine;
 // DeathZone components mark a collider which will schedule a event when the player enters the trigger.
 public class DeathZone : MonoBehaviour
 {
-    public Transform Respawn;
+    // public Transform Respawn;
     private AudioSource audioSource;
 
     void Start()
