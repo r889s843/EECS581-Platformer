@@ -1803,8 +1803,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 348019264}
     - target: {fileID: 2835386308296440332, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
+      propertyPath: m_Intensity
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835386308296440332, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
       propertyPath: m_NormalMapQuality
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835386308296440332, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
+      propertyPath: m_PointLightOuterRadius
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 6061905224598523987, guid: f3d595903f15fd3498d981f44da202d6, type: 3}
       propertyPath: m_Name
