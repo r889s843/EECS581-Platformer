@@ -20,8 +20,11 @@ public class NPC : MonoBehaviour
     public GameObject continueButton;
     public float wordSpeed = 0.06f; // default is 0.06
     public bool playerIsClose;
-
+    public bool hasShop = false;
     public GameObject shopPanel;
+    
+    public string npc_name;
+    public string level;
 
     void Start()
     {
@@ -101,4 +104,17 @@ public class NPC : MonoBehaviour
             zeroText();
         }
     }
+
+
+
+
+    // private void Manage(npc_name, level){
+        // if (npc_name == 'Zip'){
+        //     if (level == 'Level5'){
+
+        //     } else {
+                
+        //     }
+        // }
+    // }
 }
