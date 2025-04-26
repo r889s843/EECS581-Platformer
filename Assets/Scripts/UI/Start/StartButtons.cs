@@ -5,21 +5,15 @@ public class Start : MonoBehaviour
 {
     public GameObject titleCard;
     public GameObject startButtonsPanel;
+    public GameObject savePanel;
     public GameObject leaderboardsPanel;
     public GameObject optionsButtonsPanel;
 
-    public void StartStoryMode()
+    public void OpenSaves()
     {
-        SceneManager.LoadScene(1);
-    }
-    public void StartProcGen()
-    {
-        SceneManager.LoadScene(8);
-    }
-
-    public void StartFreeRun()
-    {
-        SceneManager.LoadScene(9);
+        titleCard.SetActive(false);
+        startButtonsPanel.SetActive(false);
+        savePanel.SetActive(true);
     }
 
     public void OpenLeaderboards()
@@ -39,6 +33,7 @@ public class Start : MonoBehaviour
     public void BackToStart()
     {
         titleCard.SetActive(true);
+        savePanel.SetActive(false);
         leaderboardsPanel.SetActive(false);
         optionsButtonsPanel.SetActive(false);
         startButtonsPanel.SetActive(true);
