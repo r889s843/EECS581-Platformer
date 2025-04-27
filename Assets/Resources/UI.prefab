@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8983635427920358830}
   - component: {fileID: 3223298691000620234}
   m_Layer: 5
-  m_Name: NPCName
+  m_Name: ZipNPCName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 645290386444495178}
   - component: {fileID: 5868023034748168925}
   m_Layer: 5
-  m_Name: ContinueButton
+  m_Name: DarwinContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,7 +256,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 645290386444495178}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 784149183781814926, guid: b1d5c7680f8524bc687394409371988a, type: 3}
+        m_TargetAssemblyTypeName: NPC, Assembly-CSharp
+        m_MethodName: NextLine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &289804040361537576
 GameObject:
   m_ObjectHideFlags: 0
@@ -889,7 +901,7 @@ GameObject:
   - component: {fileID: 7097586751446400126}
   - component: {fileID: 6398580649830057259}
   m_Layer: 5
-  m_Name: DialogueText
+  m_Name: TuringDialogueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1026,7 +1038,7 @@ GameObject:
   - component: {fileID: 1473478550205063892}
   - component: {fileID: 7696794651730331758}
   m_Layer: 5
-  m_Name: ContinueButton
+  m_Name: TuringContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1133,7 +1145,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1473478550205063892}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 784149183781814926, guid: 64127fb4910ce4d60bb967b0d4fbcc7f, type: 3}
+        m_TargetAssemblyTypeName: NPC, Assembly-CSharp
+        m_MethodName: NextLine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1211170505583448051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1147,7 +1171,7 @@ GameObject:
   - component: {fileID: 6924138855847777819}
   - component: {fileID: 30816600258374910}
   m_Layer: 5
-  m_Name: ContinueButton
+  m_Name: CloudContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1254,7 +1278,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6924138855847777819}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 784149183781814926, guid: 6a8f1c49e80d541589b47e097d51fb8d, type: 3}
+        m_TargetAssemblyTypeName: NPC, Assembly-CSharp
+        m_MethodName: NextLine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1402955671728632961
 GameObject:
   m_ObjectHideFlags: 0
@@ -1403,7 +1439,7 @@ GameObject:
   - component: {fileID: 8175752018688860913}
   - component: {fileID: 3435079162510333168}
   m_Layer: 5
-  m_Name: NPCImage
+  m_Name: AsimovNPCImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1765,7 +1801,7 @@ GameObject:
   - component: {fileID: 4933043212595189182}
   - component: {fileID: 8615149407378112414}
   m_Layer: 5
-  m_Name: NPCName
+  m_Name: AsimovNPCName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1954,7 +1990,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Close
+  m_text: Continue
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a9363154354864e9fa84a0646f512fe0, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2037,7 +2073,7 @@ GameObject:
   - component: {fileID: 4358651307008113411}
   - component: {fileID: 3029707088040533125}
   m_Layer: 5
-  m_Name: NPCImage
+  m_Name: DarwinNPCImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2112,7 +2148,7 @@ GameObject:
   - component: {fileID: 9023055348858001146}
   - component: {fileID: 5616917482592869893}
   m_Layer: 5
-  m_Name: NPCImage
+  m_Name: CloudNPCImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2187,7 +2223,7 @@ GameObject:
   - component: {fileID: 4564332488480186696}
   - component: {fileID: 580013766737733749}
   m_Layer: 5
-  m_Name: DialogueText
+  m_Name: AsimovDialogueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2628,7 +2664,7 @@ GameObject:
   - component: {fileID: 1738676598150421348}
   - component: {fileID: 3112696634748392200}
   m_Layer: 5
-  m_Name: DialogueText
+  m_Name: DarwinDialogueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2764,7 +2800,7 @@ GameObject:
   - component: {fileID: 1359108176495109898}
   - component: {fileID: 6112884503257827340}
   m_Layer: 5
-  m_Name: NPCName
+  m_Name: TuringNPCName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3118,7 +3154,7 @@ GameObject:
   - component: {fileID: 1555131905275423464}
   - component: {fileID: 2874647355824128127}
   m_Layer: 5
-  m_Name: NPCName
+  m_Name: CloudNPCName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3638,7 +3674,7 @@ GameObject:
   - component: {fileID: 1658943776861660457}
   - component: {fileID: 4888309330785928663}
   m_Layer: 5
-  m_Name: NPCImage
+  m_Name: ZipNPCImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4054,7 +4090,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Close
+  m_text: Continue
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a9363154354864e9fa84a0646f512fe0, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4138,7 +4174,7 @@ GameObject:
   - component: {fileID: 2290521004958847751}
   - component: {fileID: 2368312559960009473}
   m_Layer: 5
-  m_Name: ContinueButton
+  m_Name: AsimovContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4633,7 +4669,7 @@ GameObject:
   - component: {fileID: 5317718931904738111}
   - component: {fileID: 9165790852015599221}
   m_Layer: 5
-  m_Name: DialogueText
+  m_Name: ZipDialogueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4905,7 +4941,7 @@ GameObject:
   - component: {fileID: 3415708148649166762}
   - component: {fileID: 4246020914875530801}
   m_Layer: 5
-  m_Name: NPCName
+  m_Name: DarwinNPCName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5104,7 +5140,7 @@ GameObject:
   - component: {fileID: 6098479709104279696}
   - component: {fileID: 4128609959598261464}
   m_Layer: 5
-  m_Name: NPCImage
+  m_Name: TuringNPCImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5179,7 +5215,7 @@ GameObject:
   - component: {fileID: 1503464450720286978}
   - component: {fileID: 5301521899773792372}
   m_Layer: 5
-  m_Name: DialogueText
+  m_Name: CloudDialogueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5449,7 +5485,7 @@ GameObject:
   - component: {fileID: 1163933979821871641}
   - component: {fileID: 2096698612730738281}
   m_Layer: 5
-  m_Name: ContinueButton
+  m_Name: ZipContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5556,7 +5592,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1163933979821871641}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 784149183781814926, guid: 69292f1eb1a784aba9265c12c68360b0, type: 3}
+        m_TargetAssemblyTypeName: NPC, Assembly-CSharp
+        m_MethodName: NextLine
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8489314486910621928
 GameObject:
   m_ObjectHideFlags: 0
