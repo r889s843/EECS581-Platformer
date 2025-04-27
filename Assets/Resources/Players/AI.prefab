@@ -190,7 +190,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 2285815812045305226}
   agentActive: 0
   isOnFloor: 0
-  maxSpeed: 15
+  maxSpeed: 12
   maxAcceleration: 52
   maxDecceleration: 52
   maxTurnSpeed: 80

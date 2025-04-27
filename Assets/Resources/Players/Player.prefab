@@ -135,12 +135,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData:
+    username: 
     money: 0
     levelProgress: 
     abilitiesUnlocked: 
     bestFreerunDistance: 0
     procGenCompletionCount: 0
     bestStoryTime: 0
+  currentSlotIndex: 0
 --- !u!1 &4803064032494385025
 GameObject:
   m_ObjectHideFlags: 0
