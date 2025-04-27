@@ -310,6 +310,10 @@ PrefabInstance:
       propertyPath: invincibilityCooldownText
       value: 
       objectReference: {fileID: 1598037610}
+    - target: {fileID: 5833051018263824084, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: m_Intensity
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6720324758942419461, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: livesUI
       value: 
@@ -795,7 +799,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &900188361
 MonoBehaviour:
   m_ObjectHideFlags: 0
