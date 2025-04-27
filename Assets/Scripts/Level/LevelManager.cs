@@ -13,7 +13,7 @@ public class LevelManager : MonoBehaviour
     public static LevelManager Instance { get; private set; }
 
     [Header("Scene Settings")]
-    public string sceneName = "Test"; // Name of the current scene
+    public string sceneName = "Shop"; // Name of the current scene
 
     // Difficulty Tracking Variables
     [Header("Difficulty Settings")]
@@ -152,7 +152,7 @@ public class LevelManager : MonoBehaviour
             // Old: PlayerPrefs.Save(); // Ensure data is written to disk
 
             // Load main menu or handle end-of-run flow
-            LoadScene("Start"); // Transition to Main Menu
+            LoadScene("Shop"); // Transition to Main Menu
         }
         else if (p2 && livesP1 <= 0 && livesP2 > 0)
         {
@@ -219,7 +219,7 @@ public class LevelManager : MonoBehaviour
             // Old: PlayerPrefs.SetInt("TotalCompletions", totalCompletions); // Update total completions
             // Old: PlayerPrefs.Save(); // Ensure data is written to disk
 
-            LoadScene("Start"); // Transition to Main Menu
+            LoadScene("Shop"); // Transition to Main Menu
         }
     }
 
