@@ -43,44 +43,50 @@ public class PlayerDeath : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // For any lethal collision tags:
         if (collision.CompareTag("DeathZone") || collision.CompareTag("Enemy") ||
-            collision.CompareTag("Hazard")   || collision.CompareTag("Projectile"))
+            collision.CompareTag("Hazard") || collision.CompareTag("Projectile"))
         {
-            // Decrement the appropriate player's life
-            if (CompareTag("Player") && !isDead)
-                livesUI.LoseLifeP1();
-            else if (CompareTag("Player2") && !isDead)
-                livesUI.LoseLifeP2();
-
-            isDead = true;
-
-            // Disable movement so player can’t move while dissolving
-            if (playerMovement != null)
-                playerMovement.enabled = false;
-
-            // Freeze the player in place by making Rigidbody2D kinematic and zeroing velocity
-            Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            if (rb != null)
-            {
-                rb.linearVelocity = Vector2.zero; // Stop all movement
-                rb.angularVelocity = 0f;         // Stop rotation
-                rb.isKinematic = true;           // Ignore physics forces
-            }
-
-            // Reset dissolveAmount in a fresh material instance
-            Renderer renderer = GetComponent<Renderer>();
-            Material newMat = new Material(dissolveEffect.material);
-            newMat.SetFloat("_DissolveAmount", 0f);
-            renderer.material = newMat;
-            dissolveEffect.material = newMat;
-
-            // Start the dissolve effect
-            dissolveEffect.StartDissolve(dissolveSpeed);
-
-            // Respawn after the dissolve completes
-            StartCoroutine(HandleDeathAndRespawn());
+            TriggerDeath();
         }
+    }
+
+    public void TriggerDeath()
+    {
+        if (isDead) return; // Prevent multiple death triggers
+
+        // Decrement the appropriate player's life
+        if (CompareTag("Player") && !isDead)
+            livesUI.LoseLifeP1();
+        else if (CompareTag("Player2") && !isDead)
+            livesUI.LoseLifeP2();
+
+        isDead = true;
+
+        // Disable movement so player can’t move while dissolving
+        if (playerMovement != null)
+            playerMovement.enabled = false;
+
+        // Freeze the player in place by making Rigidbody2D kinematic and zeroing velocity
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero; // Stop all movement
+            rb.angularVelocity = 0f;         // Stop rotation
+            rb.isKinematic = true;           // Ignore physics forces
+        }
+
+        // Reset dissolveAmount in a fresh material instance
+        Renderer renderer = GetComponent<Renderer>();
+        Material newMat = new Material(dissolveEffect.material);
+        newMat.SetFloat("_DissolveAmount", 0f);
+        renderer.material = newMat;
+        dissolveEffect.material = newMat;
+
+        // Start the dissolve effect
+        dissolveEffect.StartDissolve(dissolveSpeed);
+
+        // Respawn after the dissolve completes
+        StartCoroutine(HandleDeathAndRespawn());
     }
 
     private IEnumerator HandleDeathAndRespawn()

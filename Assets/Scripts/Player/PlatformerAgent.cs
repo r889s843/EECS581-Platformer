@@ -177,6 +177,27 @@ public class PlatformerAgent : Agent
             SetReward(5.0f);  // Reward for reaching the goal
             // Debug.Log($"Agent Won. Final reward: {GetCumulativeReward()}");
 
+             // Trigger player death and respawn animation
+            GameObject player1 = GameObject.FindGameObjectWithTag("Player");
+            if (player1 != null)
+            {
+                PlayerDeath playerDeath1 = player1.GetComponent<PlayerDeath>();
+                if (playerDeath1 != null)
+                {
+                    playerDeath1.TriggerDeath();
+                }
+            }
+
+            GameObject player2 = GameObject.FindGameObjectWithTag("Player2");
+            if (player2 != null)
+            {
+                PlayerDeath playerDeath2 = player2.GetComponent<PlayerDeath>();
+                if (playerDeath2 != null)
+                {
+                    playerDeath2.TriggerDeath();
+                }
+            }
+
             currentLevelCompletions++;  // Increment completion count
             if (currentLevelCompletions % 10 == 0) {
                 Debug.Log($"Current Count: {currentLevelCompletions}");
