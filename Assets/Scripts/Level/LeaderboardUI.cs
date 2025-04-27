@@ -28,6 +28,13 @@ public class LeaderboardUI : MonoBehaviour
     {
         modeDropdown.onValueChanged.AddListener(OnModeChanged);
 
+        if (PlayerManager.Instance != null && PlayerManager.Instance.playerData != null)
+        {
+            UpdateFreerunLeaderboard(PlayerManager.Instance.playerData.bestFreerunDistance);
+            UpdateProcGenLeaderboard(PlayerManager.Instance.playerData.procGenCompletionCount);
+            UpdateStoryLeaderboard(PlayerManager.Instance.playerData.bestStoryTime);
+        }
+
     }
     void OnModeChanged(int index)
     {
@@ -37,42 +44,44 @@ public class LeaderboardUI : MonoBehaviour
         }
         leaderboardTabs[index].SetActive(true);
     }
+    
     public void UpdateFreerunLeaderboard(float bestDistance)
     {
-        string[] namePool = { "Monkey", "Tiger", "Ninja", "Blues", "Spark", "Shadow" }; // Pool of random names
-        string randomWord = namePool[Random.Range(0, namePool.Length)]; // Select a random name
-        int randomNum = Random.Range(1, 1000); // Generate a random number
-        string username = randomWord + randomNum; // Combine to create a unique username, e.g., "Monkey317"
+        string username = "Unknown";
+        if (PlayerManager.Instance != null && PlayerManager.Instance.playerData != null && !string.IsNullOrEmpty(PlayerManager.Instance.playerData.username))
+        {
+            username = PlayerManager.Instance.playerData.username;
+        }
 
-        Freerun_Name.text = username; // Set the username in the Freerun leaderboard
-        Freerun_Time.text = bestDistance.ToString("F2"); // Set the best distance with two decimal places
+        Freerun_Name.text = username;
+        Freerun_Time.text = bestDistance.ToString("F2");
     }
-
 
     public void UpdateProcGenLeaderboard(int totalCompletions)
     {
-        string[] namePool = { "Monkey", "Tiger", "Ninja", "Blues", "Spark", "Shadow" }; // Pool of random names
-        string randomWord = namePool[Random.Range(0, namePool.Length)]; // Select a random name
-        int randomNum = Random.Range(1, 1000); // Generate a random number
-        string username = randomWord + randomNum; // Combine to create a unique username, e.g., "Tiger845"
+        string username = "Unknown";
+        if (PlayerManager.Instance != null && PlayerManager.Instance.playerData != null && !string.IsNullOrEmpty(PlayerManager.Instance.playerData.username))
+        {
+            username = PlayerManager.Instance.playerData.username;
+        }
 
-        ProcGen_Name.text = username; // Set the username in the Procedural Generation leaderboard
-        ProcGen_Time.text = totalCompletions.ToString("F2"); // Set the total completions with two decimal places
+        ProcGen_Name.text = username;
+        ProcGen_Time.text = totalCompletions.ToString("F2");
     }
-
 
     public void UpdateStoryLeaderboard(float bestTime)
     {
-        string[] namePool = { "Monkey", "Tiger", "Ninja", "Blues", "Spark", "Shadow" }; // Pool of random names
-        string randomWord = namePool[Random.Range(0, namePool.Length)]; // Select a random name
-        int randomNum = Random.Range(1, 1000); // Generate a random number
-        string username = randomWord + randomNum; // Combine to create a unique username, e.g., "Ninja512"
+        string username = "Unknown";
+        if (PlayerManager.Instance != null && PlayerManager.Instance.playerData != null && !string.IsNullOrEmpty(PlayerManager.Instance.playerData.username))
+        {
+            username = PlayerManager.Instance.playerData.username;
+        }
 
-        int minutes = Mathf.FloorToInt(bestTime / 60f); // Calculate minutes from best time
-        int seconds = Mathf.FloorToInt(bestTime % 60f); // Calculate remaining seconds from best time
-        string timeString = string.Format("{0:00}:{1:00}", minutes, seconds); // Format time as MM:SS
+        int minutes = Mathf.FloorToInt(bestTime / 60f);
+        int seconds = Mathf.FloorToInt(bestTime % 60f);
+        string timeString = string.Format("{0:00}:{1:00}", minutes, seconds);
 
-        Story_Name.text = username; // Set the username in the Story mode leaderboard
-        Story_Time.text = timeString; // Set the formatted best time
+        Story_Name.text = username;
+        Story_Time.text = timeString;
     }
 }

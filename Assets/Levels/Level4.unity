@@ -1517,6 +1517,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1871875988032322968, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 118
+      objectReference: {fileID: 0}
+    - target: {fileID: 1871875988032322968, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1653,6 +1657,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7096319938933403153, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -118
+      objectReference: {fileID: 0}
+    - target: {fileID: 7096319938933403153, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1663,6 +1671,10 @@ PrefabInstance:
     - target: {fileID: 8198399490679642025, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
       propertyPath: m_Name
       value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198399490679642025, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2027,6 +2039,10 @@ PrefabInstance:
     - target: {fileID: 7451922685023176947, guid: 09e778b0724944fceafccf77c39b0169, type: 3}
       propertyPath: m_Name
       value: PauseCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7451922685023176947, guid: 09e778b0724944fceafccf77c39b0169, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

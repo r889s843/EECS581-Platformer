@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // if you're using TextMeshPro
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SaveSlot : MonoBehaviour
 {
@@ -10,13 +11,37 @@ public class SaveSlot : MonoBehaviour
     public Button loadButton;
     public Button deleteButton;
     public TMP_InputField nameInputField;
+    public int slotIndex; // Set in Inspector (e.g., 1, 2, 3)
 
     private void Start()
     {
-        nameInputField.interactable = false;
-        loadButton.gameObject.SetActive(false);
-        deleteButton.gameObject.SetActive(false);
+        UpdateSlotUI();
         nameInputField.onEndEdit.AddListener(OnEnterPressed);
+    }
+
+    private void UpdateSlotUI()
+    {
+        SaveData saveData = LoadSystem.LoadGameData(slotIndex);
+        if (saveData != null)
+        {
+            emptyFolder.gameObject.SetActive(false);
+            fullFolder.gameObject.SetActive(true);
+            createButton.gameObject.SetActive(false);
+            loadButton.gameObject.SetActive(true);
+            deleteButton.gameObject.SetActive(true);
+            nameInputField.text = saveData.playerData.username;
+            nameInputField.interactable = false;
+        }
+        else
+        {
+            emptyFolder.gameObject.SetActive(true);
+            fullFolder.gameObject.SetActive(false);
+            createButton.gameObject.SetActive(true);
+            loadButton.gameObject.SetActive(false);
+            deleteButton.gameObject.SetActive(false);
+            nameInputField.text = "";
+            nameInputField.interactable = false;
+        }
     }
 
     public void OnCreateClicked()
@@ -27,28 +52,41 @@ public class SaveSlot : MonoBehaviour
 
     private void OnEnterPressed(string inputText)
     {
-        if (!string.IsNullOrEmpty(nameInputField.text))
+        if (!string.IsNullOrEmpty(inputText))
         {
+            PlayerData newPlayerData = new PlayerData
+            {
+                username = inputText,
+                money = 0f,
+                levelProgress = new bool[6],
+                abilitiesUnlocked = new bool[4],
+                bestFreerunDistance = 0f,
+                procGenCompletionCount = 0,
+                bestStoryTime = 0f
+            };
+            PlayerManager.Instance.playerData = newPlayerData;
+            PlayerManager.Instance.currentSlotIndex = slotIndex;
+            PlayerManager.Instance.SavePlayerData();
             nameInputField.interactable = false;
-            emptyFolder.gameObject.SetActive(false);
-            fullFolder.gameObject.SetActive(true);
-            createButton.gameObject.SetActive(false);
-            loadButton.gameObject.SetActive(true);
-            deleteButton.gameObject.SetActive(true);
+            UpdateSlotUI();
+            SceneManager.LoadScene(1); // Load "Shop" scene
         }
     }
 
     public void OnDeleteClicked()
     {
-        emptyFolder.gameObject.SetActive(true);
-        fullFolder.gameObject.SetActive(false);
-        loadButton.gameObject.SetActive(false);
-        deleteButton.gameObject.SetActive(false);
-        createButton.gameObject.SetActive(true);
+        SaveSystem.DeleteSaveData(slotIndex);
+        UpdateSlotUI();
     }
 
     public void OnLoadClicked()
     {
-
+        SaveData saveData = LoadSystem.LoadGameData(slotIndex);
+        if (saveData != null)
+        {
+            PlayerManager.Instance.playerData = saveData.playerData;
+            PlayerManager.Instance.currentSlotIndex = slotIndex;
+            SceneManager.LoadScene(1); // Load "Shop" scene
+        }
     }
 }

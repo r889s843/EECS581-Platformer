@@ -1529,6 +1529,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: -8, y: -5, z: -8, w: -5}
   m_Softness: {x: 0, y: 0}
+--- !u!1 &434694110 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9121134539794012176, guid: 53e27c7d081217343afeecfdf38fd3d2, type: 3}
+  m_PrefabInstance: {fileID: 960901967}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &434694113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434694110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 312eb14b185bbeb4b94337bb317bad11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData:
+    username: 
+    money: 0
+    levelProgress: 
+    abilitiesUnlocked: 
+    bestFreerunDistance: 0
+    procGenCompletionCount: 0
+    bestStoryTime: 0
+  currentSlotIndex: 0
 --- !u!1 &436529267
 GameObject:
   m_ObjectHideFlags: 0
@@ -3058,7 +3084,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9121134539794012176, guid: 53e27c7d081217343afeecfdf38fd3d2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 434694113}
   m_SourcePrefab: {fileID: 100100000, guid: 53e27c7d081217343afeecfdf38fd3d2, type: 3}
 --- !u!1 &974234291
 GameObject:
@@ -3198,6 +3227,7 @@ MonoBehaviour:
   loadButton: {fileID: 216938252}
   deleteButton: {fileID: 298028546}
   nameInputField: {fileID: 1382481276}
+  slotIndex: 2
 --- !u!1 &1037693499
 GameObject:
   m_ObjectHideFlags: 0
@@ -5519,6 +5549,7 @@ MonoBehaviour:
   loadButton: {fileID: 902283494}
   deleteButton: {fileID: 1215096966}
   nameInputField: {fileID: 1279660179}
+  slotIndex: 1
 --- !u!1 &1489935238
 GameObject:
   m_ObjectHideFlags: 0
@@ -6011,6 +6042,7 @@ MonoBehaviour:
   loadButton: {fileID: 1940771755}
   deleteButton: {fileID: 2145514338}
   nameInputField: {fileID: 1037693501}
+  slotIndex: 3
 --- !u!1 &1604653135
 GameObject:
   m_ObjectHideFlags: 0

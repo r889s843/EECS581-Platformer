@@ -1,49 +1,67 @@
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour {
+public class PlayerManager : MonoBehaviour
+{
     public static PlayerManager Instance { get; private set; }
     public PlayerData playerData;
+    public int currentSlotIndex = 0; // 0 means no slot selected
 
-    private void Awake() {
-        if (Instance == null) {
+    private void Awake()
+    {
+        if (Instance == null)
+        {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            LoadPlayerData();
-        } else {
+        }
+        else
+        {
             Destroy(gameObject);
         }
     }
 
-    public void LoadPlayerData() {
-        SaveData saveData = LoadSystem.LoadGameData();
-        if (saveData != null) {
+    public void LoadPlayerData(int slotIndex)
+    {
+        currentSlotIndex = slotIndex;
+        SaveData saveData = LoadSystem.LoadGameData(slotIndex);
+        if (saveData != null)
+        {
             playerData = saveData.playerData;
-        } else {
+        }
+        else
+        {
             InitializeNewPlayerData();
+            playerData.username = ""; // Will be set later
         }
     }
 
-    public void SavePlayerData() {
-        SaveSystem.SaveGameState(playerData);
+    public void SavePlayerData()
+    {
+        if (currentSlotIndex > 0)
+        {
+            SaveSystem.SaveGameState(playerData, currentSlotIndex);
+        }
+        else
+        {
+            Debug.LogWarning("Cannot save: No slot selected.");
+        }
     }
 
-    public void ResetPlayerData() {
-        InitializeNewPlayerData();
-        SaveSystem.DeleteSaveData();
-    }
-
-    private void InitializeNewPlayerData() {
-        playerData = new PlayerData {
+    private void InitializeNewPlayerData()
+    {
+        playerData = new PlayerData
+        {
+            username = "",
             money = 0f,
             levelProgress = new bool[6], // 6 levels, all false
             abilitiesUnlocked = new bool[4], // 4 abilities, all false
             bestFreerunDistance = 0f,
             procGenCompletionCount = 0,
-            bestStoryTime = 0f // Lower time is better
+            bestStoryTime = 0f
         };
     }
 
-    private void OnApplicationQuit() {
+    private void OnApplicationQuit()
+    {
         SavePlayerData();
     }
 }
