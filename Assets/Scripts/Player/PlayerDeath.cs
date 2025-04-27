@@ -115,4 +115,10 @@ public class PlayerDeath : MonoBehaviour
 
         GetComponent<Renderer>().material = originalMaterial; // Restore original material
     }
+
+    //public getter method to check if the player is dead
+    public bool getIsDead()
+    {
+        return isDead;
+    }
 }

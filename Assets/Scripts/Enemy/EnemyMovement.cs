@@ -13,7 +13,8 @@ public class EnemyMovement : MonoBehaviour
     {
         None,
         JumpInPlace,
-        WalkLeftRight
+        WalkLeftRight,
+        Chase
     }
 
     public Animator animator;
@@ -54,6 +55,9 @@ public class EnemyMovement : MonoBehaviour
 
             case MovementMode.WalkLeftRight:
                 HandleWalkingLeftRight();
+                break;
+            case MovementMode.Chase:
+                HandleChase();
                 break;
         }
     }
@@ -110,6 +114,23 @@ public class EnemyMovement : MonoBehaviour
             // Change direction
             movingRight = !movingRight;
         }
+    }
+
+    private void HandleChase()
+    {
+        //check direction to move based on player
+        
+
+        //move chaser
+        float horizontalVelocity = movingRight ? walkSpeed : -walkSpeed;
+        body.linearVelocity = new Vector2(horizontalVelocity, body.linearVelocity.y);
+        animator.SetFloat("Speed", Mathf.Abs(body.linearVelocity.x));
+
+        //jump if edge reached
+        if (IsAtEdge() && IsGrounded()) {
+            Jump();
+        }
+
     }
 
 

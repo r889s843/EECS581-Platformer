@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 8795842049470078105, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-  force: 5
+  force: 18
 --- !u!61 &7925161545969715154
 BoxCollider2D:
   m_ObjectHideFlags: 0
