@@ -37,7 +37,7 @@ public class SaveData{
 public class PlayerData {
     public float money;              // Total money earned
     public bool[] levelProgress;     // Progress for 6 story levels
-    public bool[] abilitiesUnlocked; // 3 abilities unlocked status
+    public bool[] abilitiesUnlocked; // 4 abilities unlocked status
     public float bestFreerunDistance; // Best distance in freerun mode
     public int procGenCompletionCount; // Total procedural level completions
     public float bestStoryTime;      // Best time to complete story mode

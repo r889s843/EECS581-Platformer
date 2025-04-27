@@ -280,6 +280,10 @@ public class NPC : MonoBehaviour
                 PlayerManager.Instance.playerData.abilitiesUnlocked[2] = true;
                 Debug.Log("NPC: Unlocked Wall Jump ability.");
                 break;
+            case "invincibility":
+                PlayerManager.Instance.playerData.abilitiesUnlocked[3] = true;
+                Debug.Log("NPC: Unlocked Wall Jump ability.");
+                break;
             default:
                 Debug.LogWarning($"NPC: Unknown feature to unlock: {feature}");
                 break;

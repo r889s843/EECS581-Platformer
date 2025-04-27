@@ -36,7 +36,7 @@ public class PlayerManager : MonoBehaviour {
         playerData = new PlayerData {
             money = 0f,
             levelProgress = new bool[6], // 6 levels, all false
-            abilitiesUnlocked = new bool[3], // 3 abilities, all false
+            abilitiesUnlocked = new bool[4], // 4 abilities, all false
             bestFreerunDistance = 0f,
             procGenCompletionCount = 0,
             bestStoryTime = 0f // Lower time is better
