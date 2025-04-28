@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      moveSign.png_0: -5197108601805697912
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
