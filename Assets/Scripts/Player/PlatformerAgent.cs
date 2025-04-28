@@ -215,15 +215,16 @@ public class PlatformerAgent : Agent
                 body.linearVelocity = Vector2.zero;
             }
         }
-        else if (collision.CompareTag("DeathZone") || collision.CompareTag("Enemy") || collision.CompareTag("Hazard") || collision.CompareTag("Projectile"))
+        // else if (collision.CompareTag("DeathZone") || collision.CompareTag("Enemy") || collision.CompareTag("Hazard") || collision.CompareTag("Projectile"))
+        else if (collision.CompareTag("DeathZone"))
         {
             SetReward(-1.0f);  // Negative reward for dying or hitting a hazard
             // Debug.Log($"Agent Died. Final reward: {GetCumulativeReward()}");
-            if (CompareTag("Player")){
-                livesUI.LoseLifeP1();
-            } else if (CompareTag("Player2")){
-                livesUI.LoseLifeP2();
-            }
+            // if (CompareTag("Player")){
+            //     livesUI.LoseLifeP1();
+            // } else if (CompareTag("Player2")){
+            //     livesUI.LoseLifeP2();
+            // }
             EndEpisode(); // End the episode
         }
     }

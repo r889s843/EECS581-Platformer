@@ -2845,7 +2845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 784149183781814926, guid: 64127fb4910ce4d60bb967b0d4fbcc7f, type: 3}
       propertyPath: npcConfigs.Array.data[0].dialogue.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 784149183781814926, guid: 64127fb4910ce4d60bb967b0d4fbcc7f, type: 3}
       propertyPath: npcConfigs.Array.data[0].saveGameOnDialogueEnd
@@ -2862,11 +2862,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 784149183781814926, guid: 64127fb4910ce4d60bb967b0d4fbcc7f, type: 3}
       propertyPath: 'npcConfigs.Array.data[0].dialogue.Array.data[2]'
-      value: You can go to the portals over there and head back into the singularity
-        if you want to explore...
+      value: You can head over to the right to practice safely in our simulation
       objectReference: {fileID: 0}
     - target: {fileID: 784149183781814926, guid: 64127fb4910ce4d60bb967b0d4fbcc7f, type: 3}
       propertyPath: 'npcConfigs.Array.data[0].dialogue.Array.data[3]'
+      value: Or you can go to the portals to the left and head back into the singularity
+        if you want to explore...
+      objectReference: {fileID: 0}
+    - target: {fileID: 784149183781814926, guid: 64127fb4910ce4d60bb967b0d4fbcc7f, type: 3}
+      propertyPath: 'npcConfigs.Array.data[0].dialogue.Array.data[4]'
       value: "Be careful\u2026"
       objectReference: {fileID: 0}
     - target: {fileID: 784149183781814926, guid: 64127fb4910ce4d60bb967b0d4fbcc7f, type: 3}
