@@ -27,9 +27,9 @@ public class ShopItemManager : MonoBehaviour
         }
 
         // Ensure the array is the expected length
-        if (PlayerManager.Instance.playerData.abilitiesUnlocked.Length < 5)
+        if (PlayerManager.Instance.playerData.abilitiesCanBePurchased.Length < 5)
         {
-            Debug.LogWarning($"ShopItemManager: Expected abilitiesUnlocked array of length 5. Got length: {PlayerManager.Instance.playerData.abilitiesUnlocked.Length}");
+            Debug.LogWarning($"ShopItemManager: Expected abilitiesUnlocked array of length 5. Got length: {PlayerManager.Instance.playerData.abilitiesCanBePurchased.Length}");
             return;
         }
 
@@ -50,7 +50,7 @@ public class ShopItemManager : MonoBehaviour
             return;
         }
 
-        bool isUnlocked = PlayerManager.Instance.playerData.abilitiesUnlocked[abilityIndex];
+        bool isUnlocked = PlayerManager.Instance.playerData.abilitiesCanBePurchased[abilityIndex];
         item.SetActive(isUnlocked);
     }
 }
