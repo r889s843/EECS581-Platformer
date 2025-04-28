@@ -100,6 +100,7 @@ public class PlayerMovement : MonoBehaviour
     public bool variableJumpHeight = true;                  // Allows variable jump height based on button hold
     [Range(1f, 3f)] public float apexControlMultiplier = 2f; // Boosts air control near jump apex
     [Range(0.5f, 2f)] public float doubleJumpMultiplier = 1f;  // Adjusts double jump strength
+    [SerializeField] private Image doubleJumpIcon; // Reference to the double jump icon
 
     // Internal jump state
     public bool isJumping;          // True when the player is in a jump state
@@ -198,6 +199,9 @@ public class PlayerMovement : MonoBehaviour
         if (dashIcon != null)
             dashIcon.color = Color.white; // Start enabled
 
+        // Initialize double jump icon color
+        if (doubleJumpIcon != null)
+            doubleJumpIcon.color = Color.white; // Start enabled
     }
 
     private void Start()
@@ -257,8 +261,6 @@ public class PlayerMovement : MonoBehaviour
                 jumpInput = true;
             }
             pressingJump = Input.GetKey(KeyCode.Space);
-            // if (Input.GetKeyUp(KeyCode.Space)) 
-            //     Debug.Log("Jump released, pressingJump = false");
             if (Input.GetKeyDown(KeyCode.LeftShift)) lastPressedDashTime = dashInputBufferTime;
         }
 
@@ -323,6 +325,12 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        // Update double jump icon color based on canJumpAgain
+        if (doubleJumpIcon != null)
+        {
+            doubleJumpIcon.color = canJumpAgain ? Color.white : new Color(0.5f, 0.5f, 0.5f);
+        }
+
         // Attempt jump or dash based on state
         TryPerformJump(isGrounded, isOnLeftWall, isOnRightWall);
         TryPerformDash(isGrounded, isOnLeftWall, isOnRightWall);
@@ -335,7 +343,6 @@ public class PlayerMovement : MonoBehaviour
             else if (horizontalInput < -0.01f)
                 baseScale.x = -1f; // Face left
         }
-
 
         // Play walking sound when moving on ground
         if(isOnFloor && Mathf.Abs(horizontalInput) > 0.01f)
@@ -359,8 +366,6 @@ public class PlayerMovement : MonoBehaviour
         // Squash, Stretch, and Tilt Logic
         UpdateSquashStretchAndTilt(isOnFloor);
         wasOnFloorLastFrame = isOnFloor; // Track for landing detection
-
-        // jumpInput = false; // Reset jump input after processing
     }
 
     // Physics updates (runs at fixed time steps)
@@ -620,9 +625,6 @@ public class PlayerMovement : MonoBehaviour
         }
         isDashing = false;
         isWallDashing = false;
-
-        // if (dashIcon != null && CanDash() && !hasDashed)
-        //     dashIcon.color = Color.white;
     }
 
     // Refills dashes after a delay

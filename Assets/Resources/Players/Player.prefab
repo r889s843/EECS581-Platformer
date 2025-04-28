@@ -62,7 +62,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4326873493693996885
 Transform:
   m_ObjectHideFlags: 0
@@ -137,7 +137,8 @@ MonoBehaviour:
   playerData:
     username: 
     money: 0
-    levelProgress: 
+    levelProgress: 000000000000
+    abilitiesCanBePurchased: 
     abilitiesUnlocked: 
     bestFreerunDistance: 0
     procGenCompletionCount: 0
@@ -238,14 +239,19 @@ MonoBehaviour:
   isPlayer2: 0
   teleportIcon: {fileID: 0}
   invincibilityIcon: {fileID: 0}
+  AIStopIcon: {fileID: 0}
   teleportCooldownText: {fileID: 0}
   invincibilityCooldownText: {fileID: 0}
+  AIStopCooldownText: {fileID: 0}
   teleportCooldownDuration: 5
   invincibilityCooldownDuration: 5
+  AIStopCooldownDuration: 10
   teleportPowerupScript: {fileID: 2249510840854575851}
   invinciblePowerupScript: {fileID: 51776379038202088}
+  AIStopPowerupScript: {fileID: 3510136035710230222}
   invincibilityUnlocked: 1
   teleportUnlocked: 1
+  AIStopUnlocked: 1
 --- !u!1 &6822391475435936479
 GameObject:
   m_ObjectHideFlags: 0

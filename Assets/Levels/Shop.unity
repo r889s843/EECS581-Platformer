@@ -1247,10 +1247,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 498910032171558304, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779741760022246829, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8405716669350757767, guid: fcbffdea4d4cc41a3994ed79d4c88651, type: 3}
     - target: {fileID: 2368312559960009473, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 650951429}
+    - target: {fileID: 5077482225270499248, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5128619646263906624, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5520332690737659980, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
       propertyPath: player2
       value: 
@@ -1343,6 +1359,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6918827228898589469, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106086210321418320, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7134226909135450820, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 5008351202182229973, guid: 654f7fb5b90ed4f2ba21529b0e601273, type: 3}
     - target: {fileID: 8198399490679642025, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
       propertyPath: m_Name
       value: UI
@@ -1352,6 +1380,50 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+--- !u!114 &899486418 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2065329706353571368, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+  m_PrefabInstance: {fileID: 899486417}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &899486419 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5681187663428342409, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+  m_PrefabInstance: {fileID: 899486417}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &899486420 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 140686013313096292, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+  m_PrefabInstance: {fileID: 899486417}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &899486421 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7716812527315875932, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+  m_PrefabInstance: {fileID: 899486417}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &928079917 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8423687933671281508, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
@@ -1984,17 +2056,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4782622922462570546, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
   m_PrefabInstance: {fileID: 899486417}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1526825437 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3308952339898213697, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
-  m_PrefabInstance: {fileID: 899486417}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1552183870
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6542,26 +6603,34 @@ PrefabInstance:
       propertyPath: dashIcon
       value: 
       objectReference: {fileID: 718336924}
-    - target: {fileID: 3047485245867766272, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: playerData.levelProgress.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: teleportIcon
+    - target: {fileID: 2646103504705394422, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: doubleJumpIcon
       value: 
       objectReference: {fileID: 593486698}
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      propertyPath: invincibilityIcon
+      propertyPath: AIStopIcon
       value: 
       objectReference: {fileID: 713383370}
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: teleportIcon
+      value: 
+      objectReference: {fileID: 899486421}
+    - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: invincibilityIcon
+      value: 
+      objectReference: {fileID: 899486419}
+    - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: AIStopCooldownText
+      value: 
+      objectReference: {fileID: 1098453651}
+    - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: teleportCooldownText
       value: 
-      objectReference: {fileID: 1526825437}
+      objectReference: {fileID: 899486420}
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: invincibilityCooldownText
       value: 
-      objectReference: {fileID: 1098453651}
+      objectReference: {fileID: 899486418}
     - target: {fileID: 6720324758942419461, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: livesUI
       value: 
@@ -6629,10 +6698,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1394744282}
     m_Modifications:
+    - target: {fileID: 385733358695914136, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 735677895385442316, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: cost
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 735677895385442316, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
       propertyPath: powerUpManager
       value: 
       objectReference: {fileID: 1116632887}
+    - target: {fileID: 735677895385442316, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: abilityToUnlock
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 735677895385442316, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
       propertyPath: abilityToActivate
       value: 
@@ -6696,6 +6777,14 @@ PrefabInstance:
       propertyPath: 'npcConfigs.Array.data[0].dialogue.Array.data[1]'
       value: I have the best wears scavenged from across the Net! Vintage pre-Singularity
         items and some post-Singularity hacks
+      objectReference: {fileID: 0}
+    - target: {fileID: 1078199510495340161, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1188709035654789787, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1210841095390476922, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
       propertyPath: powerUpManager
