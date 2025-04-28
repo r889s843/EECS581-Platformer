@@ -12504,6 +12504,28 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5988400055321082847, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
   m_PrefabInstance: {fileID: 1414067025}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &831730740 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5681187663428342409, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+  m_PrefabInstance: {fileID: 1414067025}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &831730741 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7716812527315875932, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+  m_PrefabInstance: {fileID: 1414067025}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &861143441
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12890,7 +12912,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8198399490679642025, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13349,6 +13371,26 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 9019704013070089028, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: dashIcon
+      value: 
+      objectReference: {fileID: 1170645552}
+    - target: {fileID: 9019704013070089028, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: aiStopIcon
+      value: 
+      objectReference: {fileID: 102616746}
+    - target: {fileID: 9019704013070089028, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: teleportIcon
+      value: 
+      objectReference: {fileID: 831730741}
+    - target: {fileID: 9019704013070089028, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: doubleJumpIcon
+      value: 
+      objectReference: {fileID: 102616748}
+    - target: {fileID: 9019704013070089028, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: invincibilityIcon
+      value: 
+      objectReference: {fileID: 831730740}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

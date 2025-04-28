@@ -1148,6 +1148,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 9019704013070089028, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: dashIcon
+      value: 
+      objectReference: {fileID: 644149481857594080}
+    - target: {fileID: 9019704013070089028, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: aiStopIcon
+      value: 
+      objectReference: {fileID: 644149481857594077}
+    - target: {fileID: 9019704013070089028, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: teleportIcon
+      value: 
+      objectReference: {fileID: 1917432094}
+    - target: {fileID: 9019704013070089028, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: doubleJumpIcon
+      value: 
+      objectReference: {fileID: 644149481857594079}
+    - target: {fileID: 9019704013070089028, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: invincibilityIcon
+      value: 
+      objectReference: {fileID: 1917432093}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7000,6 +7020,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c74cd2a861751ef408917e5f9be7a546, type: 3}
+--- !u!114 &1917432093 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5681187663428342409, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+  m_PrefabInstance: {fileID: 644149481857594073}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1917432094 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7716812527315875932, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+  m_PrefabInstance: {fileID: 644149481857594073}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1928159057 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8228551682936099957, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
