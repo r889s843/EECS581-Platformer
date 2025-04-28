@@ -229,7 +229,7 @@ public class FreerunProcGen : MonoBehaviour
             playerDistance = playerX; // Update player distance
         }
 
-        float previousBest = PlayerPrefs.GetFloat("BestDistance", 0f); // Get previous best distance
+        float previousBest = PlayerManager.Instance.playerData.bestFreerunDistance;
         if (distanceText != null)
         {
             distanceText.text = $"Distance: {playerDistance:F2}\nBest: {previousBest:F2}"; // Update distance UI
