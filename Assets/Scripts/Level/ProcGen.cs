@@ -44,6 +44,11 @@ public class ProcGen : MonoBehaviour
     public float minY = 10f;            // Minimum Y position for platforms
     public float maxY = 30f;             // Maximum Y position for platforms
 
+    public GameObject coinPrefab; // Assign your "coin" prefab in the Inspector
+    public float coinSpawnChance = 0.1f; // Chance to spawn a coin per platform (0 to 1)
+    public Vector2 coinHeightRange = new Vector2(2f, 5f); // Height range above platform to spawn coins
+    public Vector2 coinXOffsetRange = new Vector2(-2f, 2f); // X offset range for coin placement
+
     // Difficulty levels enumeration
     public enum Difficulty
     {
@@ -113,11 +118,13 @@ public class ProcGen : MonoBehaviour
         for (int i = 0; i < numberOfChunks; i++)
         {
             Vector2 newCoords = CreateSafeChunk(x, y); // Create a safe (non-dangerous) chunk
+            SpawnCoins(new Vector2(x, y), newCoords, y); // Spawn coins above this chunk
             x = newCoords.x; // Update X position
             y = newCoords.y; // Update Y position
             // Debug.Log($"SafeChunk ended at: x = {x}, y = {y}");
 
             newCoords = CreateDangerChunk(x, y); // Create a dangerous chunk
+            SpawnCoins(new Vector2(x, y), newCoords, y); // Spawn coins above this chunk
             x = newCoords.x; // Update X position
             y = newCoords.y; // Update Y position
             // Debug.Log($"DangerChunk ended at: x = {x}, y = {y}");
@@ -139,11 +146,13 @@ public class ProcGen : MonoBehaviour
             for (int i = 0; i < numberOfChunks; i++)
             {
                 Vector2 newCoords = CreateSafeChunk(x, y); // Create a safe (non-dangerous) chunk
+                SpawnCoins(new Vector2(x, y), newCoords, y); // Spawn coins above this chunk
                 x = newCoords.x; // Update X position
                 y = newCoords.y; // Update Y position
                 // Debug.Log($"SafeChunk ended at: x = {x}, y = {y}");
 
                 newCoords = CreateDangerChunk(x, y); // Create a dangerous chunk
+                SpawnCoins(new Vector2(x, y), newCoords, y); // Spawn coins above this chunk
                 x = newCoords.x; // Update X position
                 y = newCoords.y; // Update Y position
                 // Debug.Log($"DangerChunk ended at: x = {x}, y = {y}");
@@ -212,6 +221,18 @@ public class ProcGen : MonoBehaviour
         currentX += 1f; // Move to next position
 
         return new Vector2(finalX, finalY); // Return the end position of the initial platform
+    }
+
+    private void SpawnCoins(Vector2 platformStart, Vector2 platformEnd, float platformY)
+    {
+        if (UnityEngine.Random.value > coinSpawnChance) return; // Randomly decide whether to spawn
+
+        float xPos = UnityEngine.Random.Range(platformStart.x, platformEnd.x) + UnityEngine.Random.Range(coinXOffsetRange.x, coinXOffsetRange.y);
+        float yPos = platformY + UnityEngine.Random.Range(coinHeightRange.x, coinHeightRange.y);
+        Vector2 coinPosition = new Vector2(xPos, yPos);
+
+        GameObject coin = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
+        coin.transform.SetParent(transform); // Make coin a child of ProcGen
     }
 
     private Vector2 CreateSafeChunk(float x, float y)

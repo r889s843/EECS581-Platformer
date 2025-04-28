@@ -2814,11 +2814,11 @@ PrefabInstance:
       objectReference: {fileID: 713142701}
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3892,10 +3892,14 @@ MonoBehaviour:
   rightTopWallTile: {fileID: 11400000, guid: 937178a7e57f059428065722ca99fce1, type: 2}
   spikeTile: {fileID: 11400000, guid: db7c9bd1d0aedd04193f172375e0de99, type: 2}
   numberOfChunks: 4
-  startX: 6
-  startY: -2
+  startX: -2
+  startY: 0
   minY: -3
   maxY: 3
+  coinPrefab: {fileID: 2279594192295786537, guid: 015078de0b2ed444984cc12b26b16ad9, type: 3}
+  coinSpawnChance: 0.1
+  coinHeightRange: {x: 2, y: 5}
+  coinXOffsetRange: {x: -2, y: 2}
   currentDifficulty: 2
   easyEnemyPrefabs:
   - {fileID: 946920935056350428, guid: 4449136f732614845bbe838dbdb3920b, type: 3}

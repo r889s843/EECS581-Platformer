@@ -83,6 +83,11 @@ public class FreerunProcGen : MonoBehaviour
 
     public TMPro.TextMeshProUGUI distanceText;
 
+    public GameObject coinPrefab; // Assign your "coin" prefab in the Inspector
+    public float coinSpawnChance = 0.1f; // Chance to spawn a coin per platform (0 to 1)
+    public Vector2 coinHeightRange = new Vector2(2f, 5f); // Height range above platform to spawn coins
+    public Vector2 coinXOffsetRange = new Vector2(-2f, 2f); // X offset range for coin placement
+
     private void Start()
     {
         StartFreeRunMode(); // Initialize FreeRun mode
@@ -240,27 +245,40 @@ public class FreerunProcGen : MonoBehaviour
             if (nearMaxHeight)
             {
                 if (UnityEngine.Random.value < 0.5f)
-                    endPos = CreateWallDownJumpSection(lastPlatformEndX, lastPlatformEndY); // Create wall down jump section
+                {
+                    Vector2 startPos = new Vector2(lastPlatformEndX, lastPlatformEndY);
+                    endPos = CreateWallDownJumpSection(lastPlatformEndX, lastPlatformEndY);
+                    SpawnCoins(startPos, endPos, lastPlatformEndY);
+                }
                 else
-                    endPos = CreateDownJumpSection(lastPlatformEndX, lastPlatformEndY); // Create down jump section
+                {
+                    Vector2 startPos = new Vector2(lastPlatformEndX, lastPlatformEndY);
+                    endPos = CreateDownJumpSection(lastPlatformEndX, lastPlatformEndY);
+                    SpawnCoins(startPos, endPos, lastPlatformEndY);
+                }
             }
             else
             {
+                Vector2 startPos = new Vector2(lastPlatformEndX, lastPlatformEndY);
                 if (r < pGap)
                 {
-                    endPos = CreateGap(lastPlatformEndX, lastPlatformEndY); // Create gap
+                    endPos = CreateGap(lastPlatformEndX, lastPlatformEndY);
+                    SpawnCoins(startPos, endPos, lastPlatformEndY);
                 }
                 else if (r < pGap + pJump)
                 {
-                    endPos = CreateJump(lastPlatformEndX, lastPlatformEndY); // Create jump
+                    endPos = CreateJump(lastPlatformEndX, lastPlatformEndY);
+                    SpawnCoins(startPos, endPos, lastPlatformEndY);
                 }
                 else if (r < pGap + pJump + pShortJump)
                 {
-                    endPos = CreateShortJump(lastPlatformEndX, lastPlatformEndY); // Create short jump
+                    endPos = CreateShortJump(lastPlatformEndX, lastPlatformEndY);
+                    SpawnCoins(startPos, endPos, lastPlatformEndY);
                 }
                 else
                 {
-                    endPos = CreateWallJumpSection(lastPlatformEndX, lastPlatformEndY); // Create wall jump section
+                    endPos = CreateWallJumpSection(lastPlatformEndX, lastPlatformEndY);
+                    SpawnCoins(startPos, endPos, lastPlatformEndY);
                 }
             }
 
@@ -645,6 +663,18 @@ public class FreerunProcGen : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void SpawnCoins(Vector2 platformStart, Vector2 platformEnd, float platformY)
+    {
+        if (UnityEngine.Random.value > coinSpawnChance) return;
+
+        float xPos = UnityEngine.Random.Range(platformStart.x, platformEnd.x) + UnityEngine.Random.Range(coinXOffsetRange.x, coinXOffsetRange.y);
+        float yPos = platformY + UnityEngine.Random.Range(coinHeightRange.x, coinHeightRange.y);
+        Vector2 coinPosition = new Vector2(xPos, yPos);
+
+        GameObject coin = Instantiate(coinPrefab, coinPosition, Quaternion.identity);
+        coin.transform.SetParent(transform);
     }
 
     private void IncreaseDifficulty()
