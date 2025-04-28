@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      raceSign.png_0: 4658192456229525434
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
