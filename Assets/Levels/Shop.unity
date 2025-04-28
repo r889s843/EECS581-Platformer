@@ -6672,6 +6672,26 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 593486698}
     - target: {fileID: 3182365982722007681, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: item1
+      value: 
+      objectReference: {fileID: 1964255799}
+    - target: {fileID: 3182365982722007681, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: item2
+      value: 
+      objectReference: {fileID: 427054830}
+    - target: {fileID: 3182365982722007681, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: item3
+      value: 
+      objectReference: {fileID: 1039640257}
+    - target: {fileID: 3182365982722007681, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: item4
+      value: 
+      objectReference: {fileID: 261028064}
+    - target: {fileID: 3182365982722007681, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: item5
+      value: 
+      objectReference: {fileID: 295274787}
+    - target: {fileID: 3182365982722007681, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: lockIcon1
       value: 
       objectReference: {fileID: 1964255799}
