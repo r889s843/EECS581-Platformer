@@ -695,11 +695,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6993300372748743779, guid: b1d5c7680f8524bc687394409371988a, type: 3}
   m_PrefabInstance: {fileID: 335696007}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &404223269 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-  m_PrefabInstance: {fileID: 1842696105}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &427054830 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1078199510495340161, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
@@ -973,60 +968,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8805905650658265772, guid: b82f8746c0e8e294e8c2c9c90368ff81, type: 3}
   m_PrefabInstance: {fileID: 573018874}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &593035708
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 593035709}
-  - component: {fileID: 593035710}
-  m_Layer: 7
-  m_Name: ShopUIManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &593035709
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 593035708}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 404223269}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &593035710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 593035708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56a600d2b6229394b8e7087f0739558d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  purchaseButton1: {fileID: 1492367275}
-  lockIcon1: {fileID: 1964255799}
-  purchaseButton2: {fileID: 1390199958}
-  lockIcon2: {fileID: 427054830}
-  purchaseButton3: {fileID: 1417111953}
-  lockIcon3: {fileID: 1039640257}
-  purchaseButton4: {fileID: 1660563946}
-  lockIcon4: {fileID: 261028064}
-  purchaseButton5: {fileID: 2102559394}
-  lockIcon5: {fileID: 295274787}
 --- !u!1 &593486696 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5077482225270499248, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
@@ -6730,6 +6671,46 @@ PrefabInstance:
       propertyPath: doubleJumpIcon
       value: 
       objectReference: {fileID: 593486698}
+    - target: {fileID: 3182365982722007681, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: lockIcon1
+      value: 
+      objectReference: {fileID: 1964255799}
+    - target: {fileID: 3182365982722007681, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: lockIcon2
+      value: 
+      objectReference: {fileID: 427054830}
+    - target: {fileID: 3182365982722007681, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: lockIcon3
+      value: 
+      objectReference: {fileID: 1039640257}
+    - target: {fileID: 3182365982722007681, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: lockIcon4
+      value: 
+      objectReference: {fileID: 261028064}
+    - target: {fileID: 3182365982722007681, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: lockIcon5
+      value: 
+      objectReference: {fileID: 295274787}
+    - target: {fileID: 3182365982722007681, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: purchaseButton1
+      value: 
+      objectReference: {fileID: 1492367275}
+    - target: {fileID: 3182365982722007681, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: purchaseButton2
+      value: 
+      objectReference: {fileID: 1390199958}
+    - target: {fileID: 3182365982722007681, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: purchaseButton3
+      value: 
+      objectReference: {fileID: 1417111953}
+    - target: {fileID: 3182365982722007681, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: purchaseButton4
+      value: 
+      objectReference: {fileID: 1660563946}
+    - target: {fileID: 3182365982722007681, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: purchaseButton5
+      value: 
+      objectReference: {fileID: 2102559394}
     - target: {fileID: 4446807642748851392, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
       propertyPath: AIStopIcon
       value: 
@@ -6770,12 +6751,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 9019704013070089028, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: dashIcon
+      value: 
+      objectReference: {fileID: 718336924}
+    - target: {fileID: 9019704013070089028, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: aiStopIcon
+      value: 
+      objectReference: {fileID: 713383370}
+    - target: {fileID: 9019704013070089028, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: teleportIcon
+      value: 
+      objectReference: {fileID: 899486421}
+    - target: {fileID: 9019704013070089028, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: doubleJumpIcon
+      value: 
+      objectReference: {fileID: 593486698}
+    - target: {fileID: 9019704013070089028, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
+      propertyPath: invincibilityIcon
+      value: 
+      objectReference: {fileID: 899486419}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1802557755064146918, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 593035709}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52f2a83900f018341996f77bf5eabefb, type: 3}
 --- !u!1 &1964255799 stripped
