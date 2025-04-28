@@ -44,9 +44,9 @@ public class AbilityIconManager : MonoBehaviour
         // Update each icon's visibility
         UpdateIconVisibility(dashIcon, 0);        // Dash
         UpdateIconVisibility(doubleJumpIcon, 1);  // DoubleJump
-        UpdateIconVisibility(teleportIcon, 2);    // Teleport
-        UpdateIconVisibility(invincibilityIcon, 3); // Invincibility
-        UpdateIconVisibility(aiStopIcon, 4);      // AIStop
+        UpdateIconVisibility(teleportIcon, 3);    // Teleport
+        UpdateIconVisibility(invincibilityIcon, 4); // Invincibility
+        UpdateIconVisibility(aiStopIcon, 2);      // AIStop
     }
 
     // Helper method to update the visibility of a single icon
