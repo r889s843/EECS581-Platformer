@@ -268,6 +268,13 @@ public class LevelManager : MonoBehaviour
             }
             LoadScene("Start"); // Transition to Main Menu
         }
+        else if (sceneName == "Level1"){
+            int lastNumber = int.Parse(sceneName[^1].ToString()); // Get the last character as number
+            
+            PlayerManager.Instance.playerData.levelProgress[lastNumber - 1] = true; // Mark level as completed
+            PlayerManager.Instance.SavePlayerData(); // Save the updated data using SaveSystem
+            LoadScene("Shop"); // Load the next level
+        }
         else
         {
             // Increment the level number based on the current scene name

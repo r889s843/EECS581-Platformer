@@ -1652,7 +1652,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3337700102637523427, guid: 3f4c61ce08bf0514194e5eb927af64f2, type: 3}
       propertyPath: lookDirChangeSpeed
-      value: 0.1
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 6030069196998567045, guid: 3f4c61ce08bf0514194e5eb927af64f2, type: 3}
       propertyPath: m_Name
