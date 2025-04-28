@@ -1411,7 +1411,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5681187663428342409, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
   m_PrefabInstance: {fileID: 899486417}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 899486422}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -1433,12 +1433,22 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7716812527315875932, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
   m_PrefabInstance: {fileID: 899486417}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 899486423}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &899486422 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6918827228898589469, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+  m_PrefabInstance: {fileID: 899486417}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &899486423 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5128619646263906624, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
+  m_PrefabInstance: {fileID: 899486417}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &928079917 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8423687933671281508, guid: 63e71b44e1339b149b1ee35ddeadae22, type: 3}
@@ -6756,6 +6766,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1394744282}
     m_Modifications:
+    - target: {fileID: 69245716194184705, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: powerUpManager
+      value: 
+      objectReference: {fileID: 1116632887}
+    - target: {fileID: 69245716194184705, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: abilityToUnlock
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 69245716194184705, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: abilityToActivate
+      value: 
+      objectReference: {fileID: 593486696}
     - target: {fileID: 385733358695914136, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -6860,6 +6882,30 @@ PrefabInstance:
       propertyPath: abilityToActivate
       value: 
       objectReference: {fileID: 713383368}
+    - target: {fileID: 3662946042293397714, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: powerUpManager
+      value: 
+      objectReference: {fileID: 1116632887}
+    - target: {fileID: 3662946042293397714, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: abilityToUnlock
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3662946042293397714, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: abilityToActivate
+      value: 
+      objectReference: {fileID: 899486422}
+    - target: {fileID: 4531720126721745502, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: powerUpManager
+      value: 
+      objectReference: {fileID: 1116632887}
+    - target: {fileID: 4531720126721745502, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: abilityToUnlock
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4531720126721745502, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: abilityToActivate
+      value: 
+      objectReference: {fileID: 713383368}
     - target: {fileID: 6993300372748743779, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.23
@@ -6900,6 +6946,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7845529649836675579, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: powerUpManager
+      value: 
+      objectReference: {fileID: 1116632887}
+    - target: {fileID: 7845529649836675579, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: abilityToUnlock
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7845529649836675579, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
+      propertyPath: abilityToActivate
+      value: 
+      objectReference: {fileID: 899486423}
     - target: {fileID: 8883868776469822734, guid: 0ac99ffb1223dd941a391d9ccf9a0486, type: 3}
       propertyPath: m_Name
       value: Asimov
