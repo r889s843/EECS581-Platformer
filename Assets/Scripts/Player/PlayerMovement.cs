@@ -198,22 +198,34 @@ public class PlayerMovement : MonoBehaviour
         if (dashIcon != null)
             dashIcon.color = Color.white; // Start enabled
 
-        // Load ability unlock states from PlayerData
+    }
+
+    private void Start()
+    {
+        // Load ability unlock states from PlayerData with safety checks
         if (PlayerManager.Instance != null && PlayerManager.Instance.playerData != null)
         {
-            // Based on your earlier setup in NPC.cs and UpgradesManager.cs:
-            // abilitiesUnlocked indices:
-            // 0: Dash (not used here)
-            // 1: DoubleJump (not used here)
-            // 2: AIStop
-            // 3: Invincibility
-            // 4: Teleport
-            canDoubleJump = PlayerManager.Instance.playerData.abilitiesUnlocked[1];     // Teleport
-            canDash = PlayerManager.Instance.playerData.abilitiesUnlocked[0]; // Invincibility
+            if (PlayerManager.Instance.playerData.abilitiesUnlocked != null && PlayerManager.Instance.playerData.abilitiesUnlocked.Length >= 5)
+            {
+                // Based on your setup in NPC.cs and UpgradesManager.cs:
+                // abilitiesUnlocked indices:
+                // 0: Dash
+                // 1: DoubleJump
+                // 2: Teleport
+                // 3: Invincibility
+                // 4: AIStop
+                canDoubleJump = PlayerManager.Instance.playerData.abilitiesUnlocked[1]; // DoubleJump
+                canDash = PlayerManager.Instance.playerData.abilitiesUnlocked[0];      // Dash
+            }
+            else
+            {
+                Debug.LogWarning("PlayerMovement: PlayerData.abilitiesUnlocked array is too small or not initialized. Expected length: 5, Actual length: " +
+                                 (PlayerManager.Instance.playerData.abilitiesUnlocked?.Length ?? 0));
+            }
         }
         else
         {
-            Debug.LogWarning("PowerUpManager: PlayerManager or PlayerData is not available. Abilities remain locked.");
+            Debug.LogWarning("PlayerMovement: PlayerManager or PlayerData is not available. Abilities remain at default values.");
         }
     }
 

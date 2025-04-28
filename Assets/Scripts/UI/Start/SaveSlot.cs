@@ -59,7 +59,8 @@ public class SaveSlot : MonoBehaviour
                 username = inputText,
                 money = 0f,
                 levelProgress = new bool[6],
-                abilitiesUnlocked = new bool[4],
+                abilitiesCanBePurchased = new bool[5],
+                abilitiesUnlocked = new bool[5],
                 bestFreerunDistance = 0f,
                 procGenCompletionCount = 0,
                 bestStoryTime = 0f
@@ -69,7 +70,7 @@ public class SaveSlot : MonoBehaviour
             PlayerManager.Instance.SavePlayerData();
             nameInputField.interactable = false;
             UpdateSlotUI();
-            SceneManager.LoadScene(1); // Load "Shop" scene
+            SceneManager.LoadScene(2); // Load "Shop" scene
         }
     }
 
