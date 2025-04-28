@@ -1622,7 +1622,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1522252875859301995
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2130,13 +2130,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialoguePanel: {fileID: 0}
   dialogueText: {fileID: 0}
-  dialogue:
-  - I got everything ya need in the singularity! Been around a while, you won't find
-    inventory like it.
-  - What are you in the market for?
   continueButton: {fileID: 0}
   wordSpeed: 0.04
-  playerIsClose: 0
+  npcConfigs: []
   shopPanel: {fileID: 6889432015423816159}
 --- !u!95 &7842396226416224181
 Animator:
