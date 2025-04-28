@@ -62,16 +62,10 @@ public class LevelManager : MonoBehaviour
         if (scene.name == "Start")
         {
             // Retrieve saved player statistics
-            // Old: float bestDist = PlayerPrefs.GetFloat("BestDistance", 0f);
-            // New: Retrieve best freerun distance from PlayerManager
             float bestDist = PlayerManager.Instance.playerData.bestFreerunDistance;
 
-            // Old: float bestTime = PlayerPrefs.GetFloat("BestTime", 0f);
-            // New: Retrieve best story time from PlayerManager
             float bestTime = PlayerManager.Instance.playerData.bestStoryTime;
 
-            // Old: int totalCompletions = PlayerPrefs.GetInt("TotalCompletions", 0);
-            // New: Retrieve total procedural generation completions from PlayerManager
             int totalCompletions = PlayerManager.Instance.playerData.procGenCompletionCount;
 
             // Find the LeaderboardUI in the scene and update it
@@ -134,22 +128,11 @@ public class LevelManager : MonoBehaviour
             FreerunProcGen freerunManager = FindObjectOfType<FreerunProcGen>();
             float finalDistance = freerunManager != null ? freerunManager.playerDistance : 0f;
 
-            // Old: Compare with stored best distance
-            // Old: float currentBest = PlayerPrefs.GetFloat("BestDistance", 0f);
-            // Old: if (finalDistance > currentBest)
-            // Old: {
-            // Old:     PlayerPrefs.SetFloat("BestDistance", finalDistance); // Update best distance
-            // Old:     PlayerPrefs.Save(); // Ensure data is written to disk
-            // Old: }
-            // New: Update best distance if the current distance is greater
             if (finalDistance > PlayerManager.Instance.playerData.bestFreerunDistance)
             {
                 PlayerManager.Instance.playerData.bestFreerunDistance = finalDistance;
                 PlayerManager.Instance.SavePlayerData(); // Save the updated data using SaveSystem
             }
-
-            // Old: PlayerPrefs.SetInt("TotalCompletions", totalCompletions); // Update total completions
-            // Old: PlayerPrefs.Save(); // Ensure data is written to disk
 
             // Load main menu or handle end-of-run flow
             LoadScene("Shop"); // Transition to Main Menu
@@ -203,21 +186,11 @@ public class LevelManager : MonoBehaviour
             FreerunProcGen freerunManager = FindObjectOfType<FreerunProcGen>();
             float finalDistance = freerunManager != null ? freerunManager.playerDistance : 0f;
 
-            // Old: float currentBest = PlayerPrefs.GetFloat("BestDistance", 0f);
-            // Old: if (finalDistance > currentBest)
-            // Old: {
-            // Old:     PlayerPrefs.SetFloat("BestDistance", finalDistance); // Update best distance
-            // Old:     PlayerPrefs.Save(); // Ensure data is written to disk
-            // Old: }
-            // New: Update best distance if the current distance is greater
             if (finalDistance > PlayerManager.Instance.playerData.bestFreerunDistance)
             {
                 PlayerManager.Instance.playerData.bestFreerunDistance = finalDistance;
                 PlayerManager.Instance.SavePlayerData(); // Save the updated data using SaveSystem
             }
-
-            // Old: PlayerPrefs.SetInt("TotalCompletions", totalCompletions); // Update total completions
-            // Old: PlayerPrefs.Save(); // Ensure data is written to disk
 
             LoadScene("Shop"); // Transition to Main Menu
         }
@@ -228,8 +201,6 @@ public class LevelManager : MonoBehaviour
     {
         if (sceneName == "Test")
         {
-            // Old: totalCompletions++; // Increment total completions
-            // New: Increment total completions in PlayerManager
             PlayerManager.Instance.playerData.procGenCompletionCount++;
 
             // Gradually increase difficulty every set number of completions
@@ -265,8 +236,6 @@ public class LevelManager : MonoBehaviour
                     Debug.Log("Switched difficulty to Hard."); // Log difficulty upgrade
                 }
 
-                // Old: totalCompletions = 0; // Reset total completions after upgrading difficulty
-                // New: Reset completion count in PlayerManager
                 PlayerManager.Instance.playerData.procGenCompletionCount = 0;
                 completionsForLevelUpgrade += 100; // Set next threshold for difficulty upgrade
             }
@@ -290,12 +259,6 @@ public class LevelManager : MonoBehaviour
             timer.StopTimer(); // Stop the timer
             float currentTime = timer.GetFinalTime(); // Get the final time
 
-            // Old: Update leaderboard if the current time is better
-            // Old: float bestTime = PlayerPrefs.GetFloat("BestTime", 0f);
-            // Old: bestTime = Mathf.Min(bestTime, currentTime); // Keep the lower time
-            // Old: PlayerPrefs.SetFloat("BestTime", bestTime); // Save the best time
-            // Old: PlayerPrefs.Save(); // Ensure data is written to disk
-            // New: Update best time if the current time is better
             if (currentTime < PlayerManager.Instance.playerData.bestStoryTime || PlayerManager.Instance.playerData.bestStoryTime == 0f)
             {
                 PlayerManager.Instance.playerData.bestStoryTime = currentTime;

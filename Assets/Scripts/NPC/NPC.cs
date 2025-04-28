@@ -269,20 +269,24 @@ public class NPC : MonoBehaviour
         switch (feature.ToLower())
         {
             case "doublejump":
-                PlayerManager.Instance.playerData.abilitiesUnlocked[0] = true;
+                PlayerManager.Instance.playerData.abilitiesCanBePurchased[0] = true;
                 Debug.Log("NPC: Unlocked Double Jump ability.");
                 break;
             case "dash":
-                PlayerManager.Instance.playerData.abilitiesUnlocked[1] = true;
+                PlayerManager.Instance.playerData.abilitiesCanBePurchased[1] = true;
                 Debug.Log("NPC: Unlocked Dash ability.");
                 break;
             case "teleport":
-                PlayerManager.Instance.playerData.abilitiesUnlocked[2] = true;
-                Debug.Log("NPC: Unlocked Wall Jump ability.");
+                PlayerManager.Instance.playerData.abilitiesCanBePurchased[2] = true;
+                Debug.Log("NPC: Unlocked Teleport ability.");
                 break;
             case "invincibility":
-                PlayerManager.Instance.playerData.abilitiesUnlocked[3] = true;
-                Debug.Log("NPC: Unlocked Wall Jump ability.");
+                PlayerManager.Instance.playerData.abilitiesCanBePurchased[3] = true;
+                Debug.Log("NPC: Unlocked Invincibility ability.");
+                break;
+            case "aistop":
+                PlayerManager.Instance.playerData.abilitiesCanBePurchased[4] = true;
+                Debug.Log("NPC: Unlocked AI stop ability.");
                 break;
             default:
                 Debug.LogWarning($"NPC: Unknown feature to unlock: {feature}");

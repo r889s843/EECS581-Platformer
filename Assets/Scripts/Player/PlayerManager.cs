@@ -53,7 +53,8 @@ public class PlayerManager : MonoBehaviour
             username = "",
             money = 0f,
             levelProgress = new bool[6], // 6 levels, all false
-            abilitiesUnlocked = new bool[4], // 4 abilities, all false
+            abilitiesCanBePurchased = new bool[5],
+            abilitiesUnlocked = new bool[5], // 5 abilities, all false
             bestFreerunDistance = 0f,
             procGenCompletionCount = 0,
             bestStoryTime = 0f

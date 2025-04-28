@@ -36,6 +36,7 @@ public class PlayerData {
     public string username;
     public float money;              // Total money earned
     public bool[] levelProgress;     // Progress for 6 story levels
+    public bool[] abilitiesCanBePurchased; // Tracks if ability can be purchased (set by NPC)
     public bool[] abilitiesUnlocked; // 4 abilities unlocked status
     public float bestFreerunDistance; // Best distance in freerun mode
     public int procGenCompletionCount; // Total procedural level completions

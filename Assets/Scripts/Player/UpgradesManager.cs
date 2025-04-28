@@ -13,12 +13,50 @@ public class UpgradesManager : MonoBehaviour
     public int cost = 10;
 
     // Which ability are we unlocking?
-    public enum AbilityType { Invincibility, Dash, Hookshot }
+    public enum AbilityType { Invincibility, Dash, Hookshot, AIStop, DoubleJump }
     public AbilityType abilityToUnlock;
+    private int abilityIndex;
+
+    void Start()
+    {
+        // Map ability type to PlayerData array index
+        switch (abilityToUnlock)
+        {
+            case AbilityType.Invincibility:
+                abilityIndex = 3; // Invincibility
+                break;
+            case AbilityType.Dash:
+                abilityIndex = 0; // Dash
+                break;
+            case AbilityType.Hookshot:
+                abilityIndex = 4; // Teleport (Hookshot)
+                break;
+            case AbilityType.AIStop:
+                abilityIndex = 2; // AIStop
+                break;
+            case AbilityType.DoubleJump:
+                abilityIndex = 1; // DoubleJump
+                break;
+        }
+    }
 
     public void PurchaseUpgrade()
     {
-        // Attempt to spend money from the player's money manager
+        // Check if the ability can be purchased (set by NPC)
+        if (!PlayerManager.Instance.playerData.abilitiesCanBePurchased[abilityIndex])
+        {
+            Debug.Log($"Cannot purchase {abilityToUnlock}: Not unlocked by NPC.");
+            return;
+        }
+
+        // Check if already purchased
+        if (PlayerManager.Instance.playerData.abilitiesUnlocked[abilityIndex])
+        {
+            Debug.Log($"{abilityToUnlock} is already purchased.");
+            return;
+        }
+
+        // Attempt to spend money
         bool purchased = PlayerMoneyManager.Instance.SpendMoney(cost);
         if (!purchased)
         {
@@ -26,21 +64,9 @@ public class UpgradesManager : MonoBehaviour
             return;
         }
 
-        // If purchase is successful, unlock the ability in PowerUpManager
-        switch (abilityToUnlock)
-        {
-            case AbilityType.Invincibility:
-                powerUpManager.invincibilityUnlocked = true;
-                break;
-
-            // case AbilityType.Dash:
-            //     powerUpManager.dashUnlocked = true;
-            //     break;
-
-            case AbilityType.Hookshot:
-                powerUpManager.teleportUnlocked = true;
-                break;
-        }
+        // Update PlayerData to mark the ability as purchased
+        PlayerManager.Instance.playerData.abilitiesUnlocked[abilityIndex] = true;
+        PlayerManager.Instance.SavePlayerData();
 
         // If there's a GameObject to activate (e.g., a new UI panel or something)
         if (abilityToActivate != null)

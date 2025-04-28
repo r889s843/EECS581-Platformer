@@ -197,6 +197,24 @@ public class PlayerMovement : MonoBehaviour
         // Initialize dash icon color
         if (dashIcon != null)
             dashIcon.color = Color.white; // Start enabled
+
+        // Load ability unlock states from PlayerData
+        if (PlayerManager.Instance != null && PlayerManager.Instance.playerData != null)
+        {
+            // Based on your earlier setup in NPC.cs and UpgradesManager.cs:
+            // abilitiesUnlocked indices:
+            // 0: Dash (not used here)
+            // 1: DoubleJump (not used here)
+            // 2: AIStop
+            // 3: Invincibility
+            // 4: Teleport
+            canDoubleJump = PlayerManager.Instance.playerData.abilitiesUnlocked[1];     // Teleport
+            canDash = PlayerManager.Instance.playerData.abilitiesUnlocked[0]; // Invincibility
+        }
+        else
+        {
+            Debug.LogWarning("PowerUpManager: PlayerManager or PlayerData is not available. Abilities remain locked.");
+        }
     }
 
     // Calculates initial jump speed based on jump height and gravity
